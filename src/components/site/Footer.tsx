@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, MapPin, Phone, ShieldCheck, Globe, Link2, AtSign, Github as GithubIcon, Play } from "lucide-react";
+import { Mail, MapPin, Phone, ShieldCheck, Globe, Link2, AtSign, Code2, Play } from "lucide-react";
 import logo from "@/assets/apotekpro-logo.png";
 
 const columns = [
@@ -31,10 +31,10 @@ const columns = [
 ];
 
 const socials = [
-  { icon: Linkedin, label: "LinkedIn", href: "#" },
-  { icon: Twitter, label: "Twitter", href: "#" },
-  { icon: Github, label: "GitHub", href: "#" },
-  { icon: Youtube, label: "YouTube", href: "#" },
+  { icon: Link2, label: "LinkedIn", href: "#" },
+  { icon: AtSign, label: "Twitter", href: "#" },
+  { icon: Code2, label: "GitHub", href: "#" },
+  { icon: Play, label: "YouTube", href: "#" },
 ];
 
 export function Footer() {
