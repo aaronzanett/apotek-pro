@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, MapPin, Phone, ShieldCheck, Globe, Link2, AtSign, Code2, Play } from "lucide-react";
-import logo from "@/assets/apotekpro-logo.png";
+import { Mail, MapPin, Phone, ShieldCheck, Globe, ArrowUpRight } from "lucide-react";
+import { Wordmark } from "./Wordmark";
 
 const columns = [
   {
@@ -17,7 +17,7 @@ const columns = [
     links: [
       { to: "/about" as const, label: "About" },
       { to: "/contact" as const, label: "Contact" },
-      { to: "/about" as const, label: "By Zanscode" },
+      { to: "/about" as const, label: "A Zanscode product" },
     ],
   },
   {
@@ -30,86 +30,86 @@ const columns = [
   },
 ];
 
-const socials = [
-  { icon: Link2, label: "LinkedIn", href: "#" },
-  { icon: AtSign, label: "Twitter", href: "#" },
-  { icon: Code2, label: "GitHub", href: "#" },
-  { icon: Play, label: "YouTube", href: "#" },
-];
-
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-surface">
-      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-12 lg:px-8">
-        <div className="lg:col-span-4">
-          <Link to="/" className="inline-flex items-center">
-            <img src={logo} alt="Apotek Pro" className="h-9 w-auto" />
-          </Link>
-          <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
-            Apotek Pro by Zanscode — pharmacy management built for modern operations.
-            POS, prescriptions, inventory, suppliers, and compliance in one platform.
-          </p>
-
-          <ul className="mt-6 space-y-3 text-sm">
-            <li className="flex items-start gap-3">
-              <Mail className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
-              <a href="mailto:hello@apotekpro.com" className="text-muted-foreground hover:text-foreground">hello@apotekpro.com</a>
-            </li>
-            <li className="flex items-start gap-3">
-              <Phone className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
-              <span className="text-muted-foreground">+62 21 5000 0123</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
-              <span className="text-muted-foreground">Innovation District, Jakarta, Indonesia</span>
-            </li>
-          </ul>
-        </div>
-
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-8">
-          {columns.map((col) => (
-            <div key={col.title}>
-              <h4 className="text-xs font-semibold uppercase tracking-wider text-foreground">{col.title}</h4>
-              <ul className="mt-4 space-y-3 text-sm">
-                {col.links.map((link, i) => (
-                  <li key={`${col.title}-${i}`}>
-                    <Link to={link.to} className="text-muted-foreground transition-colors hover:text-foreground">{link.label}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="border-t border-border">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-5 text-xs text-muted-foreground sm:px-6 lg:px-8">
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-            <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" /> HIPAA-ready</span>
-            <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" /> ISO 27001</span>
-            <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" /> GDPR</span>
-            <span className="inline-flex items-center gap-1.5"><Globe className="h-3.5 w-3.5" /> Multi-branch</span>
+    <footer className="relative border-t border-border bg-cream paper-grain">
+      <div className="relative mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:px-10">
+        {/* Editorial headline */}
+        <div className="max-w-3xl">
+          <p className="kicker">Let's talk</p>
+          <h2 className="mt-4 font-display text-4xl leading-[1.05] text-foreground sm:text-5xl lg:text-6xl">
+            Ready to bring <em className="serif-italic text-brand">clarity</em><br className="hidden sm:block" />
+            to your pharmacy?
+          </h2>
+          <div className="mt-8">
+            <Link
+              to="/contact"
+              className="group inline-flex items-center gap-3 font-display text-2xl text-foreground transition-colors hover:text-brand"
+            >
+              Book a demo
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-ink text-background transition-transform group-hover:translate-x-1">
+                <ArrowUpRight className="h-4 w-4" />
+              </span>
+            </Link>
           </div>
-          <div className="flex items-center gap-2">
-            {socials.map((s) => (
-              <a key={s.label} href={s.href} aria-label={s.label}
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-brand hover:text-foreground">
-                <s.icon className="h-4 w-4" />
-              </a>
+        </div>
+
+        <div className="mt-20 grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <Link to="/" className="inline-flex items-center">
+              <Wordmark className="h-8 w-auto" />
+            </Link>
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
+              Apotek Pro is a pharmacy operating system by Zanscode. POS, prescriptions,
+              inventory and compliance — quietly connected.
+            </p>
+
+            <ul className="mt-7 space-y-3 text-sm">
+              <li className="flex items-start gap-3">
+                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
+                <a href="mailto:hello@apotekpro.com" className="text-foreground hover:text-brand transition-colors">
+                  hello@apotekpro.com
+                </a>
+              </li>
+              <li className="flex items-start gap-3">
+                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
+                <span className="text-muted-foreground">+62 21 5000 0123</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
+                <span className="text-muted-foreground">Jakarta, Indonesia</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-7">
+            {columns.map((col) => (
+              <div key={col.title}>
+                <h4 className="kicker text-foreground/70">{col.title}</h4>
+                <ul className="mt-5 space-y-3 text-sm">
+                  {col.links.map((link, i) => (
+                    <li key={`${col.title}-${i}`}>
+                      <Link to={link.to} className="text-muted-foreground transition-colors hover:text-foreground">
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
         </div>
       </div>
 
-      <div className="border-t border-border bg-background">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-5 text-xs text-muted-foreground sm:flex-row sm:px-6 lg:px-8">
-          <p>© {new Date().getFullYear()} Apotek Pro · A Zanscode product. All rights reserved.</p>
-          <div className="flex items-center gap-5">
-            <Link to="/about" className="hover:text-foreground">Privacy</Link>
-            <Link to="/about" className="hover:text-foreground">Terms</Link>
-            <Link to="/about" className="hover:text-foreground">Security</Link>
-            <Link to="/contact" className="hover:text-foreground">Cookies</Link>
+      <div className="relative border-t border-border">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-5 py-5 text-xs text-muted-foreground sm:px-8 lg:px-10">
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" /> HIPAA-ready</span>
+            <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" /> ISO 27001</span>
+            <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" /> GDPR</span>
+            <span className="inline-flex items-center gap-1.5"><Globe className="h-3.5 w-3.5" /> Multi-branch</span>
           </div>
+          <p>© {new Date().getFullYear()} Apotek Pro · A Zanscode product</p>
         </div>
       </div>
     </footer>
