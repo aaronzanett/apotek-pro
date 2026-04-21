@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, MapPin, Phone, Linkedin, Twitter, Github, Youtube, ShieldCheck, Globe } from "lucide-react";
+import { Mail, MapPin, Phone, Linkedin as LinkedinIcon, Twitter as TwitterIcon, Github as GithubIcon, Youtube as YoutubeIcon, ShieldCheck, Globe } from "lucide-react";
+const Linkedin = LinkedinIcon; const Twitter = TwitterIcon; const Github = GithubIcon; const Youtube = YoutubeIcon;
 import logo from "@/assets/apotekpro-logo.png";
 
 const columns = [
