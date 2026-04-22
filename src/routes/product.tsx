@@ -3,6 +3,7 @@ import { ArrowUpRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
+import { useLang } from "@/lib/i18n";
 
 import imgPos from "@/assets/product-pos.jpg";
 import imgInventory from "@/assets/product-inventory.jpg";
@@ -11,10 +12,10 @@ import imgReports from "@/assets/product-reports.jpg";
 export const Route = createFileRoute("/product")({
   head: () => ({
     meta: [
-      { title: "Product tour — Apotek Pro" },
-      { name: "description", content: "A visual tour of the Apotek Pro modules: POS, inventory & expiry, suppliers and compliance reports." },
-      { property: "og:title", content: "Product tour — Apotek Pro" },
-      { property: "og:description", content: "See the POS, inventory and reports modules of Apotek Pro." },
+      { title: "Tur produk — Apotek Pro" },
+      { name: "description", content: "Tur visual modul Apotek Pro: POS, inventaris & kedaluwarsa, pemasok, dan laporan kepatuhan." },
+      { property: "og:title", content: "Tur produk — Apotek Pro" },
+      { property: "og:description", content: "Lihat modul POS, inventaris, dan laporan Apotek Pro." },
       { property: "og:image", content: imgPos },
       { property: "twitter:image", content: imgPos },
     ],
@@ -22,71 +23,71 @@ export const Route = createFileRoute("/product")({
   component: ProductPage,
 });
 
-const modules = [
-  {
-    n: "01",
-    tag: "POS & Dispensing",
-    title: "A counter that keeps up",
-    italic: "at peak hour.",
-    desc: "Scan, dispense, counsel and print — all from one uncluttered screen. Designed by pharmacists, for pharmacists.",
-    bullets: ["Barcode, QR and manual search", "Insurance & multi-tender", "Label + receipt in one click", "Offline-tolerant sync"],
-    img: imgPos,
-    alt: "POS and dispensing dashboard preview",
-  },
-  {
-    n: "02",
-    tag: "Inventory & Expiry",
-    title: "Batch control,",
-    italic: "FEFO by default.",
-    desc: "Every unit is tracked by batch, lot and expiry. Never dispense the wrong one — and never write off near-expiry stock quietly.",
-    bullets: ["Batch & lot tracking", "Expiry alerts by window", "Auto-reorder thresholds", "Stock transfers across branches"],
-    img: imgInventory,
-    alt: "Inventory with expiry and reorder alerts",
-    reverse: true,
-  },
-  {
-    n: "03",
-    tag: "Suppliers & POs",
-    title: "From PO to receipt,",
-    italic: "tracked.",
-    desc: "Issue purchase orders to distributors, receive goods against them, and reconcile discrepancies before the invoice lands.",
-    bullets: ["Distributor catalogs", "PO approvals & limits", "Goods receipt + variance", "Invoice reconciliation"],
-    img: imgReports,
-    alt: "Supplier and purchase order screen",
-  },
-  {
-    n: "04",
-    tag: "Reports & Compliance",
-    title: "Audit-ready",
-    italic: "at any moment.",
-    desc: "From daily sales to narcotics register — reports are always one click away, and exports are accepted by your regulator.",
-    bullets: ["Sales & margin analytics", "Controlled-substance register", "Tax-ready exports", "Activity & access logs"],
-    img: imgReports,
-    alt: "Reports and compliance dashboard",
-    reverse: true,
-  },
-];
-
 function ProductPage() {
+  const { t } = useLang();
+
+  const modules = [
+    {
+      n: "01",
+      tag: "POS & Pelayanan Resep",
+      title: t("product.m1.title"),
+      italic: t("product.m1.italic"),
+      desc: t("product.m1.desc"),
+      bullets: [t("product.m1.b1"), t("product.m1.b2"), t("product.m1.b3"), t("product.m1.b4")],
+      img: imgPos,
+      alt: "POS preview",
+    },
+    {
+      n: "02",
+      tag: "Inventaris & Kedaluwarsa",
+      title: t("product.m2.title"),
+      italic: t("product.m2.italic"),
+      desc: t("product.m2.desc"),
+      bullets: [t("product.m2.b1"), t("product.m2.b2"), t("product.m2.b3"), t("product.m2.b4")],
+      img: imgInventory,
+      alt: "Inventory preview",
+      reverse: true,
+    },
+    {
+      n: "03",
+      tag: "Pemasok & PO",
+      title: t("product.m3.title"),
+      italic: t("product.m3.italic"),
+      desc: t("product.m3.desc"),
+      bullets: [t("product.m3.b1"), t("product.m3.b2"), t("product.m3.b3"), t("product.m3.b4")],
+      img: imgReports,
+      alt: "Supplier preview",
+    },
+    {
+      n: "04",
+      tag: "Laporan & Kepatuhan",
+      title: t("product.m4.title"),
+      italic: t("product.m4.italic"),
+      desc: t("product.m4.desc"),
+      bullets: [t("product.m4.b1"), t("product.m4.b2"), t("product.m4.b3"), t("product.m4.b4")],
+      img: imgReports,
+      alt: "Reports preview",
+      reverse: true,
+    },
+  ];
+
   return (
     <SiteLayout>
-      {/* Hero */}
       <section className="bg-background pt-20 pb-16 lg:pt-28 lg:pb-24">
         <div className="mx-auto max-w-5xl px-5 sm:px-8 lg:px-10">
           <Reveal variant="up">
-            <p className="kicker">Product tour</p>
+            <p className="kicker">{t("product.kicker")}</p>
             <h1 className="mt-5 font-display text-5xl leading-[1.02] text-foreground sm:text-6xl lg:text-7xl">
-              Four modules.<br />
-              <em className="serif-italic text-brand">One</em> pharmacy platform.
+              {t("product.h1.line1")}<br />
+              <em className="serif-italic text-brand">{t("product.h1.italic")}</em>{t("product.h1.tail")}
             </h1>
             <p className="mt-8 max-w-2xl text-lg text-muted-foreground">
-              Scroll through each core module and see how they fit together.
+              {t("product.lead")}
             </p>
           </Reveal>
         </div>
       </section>
 
-      {/* Modules */}
       {modules.map((m, i) => (
         <section key={m.tag} className={`${i % 2 === 0 ? "bg-cream paper-grain" : "bg-background"} py-20 lg:py-28 relative`}>
           <div className={`relative mx-auto grid max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-12 lg:gap-10 lg:px-10 ${m.reverse ? "lg:[&>*:first-child]:order-2" : ""}`}>
@@ -123,20 +124,19 @@ function ProductPage() {
         </section>
       ))}
 
-      {/* CTA */}
       <section className="bg-ink py-20 text-background lg:py-28">
         <div className="mx-auto max-w-4xl px-5 text-center sm:px-8 lg:px-10">
           <Reveal variant="up">
             <h2 className="font-display text-4xl leading-tight sm:text-5xl lg:text-6xl">
-              Want a guided <em className="serif-italic text-brand-accent">walkthrough?</em>
+              {t("product.cta.h2")}<em className="serif-italic text-brand-accent">{t("product.cta.italic")}</em>
             </h2>
-            <p className="mx-auto mt-6 max-w-lg text-background/70">We'll tailor the demo to your branches, suppliers and reporting needs.</p>
+            <p className="mx-auto mt-6 max-w-lg text-background/70">{t("product.cta.lead")}</p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
               <Button asChild size="lg" variant="hero" className="group">
-                <Link to="/contact">Book a demo <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></Link>
+                <Link to="/contact">{t("cta.bookDemo")} <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></Link>
               </Button>
               <Button asChild size="lg" variant="ghost" className="text-background hover:bg-background/10 hover:text-background">
-                <Link to="/pricing">See pricing</Link>
+                <Link to="/pricing">{t("cta.seePricing")}</Link>
               </Button>
             </div>
           </Reveal>

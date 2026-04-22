@@ -1,0 +1,637 @@
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+
+export type Lang = "id" | "en";
+
+type Dict = Record<string, string>;
+
+const STORAGE_KEY = "apotekpro.lang";
+
+// ---------- Dictionaries ----------
+const id: Dict = {
+  // Header / nav
+  "nav.home": "Beranda",
+  "nav.features": "Fitur",
+  "nav.product": "Produk",
+  "nav.pricing": "Harga",
+  "nav.about": "Tentang",
+  "nav.contact": "Kontak",
+  "nav.signin": "Masuk",
+  "cta.bookDemo": "Pesan demo",
+  "cta.productTour": "Lihat tur produk",
+  "cta.seePricing": "Lihat harga",
+  "cta.contactUs": "Hubungi kami",
+  "cta.seeProduct": "Lihat produk",
+  "cta.exploreFeatures": "Jelajahi semua fitur",
+  "cta.seeProductTour": "Lihat tur produk",
+
+  // Home — hero
+  "home.badge": "Produk Zanscode · Kini di 6 negara",
+  "home.h1.line1": "Apotek Anda,",
+  "home.h1.italic": "rapi",
+  "home.h1.line2": " tanpa ribet.",
+  "home.hero.lead":
+    "Apotek Pro menggantikan enam alat yang terpisah dengan satu sistem operasi yang tenang — supaya tim Anda fokus pada pasien, bukan administrasi.",
+  "home.hero.users": "500+ apoteker",
+  "home.hero.usersTail": " kini melayani resep lewat Apotek Pro.",
+  "home.float.expiry": "Kerugian kedaluwarsa",
+  "home.float.expiryNote": "di kuartal pertama",
+  "home.float.checkout": "Waktu checkout",
+  "home.float.checkoutNote": "rata-rata di jam sibuk",
+  "home.audit.title": "Audit lulus · 14 Mar",
+  "home.audit.note": "Register narkotika diekspor sekali klik",
+
+  // Home — marquee
+  "home.marquee": "Dipercaya apotek di seluruh Asia Tenggara",
+
+  // Home — bento
+  "home.bento.kicker": "Apa saja di dalamnya",
+  "home.bento.h2.line1": "Satu platform,",
+  "home.bento.h2.italic": "setiap",
+  "home.bento.h2.line2": " alur kerja konter.",
+  "home.bento.lead":
+    "Dari pemindaian pertama sampai laporan kepatuhan akhir bulan, Apotek Pro dibangun mengikuti cara apoteker bekerja — bukan sebaliknya.",
+  "home.bento.pos.title": "POS & Pelayanan Resep",
+  "home.bento.pos.desc":
+    "Pindai, layani, beri konseling, dan cetak — semua dari satu layar yang lega. Dirancang apoteker untuk apoteker.",
+  "home.bento.batch.title": "Pelacakan batch & kedaluwarsa",
+  "home.bento.batch.desc": "Setiap unit terlacak. FEFO secara default. Tidak ada lagi stok hampir kedaluwarsa yang lolos diam-diam.",
+  "home.bento.audit.title": "Siap audit",
+  "home.bento.audit.desc": "Register narkotika, ekspor pajak, log permanen.",
+  "home.bento.rx.title": "Pelayanan resep yang aman",
+  "home.bento.suppliers.t": "Pemasok & PO",
+  "home.bento.suppliers.d": "Dari PO hingga barang diterima, terekonsiliasi.",
+  "home.bento.cold.t": "Sadar cold-chain",
+  "home.bento.cold.d": "Penanganan obat sensitif suhu sudah terintegrasi.",
+  "home.bento.patient.t": "Profil pasien",
+  "home.bento.patient.d": "Alergi & riwayat untuk pelayanan yang lebih aman.",
+
+  // Home — quote
+  "home.quote.text":
+    "“Kami memindahkan tiga cabang dalam satu akhir pekan. Kerugian kedaluwarsa turun ",
+  "home.quote.italic": "enam puluh persen",
+  "home.quote.tail":
+    " di kuartal pertama — apoteker penanggung jawab kami akhirnya bisa libur akhir pekan.”",
+  "home.quote.author": "Dr. Sari Pratama",
+  "home.quote.role": "Pemilik · MediFarma Group",
+
+  // Home — dashboard preview
+  "home.dash.kicker": "Jelas di setiap tingkat",
+  "home.dash.h2.line1": "Lihat seluruh apotek,",
+  "home.dash.h2.italic": "dalam satu pandangan.",
+  "home.dash.lead": "Dasbor per cabang — dari margin, produk laris, hingga jendela kedaluwarsa, diperbarui langsung.",
+  "home.dash.li.1": "Pelacakan penjualan & margin real-time",
+  "home.dash.li.2": "Peringatan kedaluwarsa sebelum jadi kerugian",
+  "home.dash.li.3": "Transfer stok antar cabang",
+  "home.dash.li.4": "Ekspor yang diterima regulator",
+
+  // Home — closing
+  "home.cta.h2.line1": "Apotek yang lebih tenang",
+  "home.cta.h2.line2": "dimulai dari ",
+  "home.cta.italic": "satu demo.",
+  "home.cta.lead": "Dua puluh menit. Cabang dan alur kerja Anda. Tanpa sales pitch — hanya sandbox yang berfungsi.",
+
+  // Features
+  "features.kicker": "Fitur",
+  "features.h1.line1": "Setiap alur kerja,",
+  "features.h1.italic": "tercakup.",
+  "features.lead":
+    "Dari pemindaian pertama hingga laporan akhir bulan — Apotek Pro dibangun mengikuti bentuk pekerjaan apotek yang sebenarnya.",
+  "features.g1.title": "Konter & pelayanan resep",
+  "features.g1.desc": "Pengalaman yang dinikmati kasir dan apoteker Anda.",
+  "features.g1.i1.t": "Point of sale",
+  "features.g1.i1.d": "Pindai barcode/QR, multi-pembayaran, struk, dan cetak label.",
+  "features.g1.i2.t": "Pelayanan resep",
+  "features.g1.i2.d": "Penerimaan resep, cek dosis/interaksi, prompt konseling, refill.",
+  "features.g1.i3.t": "Profil pasien",
+  "features.g1.i3.d": "Alergi, obat kronis, dan riwayat untuk pelayanan lebih aman.",
+  "features.g1.i4.t": "Mode tablet & kios",
+  "features.g1.i4.d": "Berjalan mulus di PC konter, tablet, dan kios.",
+  "features.g2.title": "Inventaris & pasokan",
+  "features.g2.desc": "Kontrol berbasis batch yang membuat kerugian kedaluwarsa jadi cerita lama.",
+  "features.g2.i1.t": "Pelacakan batch & lot",
+  "features.g2.i1.d": "Setiap unit terlacak per batch, lot, dan tanggal kedaluwarsa.",
+  "features.g2.i2.t": "Kedaluwarsa & FEFO",
+  "features.g2.i2.d": "Peringatan mendekati kedaluwarsa dan pengambilan FEFO.",
+  "features.g2.i3.t": "Pemasok & PO",
+  "features.g2.i3.d": "Purchase order, penerimaan barang, manajemen distributor.",
+  "features.g2.i4.t": "Multi-cabang",
+  "features.g2.i4.d": "Transfer stok antar cabang dengan jejak audit lengkap.",
+  "features.g3.title": "Insight & kepatuhan",
+  "features.g3.desc": "Siap diaudit kapan saja. Insight di tempat yang Anda butuhkan.",
+  "features.g3.i1.t": "Analitik real-time",
+  "features.g3.i1.d": "Penjualan, margin, produk laris, dan perbandingan cabang.",
+  "features.g3.i2.t": "Laporan kepatuhan",
+  "features.g3.i2.d": "Register narkotika, ekspor pajak, log siap audit.",
+  "features.g3.i3.t": "Akses berbasis peran",
+  "features.g3.i3.d": "Izin apoteker, kasir, dan admin lengkap dengan log.",
+  "features.g3.i4.t": "Peringatan cerdas",
+  "features.g3.i4.d": "Stok menipis, kedaluwarsa, selisih kas, dan deteksi anomali.",
+  "features.cta.h2.line1": "Lihat dalam ",
+  "features.cta.italic": "aksi.",
+  "features.cta.lead": "Jelajahi tur produk atau pesan demo terpandu sesuai cabang Anda.",
+
+  // Product tour
+  "product.kicker": "Tur produk",
+  "product.h1.line1": "Empat modul.",
+  "product.h1.italic": "Satu",
+  "product.h1.tail": " platform apotek.",
+  "product.lead": "Telusuri setiap modul inti dan lihat bagaimana semuanya saling terhubung.",
+  "product.m1.title": "Konter yang sigap",
+  "product.m1.italic": "di jam sibuk.",
+  "product.m1.desc":
+    "Pindai, layani, beri konseling, dan cetak — semua dari satu layar yang lega. Dirancang apoteker, untuk apoteker.",
+  "product.m1.b1": "Barcode, QR, dan pencarian manual",
+  "product.m1.b2": "Asuransi & multi-pembayaran",
+  "product.m1.b3": "Label + struk dalam satu klik",
+  "product.m1.b4": "Toleran offline dengan sinkronisasi otomatis",
+  "product.m2.title": "Kontrol batch,",
+  "product.m2.italic": "FEFO secara default.",
+  "product.m2.desc":
+    "Setiap unit dilacak per batch, lot, dan kedaluwarsa. Tidak salah ambil — dan tidak ada penghapusan stok diam-diam.",
+  "product.m2.b1": "Pelacakan batch & lot",
+  "product.m2.b2": "Peringatan kedaluwarsa per jendela waktu",
+  "product.m2.b3": "Ambang reorder otomatis",
+  "product.m2.b4": "Transfer stok antar cabang",
+  "product.m3.title": "Dari PO sampai penerimaan,",
+  "product.m3.italic": "terlacak.",
+  "product.m3.desc":
+    "Terbitkan PO ke distributor, terima barang, dan rekonsiliasi selisih sebelum faktur datang.",
+  "product.m3.b1": "Katalog distributor",
+  "product.m3.b2": "Persetujuan & batas PO",
+  "product.m3.b3": "Penerimaan barang + selisih",
+  "product.m3.b4": "Rekonsiliasi faktur",
+  "product.m4.title": "Siap audit",
+  "product.m4.italic": "kapan saja.",
+  "product.m4.desc":
+    "Dari penjualan harian sampai register narkotika — laporan selalu satu klik dan ekspor diterima regulator.",
+  "product.m4.b1": "Analitik penjualan & margin",
+  "product.m4.b2": "Register obat terkontrol",
+  "product.m4.b3": "Ekspor siap pajak",
+  "product.m4.b4": "Log aktivitas & akses",
+  "product.cta.h2": "Mau ",
+  "product.cta.italic": "demo terpandu?",
+  "product.cta.lead": "Kami akan menyesuaikan demo dengan cabang, pemasok, dan kebutuhan laporan Anda.",
+
+  // Pricing
+  "pricing.kicker": "Harga",
+  "pricing.h1.line1": "Paket yang tumbuh",
+  "pricing.h1.line2": "bersama ",
+  "pricing.h1.italic": "apotek Anda.",
+  "pricing.lead": "Harga per cabang yang sederhana. Tanpa biaya tersembunyi atau tambahan mendadak.",
+  "pricing.toggle.monthly": "Bulanan",
+  "pricing.toggle.annual": "Tahunan",
+  "pricing.tier.starter": "Starter",
+  "pricing.tier.starter.desc": "Untuk apotek satu lokasi yang ingin lebih rapi.",
+  "pricing.tier.starter.cta": "Mulai dengan Starter",
+  "pricing.tier.growth": "Growth",
+  "pricing.tier.growth.desc": "Untuk jaringan apotek yang sedang tumbuh.",
+  "pricing.tier.growth.cta": "Pilih Growth",
+  "pricing.tier.ent": "Enterprise",
+  "pricing.tier.ent.desc": "Untuk grup yang butuh SSO, SLA, dan integrasi khusus.",
+  "pricing.tier.ent.cta": "Hubungi sales",
+  "pricing.starter.f1": "1 cabang, sampai 3 pengguna",
+  "pricing.starter.f2": "POS & pelayanan resep",
+  "pricing.starter.f3": "Inventaris dengan pelacakan kedaluwarsa",
+  "pricing.starter.f4": "Laporan penjualan harian",
+  "pricing.starter.f5": "Dukungan email",
+  "pricing.growth.f1": "Sampai 10 pengguna per cabang",
+  "pricing.growth.f2": "Transfer stok antar cabang",
+  "pricing.growth.f3": "Manajemen pemasok & PO",
+  "pricing.growth.f4": "Kepatuhan & register narkotika",
+  "pricing.growth.f5": "Dukungan chat prioritas",
+  "pricing.ent.f1": "Pengguna & cabang tanpa batas",
+  "pricing.ent.f2": "SSO + RBAC lanjutan",
+  "pricing.ent.f3": "Integrasi & API khusus",
+  "pricing.ent.f4": "Customer success dedikasi",
+  "pricing.ent.f5": "SLA uptime 99,99%",
+  "pricing.popular": "Paling populer",
+  "pricing.priceUnit.mo": "/ cabang / bln",
+  "pricing.priceUnit.yr": "/ cabang / bln, tagihan tahunan",
+  "pricing.custom": "Khusus",
+  "pricing.faq.kicker": "FAQ",
+  "pricing.faq.title": "Pertanyaan ",
+  "pricing.faq.italic": "umum.",
+  "pricing.faq.q1": "Apakah ada bantuan onboarding?",
+  "pricing.faq.a1": "Ya — semua paket termasuk onboarding terpandu. Growth dan Enterprise mencakup migrasi data dari sistem Anda saat ini.",
+  "pricing.faq.q2": "Bisa coba sebelum berlangganan?",
+  "pricing.faq.a2": "Tentu. Pesan demo dan kami siapkan sandbox dengan daftar produk Anda.",
+  "pricing.faq.q3": "Apakah POS bisa offline?",
+  "pricing.faq.a3": "Bisa. POS toleran offline dan sinkronisasi otomatis saat koneksi pulih.",
+  "pricing.faq.q4": "Apakah datanya milik kami?",
+  "pricing.faq.a4": "Selalu. Anda bisa ekspor seluruh data kapan saja — tanpa lock-in.",
+
+  // About
+  "about.kicker": "Tentang",
+  "about.h1.line1": "Dibangun untuk apotek.",
+  "about.h1.line2.before": "",
+  "about.h1.italic": "Didukung",
+  "about.h1.line2.after": " oleh Zanscode.",
+  "about.lead": "Apotek Pro adalah bagian dari keluarga produk Zanscode — teknologi untuk bisnis yang rapi dan siap berkembang.",
+  "about.story.kicker": "Cerita kami",
+  "about.story.h2.line1": "Dari frustrasi di konter",
+  "about.story.italic": "menjadi sebuah platform.",
+  "about.story.p1":
+    "Kami memulai Apotek Pro setelah melihat apoteker bergulat dengan spreadsheet, POS lawas, dan buku register kertas — hanya untuk menutup hari. Kami percaya melayani obat seharusnya terasa sebagai craft, bukan rutinitas administratif.",
+  "about.story.p2":
+    "Hari ini, Apotek Pro mendukung ratusan apotek di Asia Tenggara — dari satu konter hingga grup multi-cabang — dengan janji yang sama: operasional rapi, pelayanan lebih aman, dan kepatuhan siap audit.",
+  "about.stat.l1": "Apotek terlayani",
+  "about.stat.l2": "Resep dilayani",
+  "about.stat.l3": "Negara",
+  "about.stat.l4": "Uptime",
+  "about.values.kicker": "Nilai kami",
+  "about.values.h2.line1": "Yang memandu",
+  "about.values.italic": "setiap keputusan.",
+  "about.v1.t": "Pasien yang utama",
+  "about.v1.d": "Setiap fitur diuji satu pertanyaan: apakah pelayanan jadi lebih aman atau lebih cepat?",
+  "about.v2.t": "Kejelasan operasional",
+  "about.v2.d": "Yang tidak terukur tidak bisa dikelola. Dasbor mengalahkan spreadsheet.",
+  "about.v3.t": "Kepatuhan secara default",
+  "about.v3.d": "Audit tidak boleh jadi panik. Kepatuhan kami tanam ke alur kerja harian.",
+  "about.v4.t": "Quiet craft",
+  "about.v4.d": "Software yang surut ke latar — biar apoteker bekerja dengan tenang.",
+  "about.cta.h2": "Bicara dengan ",
+  "about.cta.italic": "tim kami.",
+  "about.cta.lead": "Baik Anda mengelola satu konter atau seratus — kami senang mendengarnya.",
+
+  // Contact
+  "contact.kicker": "Kontak",
+  "contact.h1.line1": "Mari bicara tentang",
+  "contact.h1.italic": "apotek Anda.",
+  "contact.lead": "Ceritakan operasional Anda — kami balas dalam satu hari kerja.",
+  "contact.reach.kicker": "Hubungi kami",
+  "contact.reach.note": "Berbasis di Jakarta, melayani lintas zona waktu.",
+  "contact.email": "Email",
+  "contact.phone": "Telepon",
+  "contact.office": "Kantor",
+  "contact.officeAddr": "Kawasan Inovasi\nJakarta, Indonesia",
+  "contact.form.name": "Nama lengkap",
+  "contact.form.namePh": "Jane Apoteker",
+  "contact.form.email": "Email kantor",
+  "contact.form.emailPh": "anda@apotek.com",
+  "contact.form.pharmacy": "Apotek",
+  "contact.form.pharmacyPh": "MediFarma",
+  "contact.form.branches": "Jumlah cabang",
+  "contact.form.help": "Apa yang bisa kami bantu?",
+  "contact.form.helpPh": "Ceritakan cabang, sistem yang dipakai sekarang, dan apa yang ingin diperbaiki.",
+  "contact.form.send": "Kirim pesan",
+  "contact.form.sent": "Pesan terkirim",
+  "contact.form.thanks": "Terima kasih — kami akan menghubungi Anda dalam satu hari kerja.",
+
+  // Footer
+  "footer.letstalk": "Mari bicara",
+  "footer.h2.line1": "Siap menghadirkan ",
+  "footer.h2.italic": "kejelasan",
+  "footer.h2.line2": " ke apotek Anda?",
+  "footer.col.product": "Produk",
+  "footer.col.company": "Perusahaan",
+  "footer.col.resources": "Sumber daya",
+  "footer.link.features": "Fitur",
+  "footer.link.tour": "Tur produk",
+  "footer.link.pricing": "Harga",
+  "footer.link.demo": "Pesan demo",
+  "footer.link.about": "Tentang",
+  "footer.link.contact": "Kontak",
+  "footer.link.zanscode": "Produk Zanscode",
+  "footer.link.help": "Pusat bantuan",
+  "footer.link.support": "Dukungan",
+  "footer.link.status": "Status",
+  "footer.tagline":
+    "Apotek Pro adalah sistem operasi apotek dari Zanscode. POS, resep, inventaris, dan kepatuhan — terhubung dengan tenang.",
+  "footer.copyright": "Apotek Pro · Produk Zanscode",
+  "footer.multibranch": "Multi-cabang",
+
+  // 404
+  "nf.title": "Halaman tidak ditemukan",
+  "nf.back": "Kembali ke beranda",
+};
+
+const en: Dict = {
+  "nav.home": "Home",
+  "nav.features": "Features",
+  "nav.product": "Product",
+  "nav.pricing": "Pricing",
+  "nav.about": "About",
+  "nav.contact": "Contact",
+  "nav.signin": "Sign in",
+  "cta.bookDemo": "Book a demo",
+  "cta.productTour": "Take the product tour",
+  "cta.seePricing": "See pricing",
+  "cta.contactUs": "Contact us",
+  "cta.seeProduct": "See the product",
+  "cta.exploreFeatures": "Explore all features",
+  "cta.seeProductTour": "See the product tour",
+
+  "home.badge": "A Zanscode product · Now in 6 countries",
+  "home.h1.line1": "Your pharmacy,",
+  "home.h1.italic": "quietly",
+  "home.h1.line2": " organized.",
+  "home.hero.lead":
+    "Apotek Pro replaces six disconnected tools with one calm operating system — so your team can focus on patients, not paperwork.",
+  "home.hero.users": "500+ pharmacists",
+  "home.hero.usersTail": " dispensing through Apotek Pro today.",
+  "home.float.expiry": "Expiry losses",
+  "home.float.expiryNote": "in first quarter",
+  "home.float.checkout": "Checkout time",
+  "home.float.checkoutNote": "average at peak hour",
+  "home.audit.title": "Audit passed · 14 Mar",
+  "home.audit.note": "Narcotics register exported in one click",
+
+  "home.marquee": "Trusted by pharmacies across Southeast Asia",
+
+  "home.bento.kicker": "What's inside",
+  "home.bento.h2.line1": "One platform,",
+  "home.bento.h2.italic": "every",
+  "home.bento.h2.line2": " counter workflow.",
+  "home.bento.lead":
+    "From the first scan to the month-end compliance report, Apotek Pro is built around how pharmacists actually work — not the other way around.",
+  "home.bento.pos.title": "POS & Dispensing",
+  "home.bento.pos.desc":
+    "Scan, dispense, counsel, and print — all from one uncluttered screen. Designed by pharmacists for pharmacists.",
+  "home.bento.batch.title": "Batch & expiry tracking",
+  "home.bento.batch.desc": "Every unit traceable. FEFO by default. Never write off near-expiry stock quietly.",
+  "home.bento.audit.title": "Audit-ready",
+  "home.bento.audit.desc": "Narcotics register, tax exports, immutable logs.",
+  "home.bento.rx.title": "Rx-safe dispensing",
+  "home.bento.suppliers.t": "Suppliers & POs",
+  "home.bento.suppliers.d": "PO to goods-received, reconciled.",
+  "home.bento.cold.t": "Cold-chain aware",
+  "home.bento.cold.d": "Temperature-sensitive handling built in.",
+  "home.bento.patient.t": "Patient profiles",
+  "home.bento.patient.d": "Allergies & history for safer dispensing.",
+
+  "home.quote.text": "“We migrated three branches in a weekend. Expiry losses dropped ",
+  "home.quote.italic": "sixty percent",
+  "home.quote.tail":
+    " in the first quarter — our pharmacist-in-charge gets his weekends back.”",
+  "home.quote.author": "Dr. Sari Pratama",
+  "home.quote.role": "Owner · MediFarma Group",
+
+  "home.dash.kicker": "Clarity at every level",
+  "home.dash.h2.line1": "See the whole pharmacy,",
+  "home.dash.h2.italic": "in one glance.",
+  "home.dash.lead": "Branch-level dashboards from margin to fast-movers to expiry windows — updated live.",
+  "home.dash.li.1": "Real-time sales and margin tracking",
+  "home.dash.li.2": "Expiry alerts before they become losses",
+  "home.dash.li.3": "Stock transfers across branches",
+  "home.dash.li.4": "Exports regulators actually accept",
+
+  "home.cta.h2.line1": "A calmer pharmacy",
+  "home.cta.h2.line2": "starts with ",
+  "home.cta.italic": "one demo.",
+  "home.cta.lead": "Twenty minutes. Your branches, your workflows. No sales pitch — just a working sandbox.",
+
+  "features.kicker": "Features",
+  "features.h1.line1": "Every workflow,",
+  "features.h1.italic": "covered.",
+  "features.lead":
+    "From the first scan to the month-end report — Apotek Pro is built around the real shape of pharmacy work.",
+  "features.g1.title": "Counter & dispensing",
+  "features.g1.desc": "The experience your cashiers and pharmacists actually enjoy.",
+  "features.g1.i1.t": "Point of sale",
+  "features.g1.i1.d": "Barcode/QR scan, multi-tender, receipts and label printing.",
+  "features.g1.i2.t": "Prescription dispensing",
+  "features.g1.i2.d": "Rx intake, dosage/interaction checks, counsel prompts, refills.",
+  "features.g1.i3.t": "Patient profiles",
+  "features.g1.i3.d": "Allergies, chronic meds and history for safer dispensing.",
+  "features.g1.i4.t": "Tablet & kiosk mode",
+  "features.g1.i4.d": "Works beautifully on counter PCs, tablets and kiosks.",
+  "features.g2.title": "Inventory & supply",
+  "features.g2.desc": "Batch-level control that makes expiry losses a thing of the past.",
+  "features.g2.i1.t": "Batch & lot tracking",
+  "features.g2.i1.d": "Every unit traceable by batch, lot and expiry date.",
+  "features.g2.i2.t": "Expiry & FEFO",
+  "features.g2.i2.d": "Near-expiry alerts and first-expire-first-out picks.",
+  "features.g2.i3.t": "Suppliers & POs",
+  "features.g2.i3.d": "Purchase orders, goods receipt, distributor management.",
+  "features.g2.i4.t": "Multi-branch",
+  "features.g2.i4.d": "Transfer stock across branches with a full audit trail.",
+  "features.g3.title": "Insights & compliance",
+  "features.g3.desc": "Audit-ready at any moment. Insights where you need them.",
+  "features.g3.i1.t": "Real-time analytics",
+  "features.g3.i1.d": "Sales, margins, fast-movers and branch comparison.",
+  "features.g3.i2.t": "Compliance reports",
+  "features.g3.i2.d": "Narcotics register, tax exports and audit-ready logs.",
+  "features.g3.i3.t": "Role-based access",
+  "features.g3.i3.d": "Pharmacist, cashier and admin permissions with logs.",
+  "features.g3.i4.t": "Smart alerts",
+  "features.g3.i4.d": "Low stock, expiry, cash variance and anomaly detection.",
+  "features.cta.h2.line1": "See it in ",
+  "features.cta.italic": "motion.",
+  "features.cta.lead": "Explore the product tour or book a guided walkthrough tailored to your branches.",
+
+  "product.kicker": "Product tour",
+  "product.h1.line1": "Four modules.",
+  "product.h1.italic": "One",
+  "product.h1.tail": " pharmacy platform.",
+  "product.lead": "Scroll through each core module and see how they fit together.",
+  "product.m1.title": "A counter that keeps up",
+  "product.m1.italic": "at peak hour.",
+  "product.m1.desc":
+    "Scan, dispense, counsel and print — all from one uncluttered screen. Designed by pharmacists, for pharmacists.",
+  "product.m1.b1": "Barcode, QR and manual search",
+  "product.m1.b2": "Insurance & multi-tender",
+  "product.m1.b3": "Label + receipt in one click",
+  "product.m1.b4": "Offline-tolerant sync",
+  "product.m2.title": "Batch control,",
+  "product.m2.italic": "FEFO by default.",
+  "product.m2.desc":
+    "Every unit is tracked by batch, lot and expiry. Never dispense the wrong one — and never write off near-expiry stock quietly.",
+  "product.m2.b1": "Batch & lot tracking",
+  "product.m2.b2": "Expiry alerts by window",
+  "product.m2.b3": "Auto-reorder thresholds",
+  "product.m2.b4": "Stock transfers across branches",
+  "product.m3.title": "From PO to receipt,",
+  "product.m3.italic": "tracked.",
+  "product.m3.desc":
+    "Issue purchase orders to distributors, receive goods against them, and reconcile discrepancies before the invoice lands.",
+  "product.m3.b1": "Distributor catalogs",
+  "product.m3.b2": "PO approvals & limits",
+  "product.m3.b3": "Goods receipt + variance",
+  "product.m3.b4": "Invoice reconciliation",
+  "product.m4.title": "Audit-ready",
+  "product.m4.italic": "at any moment.",
+  "product.m4.desc":
+    "From daily sales to narcotics register — reports are always one click away, and exports are accepted by your regulator.",
+  "product.m4.b1": "Sales & margin analytics",
+  "product.m4.b2": "Controlled-substance register",
+  "product.m4.b3": "Tax-ready exports",
+  "product.m4.b4": "Activity & access logs",
+  "product.cta.h2": "Want a ",
+  "product.cta.italic": "guided walkthrough?",
+  "product.cta.lead": "We'll tailor the demo to your branches, suppliers and reporting needs.",
+
+  "pricing.kicker": "Pricing",
+  "pricing.h1.line1": "Plans that grow",
+  "pricing.h1.line2": "with ",
+  "pricing.h1.italic": "your pharmacy.",
+  "pricing.lead": "Simple per-branch pricing. No hidden fees, no surprise add-ons.",
+  "pricing.toggle.monthly": "Monthly",
+  "pricing.toggle.annual": "Annual",
+  "pricing.tier.starter": "Starter",
+  "pricing.tier.starter.desc": "For single-location pharmacies getting organized.",
+  "pricing.tier.starter.cta": "Start with Starter",
+  "pricing.tier.growth": "Growth",
+  "pricing.tier.growth.desc": "For growing chains that need real coordination.",
+  "pricing.tier.growth.cta": "Choose Growth",
+  "pricing.tier.ent": "Enterprise",
+  "pricing.tier.ent.desc": "For groups needing SSO, SLAs and custom integrations.",
+  "pricing.tier.ent.cta": "Contact sales",
+  "pricing.starter.f1": "1 branch, up to 3 users",
+  "pricing.starter.f2": "POS & prescription dispensing",
+  "pricing.starter.f3": "Inventory with expiry tracking",
+  "pricing.starter.f4": "Daily sales reports",
+  "pricing.starter.f5": "Email support",
+  "pricing.growth.f1": "Up to 10 users per branch",
+  "pricing.growth.f2": "Multi-branch stock transfers",
+  "pricing.growth.f3": "Supplier & PO management",
+  "pricing.growth.f4": "Compliance & narcotics register",
+  "pricing.growth.f5": "Priority chat support",
+  "pricing.ent.f1": "Unlimited users & branches",
+  "pricing.ent.f2": "SSO + advanced RBAC",
+  "pricing.ent.f3": "Custom integrations & API",
+  "pricing.ent.f4": "Dedicated success manager",
+  "pricing.ent.f5": "99.99% uptime SLA",
+  "pricing.popular": "Most popular",
+  "pricing.priceUnit.mo": "/ branch / mo",
+  "pricing.priceUnit.yr": "/ branch / mo, billed yearly",
+  "pricing.custom": "Custom",
+  "pricing.faq.kicker": "FAQ",
+  "pricing.faq.title": "Frequently ",
+  "pricing.faq.italic": "asked.",
+  "pricing.faq.q1": "Do you offer onboarding help?",
+  "pricing.faq.a1": "Yes — every plan includes guided onboarding. Growth and Enterprise include data migration from your current system.",
+  "pricing.faq.q2": "Can we try before we buy?",
+  "pricing.faq.a2": "Absolutely. Book a demo and we'll set up a sandbox with your own product list.",
+  "pricing.faq.q3": "Do you support offline counters?",
+  "pricing.faq.a3": "Yes. The POS is offline-tolerant and re-syncs automatically once the connection returns.",
+  "pricing.faq.q4": "Is the data ours?",
+  "pricing.faq.a4": "Always. You can export your full data at any time — no lock-in.",
+
+  "about.kicker": "About",
+  "about.h1.line1": "Built for pharmacies.",
+  "about.h1.line2.before": "",
+  "about.h1.italic": "Backed",
+  "about.h1.line2.after": " by Zanscode.",
+  "about.lead": "Apotek Pro is part of the Zanscode product family — technology for well-organized, scalable businesses.",
+  "about.story.kicker": "Our story",
+  "about.story.h2.line1": "From counter frustrations",
+  "about.story.italic": "to a platform.",
+  "about.story.p1":
+    "We started Apotek Pro after watching pharmacists juggle spreadsheets, legacy POS, and paper registers — just to close a day. We believe dispensing medicine should feel like a craft, not a clerical marathon.",
+  "about.story.p2":
+    "Today, Apotek Pro powers hundreds of pharmacies across Southeast Asia — from single counters to multi-branch groups — with the same promise: organized operations, safer dispensing, and audit-ready compliance.",
+  "about.stat.l1": "Pharmacies served",
+  "about.stat.l2": "Prescriptions dispensed",
+  "about.stat.l3": "Countries",
+  "about.stat.l4": "Uptime",
+  "about.values.kicker": "Our values",
+  "about.values.h2.line1": "What guides",
+  "about.values.italic": "every decision.",
+  "about.v1.t": "Patients first",
+  "about.v1.d": "Every feature is judged by one question: does it make care safer or faster?",
+  "about.v2.t": "Operational clarity",
+  "about.v2.d": "If it's not measurable, it's not manageable. Dashboards over spreadsheets.",
+  "about.v3.t": "Compliance by default",
+  "about.v3.d": "Audits should never be a scramble. We bake compliance into daily workflows.",
+  "about.v4.t": "Quiet craft",
+  "about.v4.d": "Software that fades into the background — and lets pharmacists do their work.",
+  "about.cta.h2": "Talk to ",
+  "about.cta.italic": "the team.",
+  "about.cta.lead": "Whether you run one counter or a hundred — we'd love to hear from you.",
+
+  "contact.kicker": "Contact",
+  "contact.h1.line1": "Let's talk about",
+  "contact.h1.italic": "your pharmacy.",
+  "contact.lead": "Tell us about your operation — we'll reply within one business day.",
+  "contact.reach.kicker": "Reach us",
+  "contact.reach.note": "Based in Jakarta, responding across time zones.",
+  "contact.email": "Email",
+  "contact.phone": "Phone",
+  "contact.office": "Office",
+  "contact.officeAddr": "Innovation District\nJakarta, Indonesia",
+  "contact.form.name": "Full name",
+  "contact.form.namePh": "Jane Pharmacist",
+  "contact.form.email": "Work email",
+  "contact.form.emailPh": "you@pharmacy.com",
+  "contact.form.pharmacy": "Pharmacy",
+  "contact.form.pharmacyPh": "MediFarma",
+  "contact.form.branches": "Branches",
+  "contact.form.help": "How can we help?",
+  "contact.form.helpPh": "Tell us about your branches, current systems, and what you'd like to improve.",
+  "contact.form.send": "Send message",
+  "contact.form.sent": "Message sent",
+  "contact.form.thanks": "Thanks — we'll be in touch within one business day.",
+
+  "footer.letstalk": "Let's talk",
+  "footer.h2.line1": "Ready to bring ",
+  "footer.h2.italic": "clarity",
+  "footer.h2.line2": " to your pharmacy?",
+  "footer.col.product": "Product",
+  "footer.col.company": "Company",
+  "footer.col.resources": "Resources",
+  "footer.link.features": "Features",
+  "footer.link.tour": "Product tour",
+  "footer.link.pricing": "Pricing",
+  "footer.link.demo": "Book a demo",
+  "footer.link.about": "About",
+  "footer.link.contact": "Contact",
+  "footer.link.zanscode": "A Zanscode product",
+  "footer.link.help": "Help center",
+  "footer.link.support": "Support",
+  "footer.link.status": "Status",
+  "footer.tagline":
+    "Apotek Pro is a pharmacy operating system by Zanscode. POS, prescriptions, inventory and compliance — quietly connected.",
+  "footer.copyright": "Apotek Pro · A Zanscode product",
+  "footer.multibranch": "Multi-branch",
+
+  "nf.title": "The page you're looking for doesn't exist.",
+  "nf.back": "Back home",
+};
+
+const dictionaries: Record<Lang, Dict> = { id, en };
+
+// ---------- Context ----------
+type LangCtx = {
+  lang: Lang;
+  setLang: (l: Lang) => void;
+  t: (key: string) => string;
+};
+
+const LanguageContext = createContext<LangCtx | null>(null);
+
+export function LanguageProvider({ children }: { children: ReactNode }) {
+  const [lang, setLangState] = useState<Lang>("id");
+
+  // Hydrate from localStorage on the client (default stays Indonesian)
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY) as Lang | null;
+      if (saved === "id" || saved === "en") setLangState(saved);
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.documentElement.lang = lang;
+    }
+  }, [lang]);
+
+  const setLang = (l: Lang) => {
+    setLangState(l);
+    try { localStorage.setItem(STORAGE_KEY, l); } catch {}
+  };
+
+  const t = (key: string) => dictionaries[lang][key] ?? dictionaries.en[key] ?? key;
+
+  return (
+    <LanguageContext.Provider value={{ lang, setLang, t }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+}
+
+export function useLang() {
+  const ctx = useContext(LanguageContext);
+  if (!ctx) throw new Error("useLang must be used inside LanguageProvider");
+  return ctx;
+}

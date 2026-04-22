@@ -6,76 +6,76 @@ import {
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
+import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/features")({
   head: () => ({
     meta: [
-      { title: "Features — Apotek Pro" },
-      { name: "description", content: "POS, prescriptions, batch/expiry inventory, suppliers, reports and compliance — every pharmacy workflow covered." },
-      { property: "og:title", content: "Features — Apotek Pro" },
-      { property: "og:description", content: "The full feature list of Apotek Pro by Zanscode." },
+      { title: "Fitur — Apotek Pro" },
+      { name: "description", content: "POS, resep, inventaris batch/kedaluwarsa, pemasok, laporan, dan kepatuhan — setiap alur kerja apotek tercakup." },
+      { property: "og:title", content: "Fitur — Apotek Pro" },
+      { property: "og:description", content: "Daftar fitur lengkap Apotek Pro dari Zanscode." },
     ],
   }),
   component: FeaturesPage,
 });
 
-const groups = [
-  {
-    number: "01",
-    title: "Counter & dispensing",
-    desc: "The experience your cashiers and pharmacists actually enjoy.",
-    items: [
-      { icon: ScanBarcode, t: "Point of sale", d: "Barcode/QR scan, multi-tender, receipts and label printing." },
-      { icon: Pill, t: "Prescription dispensing", d: "Rx intake, dosage/interaction checks, counsel prompts, refills." },
-      { icon: Users, t: "Patient profiles", d: "Allergies, chronic meds and history for safer dispensing." },
-      { icon: Smartphone, t: "Tablet & kiosk mode", d: "Works beautifully on counter PCs, tablets and kiosks." },
-    ],
-  },
-  {
-    number: "02",
-    title: "Inventory & supply",
-    desc: "Batch-level control that makes expiry losses a thing of the past.",
-    items: [
-      { icon: Boxes, t: "Batch & lot tracking", d: "Every unit traceable by batch, lot and expiry date." },
-      { icon: Thermometer, t: "Expiry & FEFO", d: "Near-expiry alerts and first-expire-first-out picks." },
-      { icon: Truck, t: "Suppliers & POs", d: "Purchase orders, goods receipt, distributor management." },
-      { icon: Building2, t: "Multi-branch", d: "Transfer stock across branches with a full audit trail." },
-    ],
-  },
-  {
-    number: "03",
-    title: "Insights & compliance",
-    desc: "Audit-ready at any moment. Insights where you need them.",
-    items: [
-      { icon: LineChart, t: "Real-time analytics", d: "Sales, margins, fast-movers and branch comparison." },
-      { icon: FileCheck, t: "Compliance reports", d: "Narcotics register, tax exports and audit-ready logs." },
-      { icon: ShieldCheck, t: "Role-based access", d: "Pharmacist, cashier and admin permissions with logs." },
-      { icon: Bell, t: "Smart alerts", d: "Low stock, expiry, cash variance and anomaly detection." },
-    ],
-  },
-];
-
 function FeaturesPage() {
+  const { t } = useLang();
+
+  const groups = [
+    {
+      number: "01",
+      title: t("features.g1.title"),
+      desc: t("features.g1.desc"),
+      items: [
+        { icon: ScanBarcode, t: t("features.g1.i1.t"), d: t("features.g1.i1.d") },
+        { icon: Pill, t: t("features.g1.i2.t"), d: t("features.g1.i2.d") },
+        { icon: Users, t: t("features.g1.i3.t"), d: t("features.g1.i3.d") },
+        { icon: Smartphone, t: t("features.g1.i4.t"), d: t("features.g1.i4.d") },
+      ],
+    },
+    {
+      number: "02",
+      title: t("features.g2.title"),
+      desc: t("features.g2.desc"),
+      items: [
+        { icon: Boxes, t: t("features.g2.i1.t"), d: t("features.g2.i1.d") },
+        { icon: Thermometer, t: t("features.g2.i2.t"), d: t("features.g2.i2.d") },
+        { icon: Truck, t: t("features.g2.i3.t"), d: t("features.g2.i3.d") },
+        { icon: Building2, t: t("features.g2.i4.t"), d: t("features.g2.i4.d") },
+      ],
+    },
+    {
+      number: "03",
+      title: t("features.g3.title"),
+      desc: t("features.g3.desc"),
+      items: [
+        { icon: LineChart, t: t("features.g3.i1.t"), d: t("features.g3.i1.d") },
+        { icon: FileCheck, t: t("features.g3.i2.t"), d: t("features.g3.i2.d") },
+        { icon: ShieldCheck, t: t("features.g3.i3.t"), d: t("features.g3.i3.d") },
+        { icon: Bell, t: t("features.g3.i4.t"), d: t("features.g3.i4.d") },
+      ],
+    },
+  ];
+
   return (
     <SiteLayout>
-      {/* Hero */}
       <section className="bg-background pt-20 pb-16 lg:pt-28 lg:pb-24">
         <div className="mx-auto max-w-5xl px-5 sm:px-8 lg:px-10">
           <Reveal variant="up">
-            <p className="kicker">Features</p>
+            <p className="kicker">{t("features.kicker")}</p>
             <h1 className="mt-5 font-display text-5xl leading-[1.02] text-foreground sm:text-6xl lg:text-7xl">
-              Every workflow,<br />
-              <em className="serif-italic text-brand">covered.</em>
+              {t("features.h1.line1")}<br />
+              <em className="serif-italic text-brand">{t("features.h1.italic")}</em>
             </h1>
             <p className="mt-8 max-w-2xl text-lg text-muted-foreground">
-              From the first scan to the month-end report — Apotek Pro is built
-              around the real shape of pharmacy work.
+              {t("features.lead")}
             </p>
           </Reveal>
         </div>
       </section>
 
-      {/* Feature groups — magazine layout */}
       {groups.map((g, gi) => (
         <section key={g.title} className={`${gi % 2 === 0 ? "bg-cream paper-grain" : "bg-background"} py-20 lg:py-28 relative`}>
           <div className="relative mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
@@ -107,20 +107,19 @@ function FeaturesPage() {
         </section>
       ))}
 
-      {/* CTA */}
       <section className="bg-ink py-20 text-background lg:py-28">
         <div className="mx-auto max-w-4xl px-5 text-center sm:px-8 lg:px-10">
           <Reveal variant="up">
             <h2 className="font-display text-4xl leading-tight sm:text-5xl lg:text-6xl">
-              See it in <em className="serif-italic text-brand-accent">motion.</em>
+              {t("features.cta.h2.line1")}<em className="serif-italic text-brand-accent">{t("features.cta.italic")}</em>
             </h2>
-            <p className="mx-auto mt-6 max-w-lg text-background/70">Explore the product tour or book a guided walkthrough tailored to your branches.</p>
+            <p className="mx-auto mt-6 max-w-lg text-background/70">{t("features.cta.lead")}</p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
               <Button asChild size="lg" variant="hero" className="group">
-                <Link to="/product">Product tour <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></Link>
+                <Link to="/product">{t("cta.productTour")} <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></Link>
               </Button>
               <Button asChild size="lg" variant="ghost" className="text-background hover:bg-background/10 hover:text-background">
-                <Link to="/contact">Book a demo</Link>
+                <Link to="/contact">{t("cta.bookDemo")}</Link>
               </Button>
             </div>
           </Reveal>

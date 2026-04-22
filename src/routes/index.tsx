@@ -1,11 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowUpRight, ArrowRight, ScanBarcode, Pill, Boxes, Truck, FileCheck, ShieldCheck,
-  Clock, Thermometer, Check, Sparkles, TrendingUp, Users, Quote,
+  Clock, Thermometer, Check, Sparkles, TrendingUp, Quote,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
+import { useLang } from "@/lib/i18n";
 
 import heroBottle from "@/assets/hero-bottle.jpg";
 import productPos from "@/assets/product-pos.jpg";
@@ -14,10 +15,10 @@ import productInventory from "@/assets/product-inventory.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Apotek Pro — A quieter pharmacy operating system" },
-      { name: "description", content: "POS, prescriptions, inventory, suppliers and compliance in one calm, connected platform — built by Zanscode." },
-      { property: "og:title", content: "Apotek Pro — A quieter pharmacy operating system" },
-      { property: "og:description", content: "POS, prescriptions, inventory, suppliers and compliance in one platform." },
+      { title: "Apotek Pro — Sistem operasi apotek yang tenang" },
+      { name: "description", content: "POS, resep, inventaris, pemasok, dan kepatuhan dalam satu platform yang tenang dan terhubung — dari Zanscode." },
+      { property: "og:title", content: "Apotek Pro — Sistem operasi apotek yang tenang" },
+      { property: "og:description", content: "POS, resep, inventaris, pemasok, dan kepatuhan dalam satu platform." },
     ],
   }),
   component: HomePage,
@@ -26,13 +27,13 @@ export const Route = createFileRoute("/")({
 const trusted = ["MediFarma Group", "Sehat24", "BluePill", "Apotek Sentra", "GoodHealth", "FarmaNova", "VitaCare", "KimiaMed"];
 
 function HomePage() {
+  const { t } = useLang();
   return (
     <SiteLayout>
-      {/* ============ HERO — asymmetric editorial ============ */}
+      {/* HERO */}
       <section className="relative overflow-hidden bg-background pt-10 pb-20 sm:pt-14 lg:pt-20 lg:pb-28">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
           <div className="grid gap-14 lg:grid-cols-12 lg:gap-10">
-            {/* Copy column */}
             <div className="lg:col-span-7 lg:pt-8">
               <Reveal variant="fade">
                 <div className="inline-flex items-center gap-2 rounded-full border border-border bg-cream px-3.5 py-1.5 text-xs font-medium text-foreground">
@@ -40,21 +41,20 @@ function HomePage() {
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-60"></span>
                     <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand"></span>
                   </span>
-                  A Zanscode product · Now in 6 countries
+                  {t("home.badge")}
                 </div>
               </Reveal>
 
               <Reveal variant="up" delay={120}>
                 <h1 className="mt-8 font-display text-[clamp(2.75rem,6vw,5.5rem)] leading-[0.98] tracking-tight text-foreground">
-                  Your pharmacy,<br />
-                  <em className="serif-italic text-brand">quietly</em> organized.
+                  {t("home.h1.line1")}<br />
+                  <em className="serif-italic text-brand">{t("home.h1.italic")}</em>{t("home.h1.line2")}
                 </h1>
               </Reveal>
 
               <Reveal variant="up" delay={260}>
                 <p className="mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground">
-                  Apotek Pro replaces six disconnected tools with one calm operating system —
-                  so your team can focus on patients, not paperwork.
+                  {t("home.hero.lead")}
                 </p>
               </Reveal>
 
@@ -62,12 +62,12 @@ function HomePage() {
                 <div className="mt-10 flex flex-wrap items-center gap-3">
                   <Button asChild size="lg" variant="brand" className="group">
                     <Link to="/contact">
-                      Book a demo
+                      {t("cta.bookDemo")}
                       <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </Link>
                   </Button>
                   <Button asChild size="lg" variant="outline">
-                    <Link to="/product">Take the product tour</Link>
+                    <Link to="/product">{t("cta.productTour")}</Link>
                   </Button>
                 </div>
               </Reveal>
@@ -86,17 +86,15 @@ function HomePage() {
                     ))}
                   </div>
                   <span>
-                    <span className="font-medium text-foreground">500+ pharmacists</span> dispensing through Apotek Pro today.
+                    <span className="font-medium text-foreground">{t("home.hero.users")}</span>{t("home.hero.usersTail")}
                   </span>
                 </div>
               </Reveal>
             </div>
 
-            {/* Visual column — floating product card + image */}
             <div className="relative lg:col-span-5">
               <Reveal variant="scale" delay={300}>
                 <div className="relative">
-                  {/* Image */}
                   <div className="relative overflow-hidden rounded-3xl bg-cream shadow-card">
                     <img
                       src={heroBottle}
@@ -107,39 +105,36 @@ function HomePage() {
                     />
                   </div>
 
-                  {/* Floating stat card — top */}
                   <div className="absolute -left-6 top-10 hidden animate-float-soft sm:block">
                     <div className="rounded-2xl border border-border bg-background p-4 shadow-card">
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         <TrendingUp className="h-3.5 w-3.5 text-brand" />
-                        Expiry losses
+                        {t("home.float.expiry")}
                       </div>
                       <div className="mt-1 font-display text-3xl text-foreground">−60%</div>
-                      <div className="mt-0.5 text-[11px] text-muted-foreground">in first quarter</div>
+                      <div className="mt-0.5 text-[11px] text-muted-foreground">{t("home.float.expiryNote")}</div>
                     </div>
                   </div>
 
-                  {/* Floating pill — bottom right */}
                   <div className="absolute -right-4 bottom-16 hidden animate-float-soft sm:block" style={{ animationDelay: "-4s" }}>
                     <div className="rounded-2xl border border-border bg-background p-4 shadow-card">
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         <Clock className="h-3.5 w-3.5 text-brand" />
-                        Checkout time
+                        {t("home.float.checkout")}
                       </div>
                       <div className="mt-1 font-display text-3xl text-foreground">8.2s</div>
-                      <div className="mt-0.5 text-[11px] text-muted-foreground">average at peak hour</div>
+                      <div className="mt-0.5 text-[11px] text-muted-foreground">{t("home.float.checkoutNote")}</div>
                     </div>
                   </div>
 
-                  {/* Compliance badge — bottom left */}
                   <div className="absolute -bottom-5 left-4 right-4 rounded-2xl border border-border bg-background p-4 shadow-card sm:left-10 sm:right-10">
                     <div className="flex items-center gap-3">
                       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-brand">
                         <ShieldCheck className="h-5 w-5" />
                       </div>
                       <div className="flex-1">
-                        <div className="text-sm font-medium text-foreground">Audit passed · 14 Mar</div>
-                        <div className="text-xs text-muted-foreground">Narcotics register exported in one click</div>
+                        <div className="text-sm font-medium text-foreground">{t("home.audit.title")}</div>
+                        <div className="text-xs text-muted-foreground">{t("home.audit.note")}</div>
                       </div>
                       <Check className="h-4 w-4 text-brand" />
                     </div>
@@ -151,10 +146,10 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ============ LOGO MARQUEE ============ */}
+      {/* MARQUEE */}
       <section className="border-y border-border bg-cream py-10 overflow-hidden">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
-          <p className="kicker text-center">Trusted by pharmacies across Southeast Asia</p>
+          <p className="kicker text-center">{t("home.marquee")}</p>
         </div>
         <div className="mt-6 flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
           <div className="flex shrink-0 animate-marquee-x gap-14 pr-14">
@@ -167,44 +162,40 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ============ BENTO FEATURES ============ */}
+      {/* BENTO */}
       <section className="bg-background py-24 lg:py-32">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
           <div className="grid gap-10 lg:grid-cols-12">
             <Reveal variant="up" className="lg:col-span-5">
-              <p className="kicker">What's inside</p>
+              <p className="kicker">{t("home.bento.kicker")}</p>
               <h2 className="mt-4 font-display text-4xl leading-[1.05] text-foreground sm:text-5xl lg:text-6xl">
-                One platform,<br />
-                <em className="serif-italic text-brand">every</em> counter workflow.
+                {t("home.bento.h2.line1")}<br />
+                <em className="serif-italic text-brand">{t("home.bento.h2.italic")}</em>{t("home.bento.h2.line2")}
               </h2>
             </Reveal>
             <Reveal variant="up" delay={200} className="lg:col-span-7 lg:pt-16">
               <p className="text-lg leading-relaxed text-muted-foreground">
-                From the first scan to the month-end compliance report, Apotek Pro is built
-                around how pharmacists actually work — not the other way around.
+                {t("home.bento.lead")}
               </p>
               <Link
                 to="/features"
                 className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-foreground transition-colors hover:text-brand"
               >
-                Explore all features <ArrowRight className="h-4 w-4" />
+                {t("cta.exploreFeatures")} <ArrowRight className="h-4 w-4" />
               </Link>
             </Reveal>
           </div>
 
-          {/* Bento grid */}
           <div className="mt-16 grid gap-4 lg:grid-cols-6 lg:grid-rows-2">
-            {/* Big card — POS */}
             <Reveal variant="up" className="lg:col-span-3 lg:row-span-2" as="div">
               <div className="card-hover group relative flex h-full min-h-[420px] flex-col justify-between overflow-hidden rounded-3xl border border-border bg-cream p-8 shadow-soft">
                 <div>
                   <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-ink text-background">
                     <ScanBarcode className="h-5 w-5" />
                   </div>
-                  <h3 className="mt-6 font-display text-3xl text-foreground">POS & Dispensing</h3>
+                  <h3 className="mt-6 font-display text-3xl text-foreground">{t("home.bento.pos.title")}</h3>
                   <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground">
-                    Scan, dispense, counsel, and print — all from one uncluttered screen.
-                    Designed by pharmacists for pharmacists.
+                    {t("home.bento.pos.desc")}
                   </p>
                 </div>
                 <div className="relative mt-8 overflow-hidden rounded-2xl border border-border bg-background">
@@ -213,45 +204,41 @@ function HomePage() {
               </div>
             </Reveal>
 
-            {/* Inventory */}
             <Reveal variant="up" delay={120} className="lg:col-span-3" as="div">
               <div className="card-hover group flex h-full min-h-[200px] flex-col justify-between rounded-3xl border border-border bg-accent p-8 shadow-soft">
                 <div>
                   <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-brand text-brand-foreground">
                     <Boxes className="h-5 w-5" />
                   </div>
-                  <h3 className="mt-6 font-display text-2xl text-foreground">Batch & expiry tracking</h3>
-                  <p className="mt-2 text-sm text-accent-foreground/80">Every unit traceable. FEFO by default. Never write off near-expiry stock quietly.</p>
+                  <h3 className="mt-6 font-display text-2xl text-foreground">{t("home.bento.batch.title")}</h3>
+                  <p className="mt-2 text-sm text-accent-foreground/80">{t("home.bento.batch.desc")}</p>
                 </div>
               </div>
             </Reveal>
 
-            {/* Compliance */}
             <Reveal variant="up" delay={180} className="lg:col-span-2" as="div">
               <div className="card-hover h-full rounded-3xl border border-border bg-background p-7 shadow-soft">
                 <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-cream text-brand">
                   <FileCheck className="h-5 w-5" />
                 </div>
-                <h3 className="mt-5 text-base font-medium text-foreground">Audit-ready</h3>
-                <p className="mt-1.5 text-sm text-muted-foreground">Narcotics register, tax exports, immutable logs.</p>
+                <h3 className="mt-5 text-base font-medium text-foreground">{t("home.bento.audit.title")}</h3>
+                <p className="mt-1.5 text-sm text-muted-foreground">{t("home.bento.audit.desc")}</p>
               </div>
             </Reveal>
 
-            {/* Rx */}
             <Reveal variant="up" delay={240} className="lg:col-span-1" as="div">
               <div className="card-hover flex h-full flex-col items-start rounded-3xl border border-border bg-ink p-7 text-background shadow-soft">
                 <Pill className="h-6 w-6 text-brand-accent" />
-                <h3 className="mt-auto pt-8 font-display text-xl">Rx-safe dispensing</h3>
+                <h3 className="mt-auto pt-8 font-display text-xl">{t("home.bento.rx.title")}</h3>
               </div>
             </Reveal>
           </div>
 
-          {/* Supporting row */}
           <div className="mt-4 grid gap-4 sm:grid-cols-3">
             {[
-              { icon: Truck, t: "Suppliers & POs", d: "PO to goods-received, reconciled." },
-              { icon: Thermometer, t: "Cold-chain aware", d: "Temperature-sensitive handling built in." },
-              { icon: Users, t: "Patient profiles", d: "Allergies & history for safer dispensing." },
+              { icon: Truck, t: t("home.bento.suppliers.t"), d: t("home.bento.suppliers.d") },
+              { icon: Thermometer, t: t("home.bento.cold.t"), d: t("home.bento.cold.d") },
+              { icon: Sparkles, t: t("home.bento.patient.t"), d: t("home.bento.patient.d") },
             ].map((f, i) => (
               <Reveal key={f.t} variant="up" delay={i * 100} as="div">
                 <div className="card-hover flex items-start gap-4 rounded-2xl border border-border bg-background p-6">
@@ -269,57 +256,50 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ============ LARGE EDITORIAL QUOTE ============ */}
+      {/* QUOTE */}
       <section className="relative bg-cream py-24 lg:py-32 paper-grain">
         <div className="relative mx-auto max-w-5xl px-5 text-center sm:px-8 lg:px-10">
           <Reveal variant="up">
             <Quote className="mx-auto h-8 w-8 text-brand" />
             <blockquote className="mt-8 font-display text-3xl leading-[1.2] text-foreground sm:text-4xl lg:text-5xl">
-              "We migrated three branches in a weekend. Expiry losses dropped
-              <em className="serif-italic text-brand"> sixty percent</em> in the first quarter —
-              our pharmacist-in-charge gets his weekends back."
+              {t("home.quote.text")}<em className="serif-italic text-brand">{t("home.quote.italic")}</em>{t("home.quote.tail")}
             </blockquote>
             <figcaption className="mt-10 flex items-center justify-center gap-4">
               <div className="h-12 w-12 rounded-full bg-gradient-brand" />
               <div className="text-left">
-                <div className="text-sm font-medium text-foreground">Dr. Sari Pratama</div>
-                <div className="text-sm text-muted-foreground">Owner · MediFarma Group</div>
+                <div className="text-sm font-medium text-foreground">{t("home.quote.author")}</div>
+                <div className="text-sm text-muted-foreground">{t("home.quote.role")}</div>
               </div>
             </figcaption>
           </Reveal>
         </div>
       </section>
 
-      {/* ============ DASHBOARD PREVIEW ============ */}
+      {/* DASH PREVIEW */}
       <section className="bg-background py-24 lg:py-32">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
           <div className="grid items-center gap-14 lg:grid-cols-12">
             <Reveal variant="up" className="lg:col-span-5">
-              <p className="kicker">Clarity at every level</p>
+              <p className="kicker">{t("home.dash.kicker")}</p>
               <h2 className="mt-4 font-display text-4xl leading-[1.05] text-foreground sm:text-5xl lg:text-6xl">
-                See the whole pharmacy,<br />
-                <em className="serif-italic text-brand">in one glance.</em>
+                {t("home.dash.h2.line1")}<br />
+                <em className="serif-italic text-brand">{t("home.dash.h2.italic")}</em>
               </h2>
               <p className="mt-6 text-lg text-muted-foreground">
-                Branch-level dashboards from margin to fast-movers to expiry windows — updated live.
+                {t("home.dash.lead")}
               </p>
               <ul className="mt-8 space-y-4 text-sm">
-                {[
-                  "Real-time sales and margin tracking",
-                  "Expiry alerts before they become losses",
-                  "Stock transfers across branches",
-                  "Exports regulators actually accept",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3 border-b border-border pb-4 last:border-0">
+                {["home.dash.li.1", "home.dash.li.2", "home.dash.li.3", "home.dash.li.4"].map((k) => (
+                  <li key={k} className="flex items-start gap-3 border-b border-border pb-4 last:border-0">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
-                    <span className="text-foreground">{item}</span>
+                    <span className="text-foreground">{t(k)}</span>
                   </li>
                 ))}
               </ul>
               <div className="mt-8">
                 <Button asChild variant="brand" className="group">
                   <Link to="/product">
-                    See the product tour
+                    {t("cta.seeProductTour")}
                     <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </Link>
                 </Button>
@@ -338,27 +318,27 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ============ CLOSING CTA ============ */}
+      {/* CLOSING CTA */}
       <section className="bg-ink py-24 text-background lg:py-32">
         <div className="mx-auto max-w-5xl px-5 text-center sm:px-8 lg:px-10">
           <Reveal variant="up">
             <Sparkles className="mx-auto h-6 w-6 text-brand-accent" />
             <h2 className="mt-6 font-display text-5xl leading-[1.05] sm:text-6xl lg:text-7xl">
-              A calmer pharmacy<br />
-              starts with <em className="serif-italic text-brand-accent">one demo.</em>
+              {t("home.cta.h2.line1")}<br />
+              {t("home.cta.h2.line2")}<em className="serif-italic text-brand-accent">{t("home.cta.italic")}</em>
             </h2>
             <p className="mx-auto mt-7 max-w-xl text-background/70">
-              Twenty minutes. Your branches, your workflows. No sales pitch — just a working sandbox.
+              {t("home.cta.lead")}
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-3">
               <Button asChild size="lg" variant="hero" className="group">
                 <Link to="/contact">
-                  Book a demo
+                  {t("cta.bookDemo")}
                   <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="ghost" className="text-background hover:bg-background/10 hover:text-background">
-                <Link to="/pricing">See pricing</Link>
+                <Link to="/pricing">{t("cta.seePricing")}</Link>
               </Button>
             </div>
           </Reveal>

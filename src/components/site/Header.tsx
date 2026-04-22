@@ -1,22 +1,54 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { Menu, X, ArrowUpRight, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Wordmark } from "./Wordmark";
 import { cn } from "@/lib/utils";
+import { useLang, type Lang } from "@/lib/i18n";
 
-const nav = [
-  { to: "/", label: "Home" },
-  { to: "/features", label: "Features" },
-  { to: "/product", label: "Product" },
-  { to: "/pricing", label: "Pricing" },
-  { to: "/about", label: "About" },
-  { to: "/contact", label: "Contact" },
-] as const;
+function LangSwitch({ className }: { className?: string }) {
+  const { lang, setLang } = useLang();
+  return (
+    <div
+      className={cn(
+        "inline-flex items-center rounded-full border border-border bg-cream/60 p-0.5 text-xs font-medium",
+        className
+      )}
+      role="group"
+      aria-label="Language"
+    >
+      <Globe className="ml-2 mr-1 h-3.5 w-3.5 text-muted-foreground" aria-hidden />
+      {(["id", "en"] as Lang[]).map((l) => (
+        <button
+          key={l}
+          type="button"
+          onClick={() => setLang(l)}
+          aria-pressed={lang === l}
+          className={cn(
+            "rounded-full px-2.5 py-1 uppercase tracking-wider transition-all",
+            lang === l ? "bg-ink text-background" : "text-muted-foreground hover:text-foreground"
+          )}
+        >
+          {l}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 export function Header() {
+  const { t } = useLang();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const nav = [
+    { to: "/", label: t("nav.home") },
+    { to: "/features", label: t("nav.features") },
+    { to: "/product", label: t("nav.product") },
+    { to: "/pricing", label: t("nav.pricing") },
+    { to: "/about", label: t("nav.about") },
+    { to: "/contact", label: t("nav.contact") },
+  ] as const;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -65,33 +97,37 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden items-center gap-3 md:flex">
+          <LangSwitch />
           <Link
             to="/contact"
             className="text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
-            Sign in
+            {t("nav.signin")}
           </Link>
           <Button asChild size="sm" variant="brand" className="group">
             <Link to="/contact">
-              Book a demo
+              {t("cta.bookDemo")}
               <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
           </Button>
         </div>
 
-        <button
-          className={cn(
-            "relative inline-flex h-10 w-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-secondary md:hidden",
-            open && "bg-secondary"
-          )}
-          onClick={() => setOpen((v) => !v)}
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-        >
-          <Menu className={cn("absolute h-5 w-5 transition-all duration-300", open ? "rotate-90 scale-0 opacity-0" : "opacity-100")} />
-          <X className={cn("absolute h-5 w-5 transition-all duration-300", open ? "opacity-100" : "-rotate-90 scale-0 opacity-0")} />
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <LangSwitch />
+          <button
+            className={cn(
+              "relative inline-flex h-10 w-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-secondary",
+              open && "bg-secondary"
+            )}
+            onClick={() => setOpen((v) => !v)}
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+          >
+            <Menu className={cn("absolute h-5 w-5 transition-all duration-300", open ? "rotate-90 scale-0 opacity-0" : "opacity-100")} />
+            <X className={cn("absolute h-5 w-5 transition-all duration-300", open ? "opacity-100" : "-rotate-90 scale-0 opacity-0")} />
+          </button>
+        </div>
       </div>
 
       <div
@@ -131,7 +167,7 @@ export function Header() {
           <div className="mt-4">
             <Button asChild size="lg" variant="brand" className="w-full">
               <Link to="/contact" onClick={() => setOpen(false)}>
-                Book a demo
+                {t("cta.bookDemo")}
               </Link>
             </Button>
           </div>

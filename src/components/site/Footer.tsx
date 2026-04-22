@@ -1,52 +1,53 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, MapPin, Phone, ShieldCheck, Globe, ArrowUpRight } from "lucide-react";
 import { Wordmark } from "./Wordmark";
-
-const columns = [
-  {
-    title: "Product",
-    links: [
-      { to: "/features" as const, label: "Features" },
-      { to: "/product" as const, label: "Product tour" },
-      { to: "/pricing" as const, label: "Pricing" },
-      { to: "/contact" as const, label: "Book a demo" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { to: "/about" as const, label: "About" },
-      { to: "/contact" as const, label: "Contact" },
-      { to: "/about" as const, label: "A Zanscode product" },
-    ],
-  },
-  {
-    title: "Resources",
-    links: [
-      { to: "/features" as const, label: "Help center" },
-      { to: "/contact" as const, label: "Support" },
-      { to: "/contact" as const, label: "Status" },
-    ],
-  },
-];
+import { useLang } from "@/lib/i18n";
 
 export function Footer() {
+  const { t } = useLang();
+
+  const columns = [
+    {
+      title: t("footer.col.product"),
+      links: [
+        { to: "/features" as const, label: t("footer.link.features") },
+        { to: "/product" as const, label: t("footer.link.tour") },
+        { to: "/pricing" as const, label: t("footer.link.pricing") },
+        { to: "/contact" as const, label: t("footer.link.demo") },
+      ],
+    },
+    {
+      title: t("footer.col.company"),
+      links: [
+        { to: "/about" as const, label: t("footer.link.about") },
+        { to: "/contact" as const, label: t("footer.link.contact") },
+        { to: "/about" as const, label: t("footer.link.zanscode") },
+      ],
+    },
+    {
+      title: t("footer.col.resources"),
+      links: [
+        { to: "/features" as const, label: t("footer.link.help") },
+        { to: "/contact" as const, label: t("footer.link.support") },
+        { to: "/contact" as const, label: t("footer.link.status") },
+      ],
+    },
+  ];
+
   return (
     <footer className="relative border-t border-border bg-cream paper-grain">
       <div className="relative mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:px-10">
-        {/* Editorial headline */}
         <div className="max-w-3xl">
-          <p className="kicker">Let's talk</p>
+          <p className="kicker">{t("footer.letstalk")}</p>
           <h2 className="mt-4 font-display text-4xl leading-[1.05] text-foreground sm:text-5xl lg:text-6xl">
-            Ready to bring <em className="serif-italic text-brand">clarity</em><br className="hidden sm:block" />
-            to your pharmacy?
+            {t("footer.h2.line1")}<em className="serif-italic text-brand">{t("footer.h2.italic")}</em>{t("footer.h2.line2")}
           </h2>
           <div className="mt-8">
             <Link
               to="/contact"
               className="group inline-flex items-center gap-3 font-display text-2xl text-foreground transition-colors hover:text-brand"
             >
-              Book a demo
+              {t("cta.bookDemo")}
               <span className="flex h-10 w-10 items-center justify-center rounded-full bg-ink text-background transition-transform group-hover:translate-x-1">
                 <ArrowUpRight className="h-4 w-4" />
               </span>
@@ -60,8 +61,7 @@ export function Footer() {
               <Wordmark className="h-8 w-auto" />
             </Link>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Apotek Pro is a pharmacy operating system by Zanscode. POS, prescriptions,
-              inventory and compliance — quietly connected.
+              {t("footer.tagline")}
             </p>
 
             <ul className="mt-7 space-y-3 text-sm">
@@ -107,9 +107,9 @@ export function Footer() {
             <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" /> HIPAA-ready</span>
             <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" /> ISO 27001</span>
             <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" /> GDPR</span>
-            <span className="inline-flex items-center gap-1.5"><Globe className="h-3.5 w-3.5" /> Multi-branch</span>
+            <span className="inline-flex items-center gap-1.5"><Globe className="h-3.5 w-3.5" /> {t("footer.multibranch")}</span>
           </div>
-          <p>© {new Date().getFullYear()} Apotek Pro · A Zanscode product</p>
+          <p>© {new Date().getFullYear()} {t("footer.copyright")}</p>
         </div>
       </div>
     </footer>
