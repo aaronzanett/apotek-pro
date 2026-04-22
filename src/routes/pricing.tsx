@@ -5,14 +5,15 @@ import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
 import { cn } from "@/lib/utils";
+import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "Pricing — Apotek Pro" },
-      { name: "description", content: "Transparent per-branch pricing for single pharmacies, growing chains and enterprise groups." },
-      { property: "og:title", content: "Pricing — Apotek Pro" },
-      { property: "og:description", content: "Plans for every pharmacy size, from a single counter to multi-branch enterprises." },
+      { title: "Harga — Apotek Pro" },
+      { name: "description", content: "Harga per cabang yang transparan untuk apotek tunggal, jaringan yang berkembang, dan grup enterprise." },
+      { property: "og:title", content: "Harga — Apotek Pro" },
+      { property: "og:description", content: "Paket untuk setiap ukuran apotek, dari satu konter hingga enterprise multi-cabang." },
     ],
   }),
   component: PricingPage,
@@ -20,59 +21,67 @@ export const Route = createFileRoute("/pricing")({
 
 type Cadence = "monthly" | "annual";
 
-const tiers = [
-  {
-    name: "Starter",
-    monthly: 49, annual: 39,
-    desc: "For single-location pharmacies getting organized.",
-    features: ["1 branch, up to 3 users", "POS & prescription dispensing", "Inventory with expiry tracking", "Daily sales reports", "Email support"],
-    cta: "Start with Starter",
-    highlighted: false,
-  },
-  {
-    name: "Growth",
-    monthly: 129, annual: 99,
-    desc: "For growing chains that need real coordination.",
-    features: ["Up to 10 users per branch", "Multi-branch stock transfers", "Supplier & PO management", "Compliance & narcotics register", "Priority chat support"],
-    cta: "Choose Growth",
-    highlighted: true,
-  },
-  {
-    name: "Enterprise",
-    monthly: null, annual: null,
-    desc: "For groups needing SSO, SLAs and custom integrations.",
-    features: ["Unlimited users & branches", "SSO + advanced RBAC", "Custom integrations & API", "Dedicated success manager", "99.99% uptime SLA"],
-    cta: "Contact sales",
-    highlighted: false,
-  },
-];
-
-const faqs = [
-  { q: "Do you offer onboarding help?", a: "Yes — every plan includes guided onboarding. Growth and Enterprise include data migration from your current system." },
-  { q: "Can we try before we buy?", a: "Absolutely. Book a demo and we'll set up a sandbox with your own product list." },
-  { q: "Do you support offline counters?", a: "Yes. The POS is offline-tolerant and re-syncs automatically once the connection returns." },
-  { q: "Is the data ours?", a: "Always. You can export your full data at any time — no lock-in." },
-];
-
 function PricingPage() {
+  const { t } = useLang();
   const [cadence, setCadence] = useState<Cadence>("annual");
+
+  const tiers = [
+    {
+      name: t("pricing.tier.starter"),
+      monthly: 49, annual: 39,
+      desc: t("pricing.tier.starter.desc"),
+      features: [
+        t("pricing.starter.f1"), t("pricing.starter.f2"), t("pricing.starter.f3"),
+        t("pricing.starter.f4"), t("pricing.starter.f5"),
+      ],
+      cta: t("pricing.tier.starter.cta"),
+      highlighted: false,
+    },
+    {
+      name: t("pricing.tier.growth"),
+      monthly: 129, annual: 99,
+      desc: t("pricing.tier.growth.desc"),
+      features: [
+        t("pricing.growth.f1"), t("pricing.growth.f2"), t("pricing.growth.f3"),
+        t("pricing.growth.f4"), t("pricing.growth.f5"),
+      ],
+      cta: t("pricing.tier.growth.cta"),
+      highlighted: true,
+    },
+    {
+      name: t("pricing.tier.ent"),
+      monthly: null as number | null, annual: null as number | null,
+      desc: t("pricing.tier.ent.desc"),
+      features: [
+        t("pricing.ent.f1"), t("pricing.ent.f2"), t("pricing.ent.f3"),
+        t("pricing.ent.f4"), t("pricing.ent.f5"),
+      ],
+      cta: t("pricing.tier.ent.cta"),
+      highlighted: false,
+    },
+  ];
+
+  const faqs = [
+    { q: t("pricing.faq.q1"), a: t("pricing.faq.a1") },
+    { q: t("pricing.faq.q2"), a: t("pricing.faq.a2") },
+    { q: t("pricing.faq.q3"), a: t("pricing.faq.a3") },
+    { q: t("pricing.faq.q4"), a: t("pricing.faq.a4") },
+  ];
 
   return (
     <SiteLayout>
-      {/* Hero */}
       <section className="bg-background pt-20 pb-12 lg:pt-28">
         <div className="mx-auto max-w-5xl px-5 text-center sm:px-8 lg:px-10">
           <Reveal variant="up">
-            <p className="kicker">Pricing</p>
+            <p className="kicker">{t("pricing.kicker")}</p>
             <h1 className="mt-5 font-display text-5xl leading-[1.02] text-foreground sm:text-6xl lg:text-7xl">
-              Plans that grow<br />
-              with <em className="serif-italic text-brand">your pharmacy.</em>
+              {t("pricing.h1.line1")}<br />
+              {t("pricing.h1.line2")}<em className="serif-italic text-brand">{t("pricing.h1.italic")}</em>
             </h1>
             <p className="mx-auto mt-8 max-w-xl text-lg text-muted-foreground">
-              Simple per-branch pricing. No hidden fees, no surprise add-ons.
+              {t("pricing.lead")}
             </p>
 
-            {/* Toggle */}
             <div className="mt-10 inline-flex items-center rounded-full border border-border bg-cream p-1">
               {(["monthly", "annual"] as const).map((c) => (
                 <button
@@ -85,7 +94,7 @@ function PricingPage() {
                       : "text-muted-foreground hover:text-foreground"
                   )}
                 >
-                  {c === "monthly" ? "Monthly" : "Annual"}
+                  {c === "monthly" ? t("pricing.toggle.monthly") : t("pricing.toggle.annual")}
                   {c === "annual" && (
                     <span className="ml-1.5 rounded-full bg-accent px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-brand">
                       −20%
@@ -98,47 +107,46 @@ function PricingPage() {
         </div>
       </section>
 
-      {/* Tiers */}
       <section className="bg-background pb-24 lg:pb-32">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
           <div className="grid gap-5 lg:grid-cols-3">
-            {tiers.map((t, i) => {
-              const price = cadence === "monthly" ? t.monthly : t.annual;
+            {tiers.map((tier, i) => {
+              const price = cadence === "monthly" ? tier.monthly : tier.annual;
               return (
-                <Reveal key={t.name} variant="up" delay={i * 130} as="div">
+                <Reveal key={tier.name} variant="up" delay={i * 130} as="div">
                   <div
                     className={cn(
                       "card-hover relative flex h-full flex-col rounded-3xl border p-8 lg:p-10",
-                      t.highlighted
+                      tier.highlighted
                         ? "border-ink bg-ink text-background shadow-card"
                         : "border-border bg-background shadow-soft"
                     )}
                   >
-                    {t.highlighted && (
+                    {tier.highlighted && (
                       <span className="absolute -top-3 left-8 rounded-full bg-brand px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-brand-foreground">
-                        Most popular
+                        {t("pricing.popular")}
                       </span>
                     )}
-                    <div className={cn("text-sm font-medium", t.highlighted ? "text-brand-accent" : "text-brand")}>{t.name}</div>
-                    <p className={cn("mt-1 text-sm", t.highlighted ? "text-background/70" : "text-muted-foreground")}>{t.desc}</p>
+                    <div className={cn("text-sm font-medium", tier.highlighted ? "text-brand-accent" : "text-brand")}>{tier.name}</div>
+                    <p className={cn("mt-1 text-sm", tier.highlighted ? "text-background/70" : "text-muted-foreground")}>{tier.desc}</p>
 
                     <div className="mt-8 flex items-baseline gap-2">
                       {price !== null ? (
                         <>
                           <span className="font-display text-6xl leading-none tracking-tight">${price}</span>
-                          <span className={cn("text-sm", t.highlighted ? "text-background/60" : "text-muted-foreground")}>
-                            / branch / {cadence === "monthly" ? "mo" : "mo, billed yearly"}
+                          <span className={cn("text-sm", tier.highlighted ? "text-background/60" : "text-muted-foreground")}>
+                            {cadence === "monthly" ? t("pricing.priceUnit.mo") : t("pricing.priceUnit.yr")}
                           </span>
                         </>
                       ) : (
-                        <span className="font-display text-5xl leading-none">Custom</span>
+                        <span className="font-display text-5xl leading-none">{t("pricing.custom")}</span>
                       )}
                     </div>
 
                     <ul className="mt-8 space-y-3.5 text-sm">
-                      {t.features.map((f) => (
+                      {tier.features.map((f) => (
                         <li key={f} className="flex items-start gap-3">
-                          <Check className={cn("mt-0.5 h-4 w-4 shrink-0", t.highlighted ? "text-brand-accent" : "text-brand")} />
+                          <Check className={cn("mt-0.5 h-4 w-4 shrink-0", tier.highlighted ? "text-brand-accent" : "text-brand")} />
                           <span>{f}</span>
                         </li>
                       ))}
@@ -147,11 +155,11 @@ function PricingPage() {
                     <Button
                       asChild
                       size="lg"
-                      variant={t.highlighted ? "hero" : "brand"}
+                      variant={tier.highlighted ? "hero" : "brand"}
                       className="mt-10 w-full group"
                     >
                       <Link to="/contact">
-                        {t.cta}
+                        {tier.cta}
                         <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                       </Link>
                     </Button>
@@ -163,13 +171,12 @@ function PricingPage() {
         </div>
       </section>
 
-      {/* FAQ */}
       <section className="bg-cream py-24 paper-grain">
         <div className="relative mx-auto max-w-5xl px-5 sm:px-8 lg:px-10">
           <Reveal variant="up" className="text-center">
-            <p className="kicker">FAQ</p>
+            <p className="kicker">{t("pricing.faq.kicker")}</p>
             <h2 className="mt-4 font-display text-4xl leading-tight text-foreground sm:text-5xl">
-              Frequently <em className="serif-italic text-brand">asked.</em>
+              {t("pricing.faq.title")}<em className="serif-italic text-brand">{t("pricing.faq.italic")}</em>
             </h2>
           </Reveal>
 
