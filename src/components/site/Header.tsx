@@ -100,14 +100,14 @@ export function Header() {
         <div className="hidden items-center gap-3 md:flex">
           <LangSwitch />
           <Link
-            to="/contact"
+            to="/login"
             className="text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
-            {t("nav.signin")}
+            {t("cta.signin")}
           </Link>
           <Button asChild size="sm" variant="brand" className="group">
-            <Link to="/contact">
-              {t("cta.bookDemo")}
+            <Link to="/register">
+              {t("cta.demo")}
               <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
           </Button>
