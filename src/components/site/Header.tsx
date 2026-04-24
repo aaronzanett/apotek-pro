@@ -100,14 +100,14 @@ export function Header() {
         <div className="hidden items-center gap-3 md:flex">
           <LangSwitch />
           <Link
-            to="/contact"
+            to="/login"
             className="text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
-            {t("nav.signin")}
+            {t("cta.signin")}
           </Link>
           <Button asChild size="sm" variant="brand" className="group">
-            <Link to="/contact">
-              {t("cta.bookDemo")}
+            <Link to="/register">
+              {t("cta.demo")}
               <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
           </Button>
@@ -164,10 +164,15 @@ export function Header() {
               </li>
             ))}
           </ul>
-          <div className="mt-4">
+          <div className="mt-4 grid gap-2">
             <Button asChild size="lg" variant="brand" className="w-full">
-              <Link to="/contact" onClick={() => setOpen(false)}>
-                {t("cta.bookDemo")}
+              <Link to="/register" onClick={() => setOpen(false)}>
+                {t("cta.demo")}
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="w-full">
+              <Link to="/login" onClick={() => setOpen(false)}>
+                {t("cta.signin")}
               </Link>
             </Button>
           </div>

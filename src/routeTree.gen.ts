@@ -9,13 +9,21 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ProductRouteImport } from './routes/product'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
 
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductRoute = ProductRouteImport.update({
   id: '/product',
   path: '/product',
@@ -24,6 +32,11 @@ const ProductRoute = ProductRouteImport.update({
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FeaturesRoute = FeaturesRouteImport.update({
@@ -46,22 +59,33 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/features': typeof FeaturesRoute
+  '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
   '/product': typeof ProductRoute
+  '/register': typeof RegisterRoute
+  '/admin/login': typeof AdminLoginRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/features': typeof FeaturesRoute
+  '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
   '/product': typeof ProductRoute
+  '/register': typeof RegisterRoute
+  '/admin/login': typeof AdminLoginRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -69,22 +93,46 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/features': typeof FeaturesRoute
+  '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
   '/product': typeof ProductRoute
+  '/register': typeof RegisterRoute
+  '/admin/login': typeof AdminLoginRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/contact' | '/features' | '/pricing' | '/product'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/features'
+    | '/login'
+    | '/pricing'
+    | '/product'
+    | '/register'
+    | '/admin/login'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/features' | '/pricing' | '/product'
+  to:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/features'
+    | '/login'
+    | '/pricing'
+    | '/product'
+    | '/register'
+    | '/admin/login'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/contact'
     | '/features'
+    | '/login'
     | '/pricing'
     | '/product'
+    | '/register'
+    | '/admin/login'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -92,12 +140,22 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   FeaturesRoute: typeof FeaturesRoute
+  LoginRoute: typeof LoginRoute
   PricingRoute: typeof PricingRoute
   ProductRoute: typeof ProductRoute
+  RegisterRoute: typeof RegisterRoute
+  AdminLoginRoute: typeof AdminLoginRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/product': {
       id: '/product'
       path: '/product'
@@ -110,6 +168,13 @@ declare module '@tanstack/react-router' {
       path: '/pricing'
       fullPath: '/pricing'
       preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/features': {
@@ -140,6 +205,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -148,8 +220,11 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   FeaturesRoute: FeaturesRoute,
+  LoginRoute: LoginRoute,
   PricingRoute: PricingRoute,
   ProductRoute: ProductRoute,
+  RegisterRoute: RegisterRoute,
+  AdminLoginRoute: AdminLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
