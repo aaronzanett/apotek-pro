@@ -1,10 +1,11 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowUpRight, ArrowLeft, Mail, Lock, Check } from "lucide-react";
+import { ArrowUpRight, ArrowLeft, Mail, Lock, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Wordmark } from "@/components/site/Wordmark";
 import { Reveal } from "@/components/site/Reveal";
 import { useLang, type Lang } from "@/lib/i18n";
+import { signInDemo, DEMO_OWNER } from "@/lib/demo-session";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
@@ -40,7 +41,21 @@ function LangPill() {
 
 function LoginPage() {
   const { t } = useLang();
-  const [submitted, setSubmitted] = useState(false);
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Demo: any credentials work
+    signInDemo(email);
+    navigate({ to: "/app" });
+  };
+
+  const fillDemo = () => {
+    setEmail(DEMO_OWNER.email);
+    setPassword("demo1234");
+  };
 
   return (
     <div className="min-h-screen bg-background paper-grain">
@@ -80,11 +95,34 @@ function LoginPage() {
               <p className="mt-4 text-muted-foreground">{t("login.lead")}</p>
             </div>
 
+            {/* Demo helper */}
+            <div className="mt-6 rounded-2xl border border-brand/30 bg-brand/[0.05] p-4">
+              <div className="flex items-start gap-3">
+                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-brand/15 text-brand">
+                  <Sparkles className="h-3.5 w-3.5" />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-medium text-foreground">{t("login.demo.title")}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                    {t("login.demo.body")}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={fillDemo}
+                    className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-brand/30 bg-background px-3 py-1.5 text-xs font-medium text-brand transition-colors hover:bg-brand hover:text-brand-foreground"
+                  >
+                    {t("login.demo.fill")}
+                    <ArrowUpRight className="h-3 w-3" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
             <form
-              onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}
-              className="mt-8 rounded-3xl border border-border bg-background p-7 shadow-card lg:p-9"
+              onSubmit={handleSubmit}
+              className="mt-5 rounded-3xl border border-border bg-background p-7 shadow-card lg:p-9"
             >
-              <Button type="button" variant="outline" size="lg" className="w-full">
+              <Button type="button" variant="outline" size="lg" className="w-full" onClick={handleSubmit}>
                 <GoogleIcon /> {t("auth.google")}
               </Button>
 
@@ -98,7 +136,14 @@ function LoginPage() {
                 <span className="kicker m-0">{t("auth.email")}</span>
                 <div className="mt-2 relative">
                   <Mail className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                  <input required type="email" placeholder={t("auth.emailPh")} className="block w-full rounded-xl border border-border bg-cream px-10 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20" />
+                  <input
+                    required
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder={t("auth.emailPh")}
+                    className="block w-full rounded-xl border border-border bg-cream px-10 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+                  />
                 </div>
               </label>
 
@@ -109,7 +154,14 @@ function LoginPage() {
                 </div>
                 <div className="mt-2 relative">
                   <Lock className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                  <input required type="password" placeholder={t("auth.passwordPh")} className="block w-full rounded-xl border border-border bg-cream px-10 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20" />
+                  <input
+                    required
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder={t("auth.passwordPh")}
+                    className="block w-full rounded-xl border border-border bg-cream px-10 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+                  />
                 </div>
               </label>
 
@@ -119,7 +171,8 @@ function LoginPage() {
               </label>
 
               <Button type="submit" variant="emerald" size="lg" className="mt-6 w-full group">
-                {submitted ? <><Check className="h-4 w-4" /> OK</> : <>{t("login.submit")} <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></>}
+                {t("login.submit")}
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Button>
             </form>
 

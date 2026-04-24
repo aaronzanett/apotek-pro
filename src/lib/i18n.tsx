@@ -363,6 +363,57 @@ const id: Dict = {
   "admin.ownerHint": "Bukan admin?",
   "admin.ownerLink": "Masuk sebagai pemilik apotek",
 
+  // Login — demo
+  "login.demo.title": "Akun demo",
+  "login.demo.body": "Gunakan kredensial mana saja — atau klik tombol di bawah untuk masuk sebagai pemilik demo.",
+  "login.demo.fill": "Isi otomatis akun demo",
+  "login.demo.email": "owner@demo.apotekpro.com",
+
+  // Owner app — sidebar / topbar
+  "app.brand": "Apotek Pro",
+  "app.demoMode": "Mode demo",
+  "app.search": "Cari produk, resep, pasien…",
+  "app.branchAll": "Semua cabang",
+  "app.signOut": "Keluar",
+  "app.profile": "Profil",
+  "app.help": "Bantuan",
+
+  // Sidebar groups
+  "app.nav.workspace": "Ruang kerja",
+  "app.nav.operations": "Operasional",
+  "app.nav.management": "Manajemen",
+  "app.nav.account": "Akun",
+
+  // Sidebar items
+  "app.nav.dashboard": "Dasbor",
+  "app.nav.pos": "Kasir (POS)",
+  "app.nav.prescriptions": "Resep",
+  "app.nav.inventory": "Inventaris",
+  "app.nav.suppliers": "Pemasok & PO",
+  "app.nav.branches": "Cabang",
+  "app.nav.team": "Tim",
+  "app.nav.reports": "Laporan",
+  "app.nav.compliance": "Kepatuhan",
+  "app.nav.settings": "Pengaturan",
+
+  // Dashboard
+  "app.dash.greet": "Selamat datang kembali,",
+  "app.dash.sub": "Berikut ringkasan apotek Anda hari ini.",
+  "app.dash.kpi.sales": "Penjualan hari ini",
+  "app.dash.kpi.tx": "Transaksi",
+  "app.dash.kpi.rx": "Resep dilayani",
+  "app.dash.kpi.expiry": "Mendekati kedaluwarsa",
+  "app.dash.activity": "Aktivitas terbaru",
+  "app.dash.alerts": "Peringatan",
+  "app.dash.alerts.empty": "Tidak ada peringatan kritis. Apotek Anda tenang.",
+  "app.dash.lowStock": "Stok menipis",
+  "app.dash.expiringSoon": "Kedaluwarsa < 30 hari",
+  "app.dash.viewAll": "Lihat semua",
+
+  // Generic placeholder
+  "app.placeholder.title": "Halaman dalam pengembangan",
+  "app.placeholder.body": "Modul ini akan segera tersedia. Layout dan navigasi sudah siap — kirimkan detailnya kapan saja.",
+
   // 404
   "nf.title": "Halaman tidak ditemukan",
   "nf.back": "Kembali ke beranda",
@@ -704,6 +755,51 @@ const en: Dict = {
   "admin.notice": "Unauthorized access is prohibited and monitored.",
   "admin.ownerHint": "Not an admin?",
   "admin.ownerLink": "Sign in as pharmacy owner",
+
+  "login.demo.title": "Demo account",
+  "login.demo.body": "Use any credentials — or click below to sign in as a demo owner.",
+  "login.demo.fill": "Auto-fill demo account",
+  "login.demo.email": "owner@demo.apotekpro.com",
+
+  "app.brand": "Apotek Pro",
+  "app.demoMode": "Demo mode",
+  "app.search": "Search products, prescriptions, patients…",
+  "app.branchAll": "All branches",
+  "app.signOut": "Sign out",
+  "app.profile": "Profile",
+  "app.help": "Help",
+
+  "app.nav.workspace": "Workspace",
+  "app.nav.operations": "Operations",
+  "app.nav.management": "Management",
+  "app.nav.account": "Account",
+
+  "app.nav.dashboard": "Dashboard",
+  "app.nav.pos": "Point of sale",
+  "app.nav.prescriptions": "Prescriptions",
+  "app.nav.inventory": "Inventory",
+  "app.nav.suppliers": "Suppliers & POs",
+  "app.nav.branches": "Branches",
+  "app.nav.team": "Team",
+  "app.nav.reports": "Reports",
+  "app.nav.compliance": "Compliance",
+  "app.nav.settings": "Settings",
+
+  "app.dash.greet": "Welcome back,",
+  "app.dash.sub": "Here's how your pharmacy is doing today.",
+  "app.dash.kpi.sales": "Today's sales",
+  "app.dash.kpi.tx": "Transactions",
+  "app.dash.kpi.rx": "Prescriptions filled",
+  "app.dash.kpi.expiry": "Near expiry",
+  "app.dash.activity": "Recent activity",
+  "app.dash.alerts": "Alerts",
+  "app.dash.alerts.empty": "No critical alerts. Your pharmacy is calm.",
+  "app.dash.lowStock": "Low stock",
+  "app.dash.expiringSoon": "Expiring < 30 days",
+  "app.dash.viewAll": "View all",
+
+  "app.placeholder.title": "Page in progress",
+  "app.placeholder.body": "This module is coming soon. The layout and navigation are ready — send us the details whenever you're ready.",
 
   "nf.title": "The page you're looking for doesn't exist.",
   "nf.back": "Back home",

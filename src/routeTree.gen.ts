@@ -17,6 +17,16 @@ import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppTeamRouteImport } from './routes/app.team'
+import { Route as AppSuppliersRouteImport } from './routes/app.suppliers'
+import { Route as AppSettingsRouteImport } from './routes/app.settings'
+import { Route as AppReportsRouteImport } from './routes/app.reports'
+import { Route as AppPrescriptionsRouteImport } from './routes/app.prescriptions'
+import { Route as AppPosRouteImport } from './routes/app.pos'
+import { Route as AppInventoryRouteImport } from './routes/app.inventory'
+import { Route as AppComplianceRouteImport } from './routes/app.compliance'
+import { Route as AppBranchesRouteImport } from './routes/app.branches'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 
 const RegisterRoute = RegisterRouteImport.update({
@@ -59,6 +69,56 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/app/',
+  path: '/app/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppTeamRoute = AppTeamRouteImport.update({
+  id: '/app/team',
+  path: '/app/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppSuppliersRoute = AppSuppliersRouteImport.update({
+  id: '/app/suppliers',
+  path: '/app/suppliers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/app/settings',
+  path: '/app/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppReportsRoute = AppReportsRouteImport.update({
+  id: '/app/reports',
+  path: '/app/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppPrescriptionsRoute = AppPrescriptionsRouteImport.update({
+  id: '/app/prescriptions',
+  path: '/app/prescriptions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppPosRoute = AppPosRouteImport.update({
+  id: '/app/pos',
+  path: '/app/pos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppInventoryRoute = AppInventoryRouteImport.update({
+  id: '/app/inventory',
+  path: '/app/inventory',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppComplianceRoute = AppComplianceRouteImport.update({
+  id: '/app/compliance',
+  path: '/app/compliance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppBranchesRoute = AppBranchesRouteImport.update({
+  id: '/app/branches',
+  path: '/app/branches',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/admin/login',
   path: '/admin/login',
@@ -75,6 +135,16 @@ export interface FileRoutesByFullPath {
   '/product': typeof ProductRoute
   '/register': typeof RegisterRoute
   '/admin/login': typeof AdminLoginRoute
+  '/app/branches': typeof AppBranchesRoute
+  '/app/compliance': typeof AppComplianceRoute
+  '/app/inventory': typeof AppInventoryRoute
+  '/app/pos': typeof AppPosRoute
+  '/app/prescriptions': typeof AppPrescriptionsRoute
+  '/app/reports': typeof AppReportsRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/suppliers': typeof AppSuppliersRoute
+  '/app/team': typeof AppTeamRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -86,6 +156,16 @@ export interface FileRoutesByTo {
   '/product': typeof ProductRoute
   '/register': typeof RegisterRoute
   '/admin/login': typeof AdminLoginRoute
+  '/app/branches': typeof AppBranchesRoute
+  '/app/compliance': typeof AppComplianceRoute
+  '/app/inventory': typeof AppInventoryRoute
+  '/app/pos': typeof AppPosRoute
+  '/app/prescriptions': typeof AppPrescriptionsRoute
+  '/app/reports': typeof AppReportsRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/suppliers': typeof AppSuppliersRoute
+  '/app/team': typeof AppTeamRoute
+  '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -98,6 +178,16 @@ export interface FileRoutesById {
   '/product': typeof ProductRoute
   '/register': typeof RegisterRoute
   '/admin/login': typeof AdminLoginRoute
+  '/app/branches': typeof AppBranchesRoute
+  '/app/compliance': typeof AppComplianceRoute
+  '/app/inventory': typeof AppInventoryRoute
+  '/app/pos': typeof AppPosRoute
+  '/app/prescriptions': typeof AppPrescriptionsRoute
+  '/app/reports': typeof AppReportsRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/suppliers': typeof AppSuppliersRoute
+  '/app/team': typeof AppTeamRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -111,6 +201,16 @@ export interface FileRouteTypes {
     | '/product'
     | '/register'
     | '/admin/login'
+    | '/app/branches'
+    | '/app/compliance'
+    | '/app/inventory'
+    | '/app/pos'
+    | '/app/prescriptions'
+    | '/app/reports'
+    | '/app/settings'
+    | '/app/suppliers'
+    | '/app/team'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -122,6 +222,16 @@ export interface FileRouteTypes {
     | '/product'
     | '/register'
     | '/admin/login'
+    | '/app/branches'
+    | '/app/compliance'
+    | '/app/inventory'
+    | '/app/pos'
+    | '/app/prescriptions'
+    | '/app/reports'
+    | '/app/settings'
+    | '/app/suppliers'
+    | '/app/team'
+    | '/app'
   id:
     | '__root__'
     | '/'
@@ -133,6 +243,16 @@ export interface FileRouteTypes {
     | '/product'
     | '/register'
     | '/admin/login'
+    | '/app/branches'
+    | '/app/compliance'
+    | '/app/inventory'
+    | '/app/pos'
+    | '/app/prescriptions'
+    | '/app/reports'
+    | '/app/settings'
+    | '/app/suppliers'
+    | '/app/team'
+    | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -145,6 +265,16 @@ export interface RootRouteChildren {
   ProductRoute: typeof ProductRoute
   RegisterRoute: typeof RegisterRoute
   AdminLoginRoute: typeof AdminLoginRoute
+  AppBranchesRoute: typeof AppBranchesRoute
+  AppComplianceRoute: typeof AppComplianceRoute
+  AppInventoryRoute: typeof AppInventoryRoute
+  AppPosRoute: typeof AppPosRoute
+  AppPrescriptionsRoute: typeof AppPrescriptionsRoute
+  AppReportsRoute: typeof AppReportsRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppSuppliersRoute: typeof AppSuppliersRoute
+  AppTeamRoute: typeof AppTeamRoute
+  AppIndexRoute: typeof AppIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -205,6 +335,76 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/': {
+      id: '/app/'
+      path: '/app'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/team': {
+      id: '/app/team'
+      path: '/app/team'
+      fullPath: '/app/team'
+      preLoaderRoute: typeof AppTeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/suppliers': {
+      id: '/app/suppliers'
+      path: '/app/suppliers'
+      fullPath: '/app/suppliers'
+      preLoaderRoute: typeof AppSuppliersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/app/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/reports': {
+      id: '/app/reports'
+      path: '/app/reports'
+      fullPath: '/app/reports'
+      preLoaderRoute: typeof AppReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/prescriptions': {
+      id: '/app/prescriptions'
+      path: '/app/prescriptions'
+      fullPath: '/app/prescriptions'
+      preLoaderRoute: typeof AppPrescriptionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/pos': {
+      id: '/app/pos'
+      path: '/app/pos'
+      fullPath: '/app/pos'
+      preLoaderRoute: typeof AppPosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/inventory': {
+      id: '/app/inventory'
+      path: '/app/inventory'
+      fullPath: '/app/inventory'
+      preLoaderRoute: typeof AppInventoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/compliance': {
+      id: '/app/compliance'
+      path: '/app/compliance'
+      fullPath: '/app/compliance'
+      preLoaderRoute: typeof AppComplianceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/branches': {
+      id: '/app/branches'
+      path: '/app/branches'
+      fullPath: '/app/branches'
+      preLoaderRoute: typeof AppBranchesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/login': {
       id: '/admin/login'
       path: '/admin/login'
@@ -225,6 +425,16 @@ const rootRouteChildren: RootRouteChildren = {
   ProductRoute: ProductRoute,
   RegisterRoute: RegisterRoute,
   AdminLoginRoute: AdminLoginRoute,
+  AppBranchesRoute: AppBranchesRoute,
+  AppComplianceRoute: AppComplianceRoute,
+  AppInventoryRoute: AppInventoryRoute,
+  AppPosRoute: AppPosRoute,
+  AppPrescriptionsRoute: AppPrescriptionsRoute,
+  AppReportsRoute: AppReportsRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppSuppliersRoute: AppSuppliersRoute,
+  AppTeamRoute: AppTeamRoute,
+  AppIndexRoute: AppIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
