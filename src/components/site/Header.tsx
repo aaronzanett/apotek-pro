@@ -164,10 +164,15 @@ export function Header() {
               </li>
             ))}
           </ul>
-          <div className="mt-4">
+          <div className="mt-4 grid gap-2">
             <Button asChild size="lg" variant="brand" className="w-full">
-              <Link to="/contact" onClick={() => setOpen(false)}>
-                {t("cta.bookDemo")}
+              <Link to="/register" onClick={() => setOpen(false)}>
+                {t("cta.demo")}
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="w-full">
+              <Link to="/login" onClick={() => setOpen(false)}>
+                {t("cta.signin")}
               </Link>
             </Button>
           </div>
