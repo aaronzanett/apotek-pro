@@ -418,6 +418,8 @@ const id: Dict = {
   "nf.title": "Halaman tidak ditemukan",
   "nf.back": "Kembali ke beranda",
 };
+
+const en: Dict = {
   "nav.home": "Home",
   "nav.features": "Features",
   "nav.product": "Product",
