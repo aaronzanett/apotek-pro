@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard,
@@ -8,17 +8,37 @@ import {
   Truck,
   Building2,
   Users,
-  BarChart3,
-  ShieldCheck,
   Settings,
   Search,
   Bell,
   ChevronDown,
+  ChevronRight,
   LogOut,
   Menu,
   X,
   Sparkles,
   HelpCircle,
+  Tag,
+  Ruler,
+  Archive,
+  CreditCard,
+  AlertTriangle,
+  CalendarX,
+  ClipboardCheck,
+  ShoppingCart,
+  PackageCheck,
+  Receipt,
+  BookOpen,
+  ArrowDownCircle,
+  ArrowUpCircle,
+  UserCog,
+  KeyRound,
+  Contact,
+  UserRound,
+  Store,
+  Database,
+  Wallet,
+  Shield,
 } from "lucide-react";
 import { Wordmark } from "@/components/site/Wordmark";
 import { cn } from "@/lib/utils";
@@ -26,48 +46,105 @@ import { useLang, type Lang } from "@/lib/i18n";
 import { getDemoSession, signOutDemo, DEMO_OWNER } from "@/lib/demo-session";
 
 type NavItem = {
-  to:
-    | "/app"
-    | "/app/pos"
-    | "/app/prescriptions"
-    | "/app/inventory"
-    | "/app/suppliers"
-    | "/app/branches"
-    | "/app/team"
-    | "/app/reports"
-    | "/app/compliance"
-    | "/app/settings";
+  to: string;
   labelKey: string;
   icon: typeof LayoutDashboard;
   badge?: string;
 };
 
-function useNav(t: (k: string) => string): { group: string; items: NavItem[] }[] {
+type NavGroup = {
+  key: string;
+  labelKey: string;
+  icon: typeof LayoutDashboard;
+  collapsible?: boolean;
+  items: NavItem[];
+};
+
+function buildNav(): NavGroup[] {
   return [
     {
-      group: t("app.nav.workspace"),
-      items: [{ to: "/app", labelKey: "app.nav.dashboard", icon: LayoutDashboard }],
-    },
-    {
-      group: t("app.nav.operations"),
+      key: "workspace",
+      labelKey: "app.nav.workspace",
+      icon: LayoutDashboard,
       items: [
+        { to: "/app", labelKey: "app.nav.dashboard", icon: LayoutDashboard },
         { to: "/app/pos", labelKey: "app.nav.pos", icon: ScanBarcode },
+        { to: "/app/sales", labelKey: "app.nav.sales", icon: Receipt },
         { to: "/app/prescriptions", labelKey: "app.nav.prescriptions", icon: Pill, badge: "3" },
-        { to: "/app/inventory", labelKey: "app.nav.inventory", icon: Boxes },
-        { to: "/app/suppliers", labelKey: "app.nav.suppliers", icon: Truck },
       ],
     },
     {
-      group: t("app.nav.management"),
+      key: "masterData",
+      labelKey: "app.nav.masterData",
+      icon: Database,
+      collapsible: true,
       items: [
-        { to: "/app/branches", labelKey: "app.nav.branches", icon: Building2 },
-        { to: "/app/team", labelKey: "app.nav.team", icon: Users },
-        { to: "/app/reports", labelKey: "app.nav.reports", icon: BarChart3 },
-        { to: "/app/compliance", labelKey: "app.nav.compliance", icon: ShieldCheck },
+        { to: "/app/products", labelKey: "app.nav.products", icon: Pill },
+        { to: "/app/categories", labelKey: "app.nav.categories", icon: Tag },
+        { to: "/app/units", labelKey: "app.nav.units", icon: Ruler },
+        { to: "/app/shelves", labelKey: "app.nav.shelves", icon: Archive },
+        { to: "/app/payment-methods", labelKey: "app.nav.paymentMethods", icon: CreditCard },
       ],
     },
     {
-      group: t("app.nav.account"),
+      key: "inventoryGroup",
+      labelKey: "app.nav.inventoryGroup",
+      icon: Boxes,
+      collapsible: true,
+      items: [
+        { to: "/app/stock", labelKey: "app.nav.stock", icon: Boxes },
+        { to: "/app/defecta", labelKey: "app.nav.defecta", icon: AlertTriangle },
+        { to: "/app/expired-stock", labelKey: "app.nav.expired", icon: CalendarX },
+        { to: "/app/stock-opname", labelKey: "app.nav.opname", icon: ClipboardCheck },
+      ],
+    },
+    {
+      key: "purchasingGroup",
+      labelKey: "app.nav.purchasingGroup",
+      icon: ShoppingCart,
+      collapsible: true,
+      items: [
+        { to: "/app/purchasing", labelKey: "app.nav.purchasing", icon: ShoppingCart },
+        { to: "/app/supply", labelKey: "app.nav.supply", icon: PackageCheck },
+      ],
+    },
+    {
+      key: "finance",
+      labelKey: "app.nav.finance",
+      icon: Wallet,
+      collapsible: true,
+      items: [
+        { to: "/app/cash-book", labelKey: "app.nav.cashBook", icon: BookOpen },
+        { to: "/app/accounts-payable", labelKey: "app.nav.payable", icon: ArrowDownCircle },
+        { to: "/app/accounts-receivable", labelKey: "app.nav.receivable", icon: ArrowUpCircle },
+      ],
+    },
+    {
+      key: "contacts",
+      labelKey: "app.nav.contacts",
+      icon: Users,
+      collapsible: true,
+      items: [
+        { to: "/app/contact-customers", labelKey: "app.nav.customers", icon: UserRound },
+        { to: "/app/contact-employees", labelKey: "app.nav.employees", icon: Contact },
+        { to: "/app/contact-suppliers", labelKey: "app.nav.contactSuppliers", icon: Truck },
+      ],
+    },
+    {
+      key: "admin",
+      labelKey: "app.nav.admin",
+      icon: Shield,
+      collapsible: true,
+      items: [
+        { to: "/app/users", labelKey: "app.nav.users", icon: UserCog },
+        { to: "/app/roles", labelKey: "app.nav.roles", icon: KeyRound },
+        { to: "/app/outlets", labelKey: "app.nav.outlets", icon: Store },
+      ],
+    },
+    {
+      key: "account",
+      labelKey: "app.nav.account",
+      icon: Settings,
       items: [{ to: "/app/settings", labelKey: "app.nav.settings", icon: Settings }],
     },
   ];
