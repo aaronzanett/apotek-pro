@@ -14,13 +14,14 @@ export function StatCard({
   value: string;
   hint?: string;
   icon?: React.ComponentType<{ className?: string }>;
-  tone?: "default" | "good" | "warn" | "bad";
+  tone?: "default" | "good" | "warn" | "bad" | "info";
 }) {
   const tones: Record<string, string> = {
     default: "text-foreground",
     good: "text-emerald-600",
     warn: "text-amber-600",
     bad: "text-destructive",
+    info: "text-brand",
   };
   return (
     <div className="rounded-2xl border border-border bg-background p-4">
