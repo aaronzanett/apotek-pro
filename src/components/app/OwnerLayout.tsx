@@ -199,7 +199,31 @@ export function OwnerLayout({ children, title }: { children: ReactNode; title?: 
     setSidebarOpen(false);
   }, [pathname]);
 
-  const groups = useNav(t);
+  const groups = useMemo(() => buildNav(), []);
+
+  // Track which collapsible groups are open. Auto-open the group containing the active route.
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() => {
+    const initial: Record<string, boolean> = {};
+    for (const g of groups) {
+      if (g.collapsible) initial[g.key] = false;
+    }
+    return initial;
+  });
+
+  useEffect(() => {
+    setOpenGroups((prev) => {
+      const next = { ...prev };
+      for (const g of groups) {
+        if (g.collapsible && g.items.some((i) => pathname === i.to || pathname.startsWith(i.to + "/"))) {
+          next[g.key] = true;
+        }
+      }
+      return next;
+    });
+  }, [pathname, groups]);
+
+  const toggleGroup = (key: string) =>
+    setOpenGroups((prev) => ({ ...prev, [key]: !prev[key] }));
 
   const handleSignOut = () => {
     signOutDemo();
