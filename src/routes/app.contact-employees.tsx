@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { IdCard } from "lucide-react";
+import { Contact } from "lucide-react";
 import { OwnerLayout } from "@/components/app/OwnerLayout";
 import { PlaceholderPage } from "@/components/app/PlaceholderPage";
 import { useLang } from "@/lib/i18n";
@@ -10,7 +10,7 @@ export const Route = createFileRoute("/app/contact-employees")({
     const { t } = useLang();
     return (
       <OwnerLayout title={t("app.nav.employees")}>
-        <PlaceholderPage icon={IdCard} />
+        <PlaceholderPage icon={Contact} />
       </OwnerLayout>
     );
   },
