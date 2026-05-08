@@ -271,13 +271,16 @@ export function OwnerLayout({ children, title }: { children: ReactNode; title?: 
         </div>
 
         <div className="flex-1 overflow-y-auto px-3 py-5">
-          <nav className="space-y-6">
-            {groups.map((group) => (
-              <div key={group.group}>
-                <p className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                  {group.group}
-                </p>
-                <ul className="space-y-0.5">
+          <nav className="space-y-4">
+            {groups.map((group) => {
+              const GroupIcon = group.icon;
+              const isOpen = group.collapsible ? !!openGroups[group.key] : true;
+              const hasActive = group.items.some(
+                (i) => pathname === i.to || pathname.startsWith(i.to + "/")
+              );
+
+              const renderItems = (
+                <ul className={cn("space-y-0.5", group.collapsible && "mt-0.5")}>
                   {group.items.map((item) => {
                     const Icon = item.icon;
                     return (
@@ -285,9 +288,12 @@ export function OwnerLayout({ children, title }: { children: ReactNode; title?: 
                         <Link
                           to={item.to}
                           activeOptions={{ exact: item.to === "/app" }}
-                          className="group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-muted-foreground transition-all hover:bg-secondary hover:text-foreground [&.active]:bg-brand/10 [&.active]:text-brand [&.active]:font-medium"
+                          className={cn(
+                            "group flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-muted-foreground transition-all hover:bg-secondary hover:text-foreground [&.active]:bg-brand/10 [&.active]:text-brand [&.active]:font-medium",
+                            group.collapsible && "pl-9"
+                          )}
                         >
-                          <Icon className="h-4 w-4 shrink-0" />
+                          {!group.collapsible && <Icon className="h-4 w-4 shrink-0" />}
                           <span className="flex-1 truncate">{t(item.labelKey)}</span>
                           {item.badge && (
                             <span className="rounded-full bg-brand/10 px-2 py-0.5 text-[10px] font-semibold text-brand">
@@ -299,8 +305,40 @@ export function OwnerLayout({ children, title }: { children: ReactNode; title?: 
                     );
                   })}
                 </ul>
-              </div>
-            ))}
+              );
+
+              if (!group.collapsible) {
+                return (
+                  <div key={group.key}>
+                    <p className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                      {t(group.labelKey)}
+                    </p>
+                    {renderItems}
+                  </div>
+                );
+              }
+
+              return (
+                <div key={group.key}>
+                  <button
+                    type="button"
+                    onClick={() => toggleGroup(group.key)}
+                    aria-expanded={isOpen}
+                    className={cn(
+                      "flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm transition-colors hover:bg-secondary",
+                      hasActive ? "text-foreground" : "text-muted-foreground"
+                    )}
+                  >
+                    <GroupIcon className="h-4 w-4 shrink-0" />
+                    <span className="flex-1 text-left font-medium">{t(group.labelKey)}</span>
+                    <ChevronRight
+                      className={cn("h-3.5 w-3.5 transition-transform", isOpen && "rotate-90")}
+                    />
+                  </button>
+                  {isOpen && renderItems}
+                </div>
+              );
+            })}
           </nav>
         </div>
 
