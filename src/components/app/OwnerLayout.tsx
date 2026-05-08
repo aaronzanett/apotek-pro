@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard,
@@ -8,17 +8,37 @@ import {
   Truck,
   Building2,
   Users,
-  BarChart3,
-  ShieldCheck,
   Settings,
   Search,
   Bell,
   ChevronDown,
+  ChevronRight,
   LogOut,
   Menu,
   X,
   Sparkles,
   HelpCircle,
+  Tag,
+  Ruler,
+  Archive,
+  CreditCard,
+  AlertTriangle,
+  CalendarX,
+  ClipboardCheck,
+  ShoppingCart,
+  PackageCheck,
+  Receipt,
+  BookOpen,
+  ArrowDownCircle,
+  ArrowUpCircle,
+  UserCog,
+  KeyRound,
+  Contact,
+  UserRound,
+  Store,
+  Database,
+  Wallet,
+  Shield,
 } from "lucide-react";
 import { Wordmark } from "@/components/site/Wordmark";
 import { cn } from "@/lib/utils";
@@ -26,48 +46,105 @@ import { useLang, type Lang } from "@/lib/i18n";
 import { getDemoSession, signOutDemo, DEMO_OWNER } from "@/lib/demo-session";
 
 type NavItem = {
-  to:
-    | "/app"
-    | "/app/pos"
-    | "/app/prescriptions"
-    | "/app/inventory"
-    | "/app/suppliers"
-    | "/app/branches"
-    | "/app/team"
-    | "/app/reports"
-    | "/app/compliance"
-    | "/app/settings";
+  to: string;
   labelKey: string;
   icon: typeof LayoutDashboard;
   badge?: string;
 };
 
-function useNav(t: (k: string) => string): { group: string; items: NavItem[] }[] {
+type NavGroup = {
+  key: string;
+  labelKey: string;
+  icon: typeof LayoutDashboard;
+  collapsible?: boolean;
+  items: NavItem[];
+};
+
+function buildNav(): NavGroup[] {
   return [
     {
-      group: t("app.nav.workspace"),
-      items: [{ to: "/app", labelKey: "app.nav.dashboard", icon: LayoutDashboard }],
-    },
-    {
-      group: t("app.nav.operations"),
+      key: "workspace",
+      labelKey: "app.nav.workspace",
+      icon: LayoutDashboard,
       items: [
+        { to: "/app", labelKey: "app.nav.dashboard", icon: LayoutDashboard },
         { to: "/app/pos", labelKey: "app.nav.pos", icon: ScanBarcode },
+        { to: "/app/sales", labelKey: "app.nav.sales", icon: Receipt },
         { to: "/app/prescriptions", labelKey: "app.nav.prescriptions", icon: Pill, badge: "3" },
-        { to: "/app/inventory", labelKey: "app.nav.inventory", icon: Boxes },
-        { to: "/app/suppliers", labelKey: "app.nav.suppliers", icon: Truck },
       ],
     },
     {
-      group: t("app.nav.management"),
+      key: "masterData",
+      labelKey: "app.nav.masterData",
+      icon: Database,
+      collapsible: true,
       items: [
-        { to: "/app/branches", labelKey: "app.nav.branches", icon: Building2 },
-        { to: "/app/team", labelKey: "app.nav.team", icon: Users },
-        { to: "/app/reports", labelKey: "app.nav.reports", icon: BarChart3 },
-        { to: "/app/compliance", labelKey: "app.nav.compliance", icon: ShieldCheck },
+        { to: "/app/products", labelKey: "app.nav.products", icon: Pill },
+        { to: "/app/categories", labelKey: "app.nav.categories", icon: Tag },
+        { to: "/app/units", labelKey: "app.nav.units", icon: Ruler },
+        { to: "/app/shelves", labelKey: "app.nav.shelves", icon: Archive },
+        { to: "/app/payment-methods", labelKey: "app.nav.paymentMethods", icon: CreditCard },
       ],
     },
     {
-      group: t("app.nav.account"),
+      key: "inventoryGroup",
+      labelKey: "app.nav.inventoryGroup",
+      icon: Boxes,
+      collapsible: true,
+      items: [
+        { to: "/app/stock", labelKey: "app.nav.stock", icon: Boxes },
+        { to: "/app/defecta", labelKey: "app.nav.defecta", icon: AlertTriangle },
+        { to: "/app/expired-stock", labelKey: "app.nav.expired", icon: CalendarX },
+        { to: "/app/stock-opname", labelKey: "app.nav.opname", icon: ClipboardCheck },
+      ],
+    },
+    {
+      key: "purchasingGroup",
+      labelKey: "app.nav.purchasingGroup",
+      icon: ShoppingCart,
+      collapsible: true,
+      items: [
+        { to: "/app/purchasing", labelKey: "app.nav.purchasing", icon: ShoppingCart },
+        { to: "/app/supply", labelKey: "app.nav.supply", icon: PackageCheck },
+      ],
+    },
+    {
+      key: "finance",
+      labelKey: "app.nav.finance",
+      icon: Wallet,
+      collapsible: true,
+      items: [
+        { to: "/app/cash-book", labelKey: "app.nav.cashBook", icon: BookOpen },
+        { to: "/app/accounts-payable", labelKey: "app.nav.payable", icon: ArrowDownCircle },
+        { to: "/app/accounts-receivable", labelKey: "app.nav.receivable", icon: ArrowUpCircle },
+      ],
+    },
+    {
+      key: "contacts",
+      labelKey: "app.nav.contacts",
+      icon: Users,
+      collapsible: true,
+      items: [
+        { to: "/app/contact-customers", labelKey: "app.nav.customers", icon: UserRound },
+        { to: "/app/contact-employees", labelKey: "app.nav.employees", icon: Contact },
+        { to: "/app/contact-suppliers", labelKey: "app.nav.contactSuppliers", icon: Truck },
+      ],
+    },
+    {
+      key: "admin",
+      labelKey: "app.nav.admin",
+      icon: Shield,
+      collapsible: true,
+      items: [
+        { to: "/app/users", labelKey: "app.nav.users", icon: UserCog },
+        { to: "/app/roles", labelKey: "app.nav.roles", icon: KeyRound },
+        { to: "/app/outlets", labelKey: "app.nav.outlets", icon: Store },
+      ],
+    },
+    {
+      key: "account",
+      labelKey: "app.nav.account",
+      icon: Settings,
       items: [{ to: "/app/settings", labelKey: "app.nav.settings", icon: Settings }],
     },
   ];
@@ -122,7 +199,31 @@ export function OwnerLayout({ children, title }: { children: ReactNode; title?: 
     setSidebarOpen(false);
   }, [pathname]);
 
-  const groups = useNav(t);
+  const groups = useMemo(() => buildNav(), []);
+
+  // Track which collapsible groups are open. Auto-open the group containing the active route.
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() => {
+    const initial: Record<string, boolean> = {};
+    for (const g of groups) {
+      if (g.collapsible) initial[g.key] = false;
+    }
+    return initial;
+  });
+
+  useEffect(() => {
+    setOpenGroups((prev) => {
+      const next = { ...prev };
+      for (const g of groups) {
+        if (g.collapsible && g.items.some((i) => pathname === i.to || pathname.startsWith(i.to + "/"))) {
+          next[g.key] = true;
+        }
+      }
+      return next;
+    });
+  }, [pathname, groups]);
+
+  const toggleGroup = (key: string) =>
+    setOpenGroups((prev) => ({ ...prev, [key]: !prev[key] }));
 
   const handleSignOut = () => {
     signOutDemo();
@@ -170,13 +271,16 @@ export function OwnerLayout({ children, title }: { children: ReactNode; title?: 
         </div>
 
         <div className="flex-1 overflow-y-auto px-3 py-5">
-          <nav className="space-y-6">
-            {groups.map((group) => (
-              <div key={group.group}>
-                <p className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                  {group.group}
-                </p>
-                <ul className="space-y-0.5">
+          <nav className="space-y-4">
+            {groups.map((group) => {
+              const GroupIcon = group.icon;
+              const isOpen = group.collapsible ? !!openGroups[group.key] : true;
+              const hasActive = group.items.some(
+                (i) => pathname === i.to || pathname.startsWith(i.to + "/")
+              );
+
+              const renderItems = (
+                <ul className={cn("space-y-0.5", group.collapsible && "mt-0.5")}>
                   {group.items.map((item) => {
                     const Icon = item.icon;
                     return (
@@ -184,9 +288,12 @@ export function OwnerLayout({ children, title }: { children: ReactNode; title?: 
                         <Link
                           to={item.to}
                           activeOptions={{ exact: item.to === "/app" }}
-                          className="group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-muted-foreground transition-all hover:bg-secondary hover:text-foreground [&.active]:bg-brand/10 [&.active]:text-brand [&.active]:font-medium"
+                          className={cn(
+                            "group flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-muted-foreground transition-all hover:bg-secondary hover:text-foreground [&.active]:bg-brand/10 [&.active]:text-brand [&.active]:font-medium",
+                            group.collapsible && "pl-9"
+                          )}
                         >
-                          <Icon className="h-4 w-4 shrink-0" />
+                          {!group.collapsible && <Icon className="h-4 w-4 shrink-0" />}
                           <span className="flex-1 truncate">{t(item.labelKey)}</span>
                           {item.badge && (
                             <span className="rounded-full bg-brand/10 px-2 py-0.5 text-[10px] font-semibold text-brand">
@@ -198,8 +305,40 @@ export function OwnerLayout({ children, title }: { children: ReactNode; title?: 
                     );
                   })}
                 </ul>
-              </div>
-            ))}
+              );
+
+              if (!group.collapsible) {
+                return (
+                  <div key={group.key}>
+                    <p className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                      {t(group.labelKey)}
+                    </p>
+                    {renderItems}
+                  </div>
+                );
+              }
+
+              return (
+                <div key={group.key}>
+                  <button
+                    type="button"
+                    onClick={() => toggleGroup(group.key)}
+                    aria-expanded={isOpen}
+                    className={cn(
+                      "flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm transition-colors hover:bg-secondary",
+                      hasActive ? "text-foreground" : "text-muted-foreground"
+                    )}
+                  >
+                    <GroupIcon className="h-4 w-4 shrink-0" />
+                    <span className="flex-1 text-left font-medium">{t(group.labelKey)}</span>
+                    <ChevronRight
+                      className={cn("h-3.5 w-3.5 transition-transform", isOpen && "rotate-90")}
+                    />
+                  </button>
+                  {isOpen && renderItems}
+                </div>
+              );
+            })}
           </nav>
         </div>
 
