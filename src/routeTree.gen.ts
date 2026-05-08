@@ -22,6 +22,7 @@ import { Route as AppTeamRouteImport } from './routes/app.team'
 import { Route as AppSuppliersRouteImport } from './routes/app.suppliers'
 import { Route as AppSettingsRouteImport } from './routes/app.settings'
 import { Route as AppReportsRouteImport } from './routes/app.reports'
+import { Route as AppProductsRouteImport } from './routes/app.products'
 import { Route as AppPrescriptionsRouteImport } from './routes/app.prescriptions'
 import { Route as AppPosRouteImport } from './routes/app.pos'
 import { Route as AppInventoryRouteImport } from './routes/app.inventory'
@@ -94,6 +95,11 @@ const AppReportsRoute = AppReportsRouteImport.update({
   path: '/app/reports',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppProductsRoute = AppProductsRouteImport.update({
+  id: '/app/products',
+  path: '/app/products',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppPrescriptionsRoute = AppPrescriptionsRouteImport.update({
   id: '/app/prescriptions',
   path: '/app/prescriptions',
@@ -140,6 +146,7 @@ export interface FileRoutesByFullPath {
   '/app/inventory': typeof AppInventoryRoute
   '/app/pos': typeof AppPosRoute
   '/app/prescriptions': typeof AppPrescriptionsRoute
+  '/app/products': typeof AppProductsRoute
   '/app/reports': typeof AppReportsRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/suppliers': typeof AppSuppliersRoute
@@ -161,6 +168,7 @@ export interface FileRoutesByTo {
   '/app/inventory': typeof AppInventoryRoute
   '/app/pos': typeof AppPosRoute
   '/app/prescriptions': typeof AppPrescriptionsRoute
+  '/app/products': typeof AppProductsRoute
   '/app/reports': typeof AppReportsRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/suppliers': typeof AppSuppliersRoute
@@ -183,6 +191,7 @@ export interface FileRoutesById {
   '/app/inventory': typeof AppInventoryRoute
   '/app/pos': typeof AppPosRoute
   '/app/prescriptions': typeof AppPrescriptionsRoute
+  '/app/products': typeof AppProductsRoute
   '/app/reports': typeof AppReportsRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/suppliers': typeof AppSuppliersRoute
@@ -206,6 +215,7 @@ export interface FileRouteTypes {
     | '/app/inventory'
     | '/app/pos'
     | '/app/prescriptions'
+    | '/app/products'
     | '/app/reports'
     | '/app/settings'
     | '/app/suppliers'
@@ -227,6 +237,7 @@ export interface FileRouteTypes {
     | '/app/inventory'
     | '/app/pos'
     | '/app/prescriptions'
+    | '/app/products'
     | '/app/reports'
     | '/app/settings'
     | '/app/suppliers'
@@ -248,6 +259,7 @@ export interface FileRouteTypes {
     | '/app/inventory'
     | '/app/pos'
     | '/app/prescriptions'
+    | '/app/products'
     | '/app/reports'
     | '/app/settings'
     | '/app/suppliers'
@@ -270,6 +282,7 @@ export interface RootRouteChildren {
   AppInventoryRoute: typeof AppInventoryRoute
   AppPosRoute: typeof AppPosRoute
   AppPrescriptionsRoute: typeof AppPrescriptionsRoute
+  AppProductsRoute: typeof AppProductsRoute
   AppReportsRoute: typeof AppReportsRoute
   AppSettingsRoute: typeof AppSettingsRoute
   AppSuppliersRoute: typeof AppSuppliersRoute
@@ -370,6 +383,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppReportsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/products': {
+      id: '/app/products'
+      path: '/app/products'
+      fullPath: '/app/products'
+      preLoaderRoute: typeof AppProductsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/app/prescriptions': {
       id: '/app/prescriptions'
       path: '/app/prescriptions'
@@ -430,6 +450,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppInventoryRoute: AppInventoryRoute,
   AppPosRoute: AppPosRoute,
   AppPrescriptionsRoute: AppPrescriptionsRoute,
+  AppProductsRoute: AppProductsRoute,
   AppReportsRoute: AppReportsRoute,
   AppSettingsRoute: AppSettingsRoute,
   AppSuppliersRoute: AppSuppliersRoute,
@@ -439,3 +460,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
