@@ -133,7 +133,7 @@ function PricingPage() {
                     <div className="mt-8 flex items-baseline gap-2">
                       {price !== null ? (
                         <>
-                          <span className="font-display text-6xl leading-none tracking-tight">${price}</span>
+                          <span className={cn("font-display leading-none tracking-tight", lang === "id" ? "text-4xl sm:text-5xl" : "text-6xl")}>{formatPrice(price, lang)}</span>
                           <span className={cn("text-sm", tier.highlighted ? "text-background/60" : "text-muted-foreground")}>
                             {cadence === "monthly" ? t("pricing.priceUnit.mo") : t("pricing.priceUnit.yr")}
                           </span>
