@@ -1,9 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, Lock, Mail, ShieldCheck, Check } from "lucide-react";
+import { ArrowLeft, Lock, Mail, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Wordmark } from "@/components/site/Wordmark";
 import { useLang, type Lang } from "@/lib/i18n";
+import { signInAdmin, DEMO_ADMIN } from "@/lib/admin-session";
 
 export const Route = createFileRoute("/admin/login")({
   head: () => ({
