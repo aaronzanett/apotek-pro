@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
 import { cn } from "@/lib/utils";
-import { useLang } from "@/lib/i18n";
+import { useLang, formatPrice } from "@/lib/i18n";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/pricing")({
 type Cadence = "monthly" | "annual";
 
 function PricingPage() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const [cadence, setCadence] = useState<Cadence>("annual");
 
   const tiers = [
@@ -133,7 +133,7 @@ function PricingPage() {
                     <div className="mt-8 flex items-baseline gap-2">
                       {price !== null ? (
                         <>
-                          <span className="font-display text-6xl leading-none tracking-tight">${price}</span>
+                          <span className={cn("font-display leading-none tracking-tight", lang === "id" ? "text-4xl sm:text-5xl" : "text-6xl")}>{formatPrice(price, lang)}</span>
                           <span className={cn("text-sm", tier.highlighted ? "text-background/60" : "text-muted-foreground")}>
                             {cadence === "monthly" ? t("pricing.priceUnit.mo") : t("pricing.priceUnit.yr")}
                           </span>
