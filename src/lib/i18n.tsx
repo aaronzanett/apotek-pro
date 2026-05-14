@@ -907,3 +907,29 @@ export function useLang() {
   if (!ctx) throw new Error("useLang must be used inside LanguageProvider");
   return ctx;
 }
+
+// ---------- Currency helpers ----------
+// Map well-known USD prices to nicely-rounded IDR equivalents.
+// Falls back to a 16,000 IDR/USD multiplier rounded to the nearest 10,000.
+const USD_TO_IDR: Record<number, number> = {
+  39: 620_000,
+  49: 790_000,
+  99: 1_590_000,
+  129: 2_090_000,
+  199: 3_190_000,
+  299: 4_790_000,
+};
+
+export function formatPrice(usd: number, lang: Lang): string {
+  if (lang === "en") return `$${usd}`;
+  const idr = USD_TO_IDR[usd] ?? Math.round((usd * 16000) / 10000) * 10000;
+  return `Rp ${idr.toLocaleString("id-ID")}`;
+}
+
+export function formatIDR(amount: number): string {
+  return `Rp ${Math.round(amount).toLocaleString("id-ID")}`;
+}
+
+export function formatMoney(usd: number, lang: Lang): string {
+  return formatPrice(usd, lang);
+}

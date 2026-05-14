@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
 import { cn } from "@/lib/utils";
-import { useLang } from "@/lib/i18n";
+import { useLang, formatPrice } from "@/lib/i18n";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/pricing")({
 type Cadence = "monthly" | "annual";
 
 function PricingPage() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const [cadence, setCadence] = useState<Cadence>("annual");
 
   const tiers = [
