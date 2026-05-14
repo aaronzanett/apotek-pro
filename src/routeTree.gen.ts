@@ -18,6 +18,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AppUsersRouteImport } from './routes/app.users'
 import { Route as AppUnitsRouteImport } from './routes/app.units'
 import { Route as AppTeamRouteImport } from './routes/app.team'
@@ -48,7 +49,17 @@ import { Route as AppCashBookRouteImport } from './routes/app.cash-book'
 import { Route as AppBranchesRouteImport } from './routes/app.branches'
 import { Route as AppAccountsReceivableRouteImport } from './routes/app.accounts-receivable'
 import { Route as AppAccountsPayableRouteImport } from './routes/app.accounts-payable'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminTenantsRouteImport } from './routes/admin.tenants'
+import { Route as AdminSystemRouteImport } from './routes/admin.system'
+import { Route as AdminSupportRouteImport } from './routes/admin.support'
+import { Route as AdminSubscriptionsRouteImport } from './routes/admin.subscriptions'
+import { Route as AdminStaffRouteImport } from './routes/admin.staff'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminBillingRouteImport } from './routes/admin.billing'
+import { Route as AdminAuditRouteImport } from './routes/admin.audit'
+import { Route as AdminAnnouncementsRouteImport } from './routes/admin.announcements'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -93,6 +104,11 @@ const IndexRoute = IndexRouteImport.update({
 const AppIndexRoute = AppIndexRouteImport.update({
   id: '/app/',
   path: '/app/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppUsersRoute = AppUsersRouteImport.update({
@@ -245,9 +261,59 @@ const AppAccountsPayableRoute = AppAccountsPayableRouteImport.update({
   path: '/app/accounts-payable',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminTenantsRoute = AdminTenantsRouteImport.update({
+  id: '/admin/tenants',
+  path: '/admin/tenants',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSystemRoute = AdminSystemRouteImport.update({
+  id: '/admin/system',
+  path: '/admin/system',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSupportRoute = AdminSupportRouteImport.update({
+  id: '/admin/support',
+  path: '/admin/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSubscriptionsRoute = AdminSubscriptionsRouteImport.update({
+  id: '/admin/subscriptions',
+  path: '/admin/subscriptions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminStaffRoute = AdminStaffRouteImport.update({
+  id: '/admin/staff',
+  path: '/admin/staff',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/admin/settings',
+  path: '/admin/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/admin/login',
   path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminBillingRoute = AdminBillingRouteImport.update({
+  id: '/admin/billing',
+  path: '/admin/billing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAuditRoute = AdminAuditRouteImport.update({
+  id: '/admin/audit',
+  path: '/admin/audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAnnouncementsRoute = AdminAnnouncementsRouteImport.update({
+  id: '/admin/announcements',
+  path: '/admin/announcements',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -260,7 +326,17 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/product': typeof ProductRoute
   '/register': typeof RegisterRoute
+  '/admin/announcements': typeof AdminAnnouncementsRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/billing': typeof AdminBillingRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/staff': typeof AdminStaffRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRoute
+  '/admin/support': typeof AdminSupportRoute
+  '/admin/system': typeof AdminSystemRoute
+  '/admin/tenants': typeof AdminTenantsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/app/accounts-payable': typeof AppAccountsPayableRoute
   '/app/accounts-receivable': typeof AppAccountsReceivableRoute
   '/app/branches': typeof AppBranchesRoute
@@ -291,6 +367,7 @@ export interface FileRoutesByFullPath {
   '/app/team': typeof AppTeamRoute
   '/app/units': typeof AppUnitsRoute
   '/app/users': typeof AppUsersRoute
+  '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
@@ -302,7 +379,17 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/product': typeof ProductRoute
   '/register': typeof RegisterRoute
+  '/admin/announcements': typeof AdminAnnouncementsRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/billing': typeof AdminBillingRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/staff': typeof AdminStaffRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRoute
+  '/admin/support': typeof AdminSupportRoute
+  '/admin/system': typeof AdminSystemRoute
+  '/admin/tenants': typeof AdminTenantsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/app/accounts-payable': typeof AppAccountsPayableRoute
   '/app/accounts-receivable': typeof AppAccountsReceivableRoute
   '/app/branches': typeof AppBranchesRoute
@@ -333,6 +420,7 @@ export interface FileRoutesByTo {
   '/app/team': typeof AppTeamRoute
   '/app/units': typeof AppUnitsRoute
   '/app/users': typeof AppUsersRoute
+  '/admin': typeof AdminIndexRoute
   '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
@@ -345,7 +433,17 @@ export interface FileRoutesById {
   '/pricing': typeof PricingRoute
   '/product': typeof ProductRoute
   '/register': typeof RegisterRoute
+  '/admin/announcements': typeof AdminAnnouncementsRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/billing': typeof AdminBillingRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/staff': typeof AdminStaffRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRoute
+  '/admin/support': typeof AdminSupportRoute
+  '/admin/system': typeof AdminSystemRoute
+  '/admin/tenants': typeof AdminTenantsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/app/accounts-payable': typeof AppAccountsPayableRoute
   '/app/accounts-receivable': typeof AppAccountsReceivableRoute
   '/app/branches': typeof AppBranchesRoute
@@ -376,6 +474,7 @@ export interface FileRoutesById {
   '/app/team': typeof AppTeamRoute
   '/app/units': typeof AppUnitsRoute
   '/app/users': typeof AppUsersRoute
+  '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
@@ -389,7 +488,17 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/product'
     | '/register'
+    | '/admin/announcements'
+    | '/admin/audit'
+    | '/admin/billing'
     | '/admin/login'
+    | '/admin/settings'
+    | '/admin/staff'
+    | '/admin/subscriptions'
+    | '/admin/support'
+    | '/admin/system'
+    | '/admin/tenants'
+    | '/admin/users'
     | '/app/accounts-payable'
     | '/app/accounts-receivable'
     | '/app/branches'
@@ -420,6 +529,7 @@ export interface FileRouteTypes {
     | '/app/team'
     | '/app/units'
     | '/app/users'
+    | '/admin/'
     | '/app/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -431,7 +541,17 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/product'
     | '/register'
+    | '/admin/announcements'
+    | '/admin/audit'
+    | '/admin/billing'
     | '/admin/login'
+    | '/admin/settings'
+    | '/admin/staff'
+    | '/admin/subscriptions'
+    | '/admin/support'
+    | '/admin/system'
+    | '/admin/tenants'
+    | '/admin/users'
     | '/app/accounts-payable'
     | '/app/accounts-receivable'
     | '/app/branches'
@@ -462,6 +582,7 @@ export interface FileRouteTypes {
     | '/app/team'
     | '/app/units'
     | '/app/users'
+    | '/admin'
     | '/app'
   id:
     | '__root__'
@@ -473,7 +594,17 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/product'
     | '/register'
+    | '/admin/announcements'
+    | '/admin/audit'
+    | '/admin/billing'
     | '/admin/login'
+    | '/admin/settings'
+    | '/admin/staff'
+    | '/admin/subscriptions'
+    | '/admin/support'
+    | '/admin/system'
+    | '/admin/tenants'
+    | '/admin/users'
     | '/app/accounts-payable'
     | '/app/accounts-receivable'
     | '/app/branches'
@@ -504,6 +635,7 @@ export interface FileRouteTypes {
     | '/app/team'
     | '/app/units'
     | '/app/users'
+    | '/admin/'
     | '/app/'
   fileRoutesById: FileRoutesById
 }
@@ -516,7 +648,17 @@ export interface RootRouteChildren {
   PricingRoute: typeof PricingRoute
   ProductRoute: typeof ProductRoute
   RegisterRoute: typeof RegisterRoute
+  AdminAnnouncementsRoute: typeof AdminAnnouncementsRoute
+  AdminAuditRoute: typeof AdminAuditRoute
+  AdminBillingRoute: typeof AdminBillingRoute
   AdminLoginRoute: typeof AdminLoginRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminStaffRoute: typeof AdminStaffRoute
+  AdminSubscriptionsRoute: typeof AdminSubscriptionsRoute
+  AdminSupportRoute: typeof AdminSupportRoute
+  AdminSystemRoute: typeof AdminSystemRoute
+  AdminTenantsRoute: typeof AdminTenantsRoute
+  AdminUsersRoute: typeof AdminUsersRoute
   AppAccountsPayableRoute: typeof AppAccountsPayableRoute
   AppAccountsReceivableRoute: typeof AppAccountsReceivableRoute
   AppBranchesRoute: typeof AppBranchesRoute
@@ -547,6 +689,7 @@ export interface RootRouteChildren {
   AppTeamRoute: typeof AppTeamRoute
   AppUnitsRoute: typeof AppUnitsRoute
   AppUsersRoute: typeof AppUsersRoute
+  AdminIndexRoute: typeof AdminIndexRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
@@ -613,6 +756,13 @@ declare module '@tanstack/react-router' {
       path: '/app'
       fullPath: '/app/'
       preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/users': {
@@ -825,11 +975,81 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAccountsPayableRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/tenants': {
+      id: '/admin/tenants'
+      path: '/admin/tenants'
+      fullPath: '/admin/tenants'
+      preLoaderRoute: typeof AdminTenantsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/system': {
+      id: '/admin/system'
+      path: '/admin/system'
+      fullPath: '/admin/system'
+      preLoaderRoute: typeof AdminSystemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/support': {
+      id: '/admin/support'
+      path: '/admin/support'
+      fullPath: '/admin/support'
+      preLoaderRoute: typeof AdminSupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/subscriptions': {
+      id: '/admin/subscriptions'
+      path: '/admin/subscriptions'
+      fullPath: '/admin/subscriptions'
+      preLoaderRoute: typeof AdminSubscriptionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/staff': {
+      id: '/admin/staff'
+      path: '/admin/staff'
+      fullPath: '/admin/staff'
+      preLoaderRoute: typeof AdminStaffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/login': {
       id: '/admin/login'
       path: '/admin/login'
       fullPath: '/admin/login'
       preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/billing': {
+      id: '/admin/billing'
+      path: '/admin/billing'
+      fullPath: '/admin/billing'
+      preLoaderRoute: typeof AdminBillingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/audit': {
+      id: '/admin/audit'
+      path: '/admin/audit'
+      fullPath: '/admin/audit'
+      preLoaderRoute: typeof AdminAuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/announcements': {
+      id: '/admin/announcements'
+      path: '/admin/announcements'
+      fullPath: '/admin/announcements'
+      preLoaderRoute: typeof AdminAnnouncementsRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -844,7 +1064,17 @@ const rootRouteChildren: RootRouteChildren = {
   PricingRoute: PricingRoute,
   ProductRoute: ProductRoute,
   RegisterRoute: RegisterRoute,
+  AdminAnnouncementsRoute: AdminAnnouncementsRoute,
+  AdminAuditRoute: AdminAuditRoute,
+  AdminBillingRoute: AdminBillingRoute,
   AdminLoginRoute: AdminLoginRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminStaffRoute: AdminStaffRoute,
+  AdminSubscriptionsRoute: AdminSubscriptionsRoute,
+  AdminSupportRoute: AdminSupportRoute,
+  AdminSystemRoute: AdminSystemRoute,
+  AdminTenantsRoute: AdminTenantsRoute,
+  AdminUsersRoute: AdminUsersRoute,
   AppAccountsPayableRoute: AppAccountsPayableRoute,
   AppAccountsReceivableRoute: AppAccountsReceivableRoute,
   AppBranchesRoute: AppBranchesRoute,
@@ -875,6 +1105,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppTeamRoute: AppTeamRoute,
   AppUnitsRoute: AppUnitsRoute,
   AppUsersRoute: AppUsersRoute,
+  AdminIndexRoute: AdminIndexRoute,
   AppIndexRoute: AppIndexRoute,
 }
 export const routeTree = rootRouteImport

@@ -32,11 +32,11 @@ export function ATable({ children }: { children: ReactNode }) {
   );
 }
 
-export function ATh({ children, className }: { children: ReactNode; className?: string }) {
+export function ATh({ children, className }: { children?: ReactNode; className?: string }) {
   return <th className={cn("border-b border-white/10 bg-white/[0.04] px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-white/50", className)}>{children}</th>;
 }
 
-export function ATd({ children, className }: { children: ReactNode; className?: string }) {
+export function ATd({ children, className }: { children?: ReactNode; className?: string }) {
   return <td className={cn("border-b border-white/5 px-4 py-3 text-white/80", className)}>{children}</td>;
 }
 
