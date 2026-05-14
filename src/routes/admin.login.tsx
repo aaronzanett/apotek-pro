@@ -38,7 +38,20 @@ function LangPill() {
 
 function AdminLoginPage() {
   const { t } = useLang();
-  const [submitted, setSubmitted] = useState(false);
+  const navigate = useNavigate();
+  const [email, setEmail] = useState(DEMO_ADMIN.email);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    signInAdmin(email);
+    navigate({ to: "/admin" });
+  };
+
+  const handleAutofill = () => {
+    setEmail(DEMO_ADMIN.email);
+    signInAdmin(DEMO_ADMIN.email);
+    navigate({ to: "/admin" });
+  };
 
   return (
     <div className="min-h-screen bg-ink text-background">
@@ -67,14 +80,14 @@ function AdminLoginPage() {
         </div>
 
         <form
-          onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}
+          onSubmit={handleSubmit}
           className="rounded-3xl border border-white/10 bg-white/[0.03] p-7 backdrop-blur-sm sm:p-8"
         >
           <label className="block">
             <span className="text-xs uppercase tracking-[0.18em] text-white/60">{t("admin.email")}</span>
             <div className="mt-2 relative">
               <Mail className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
-              <input required type="email" placeholder={t("admin.emailPh")} className="block w-full rounded-xl border border-white/10 bg-white/5 px-10 py-3 text-sm text-background placeholder:text-white/30 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" />
+              <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder={t("admin.emailPh")} className="block w-full rounded-xl border border-white/10 bg-white/5 px-10 py-3 text-sm text-background placeholder:text-white/30 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" />
             </div>
           </label>
 
@@ -82,18 +95,22 @@ function AdminLoginPage() {
             <span className="text-xs uppercase tracking-[0.18em] text-white/60">{t("auth.password")}</span>
             <div className="mt-2 relative">
               <Lock className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
-              <input required type="password" placeholder={t("auth.passwordPh")} className="block w-full rounded-xl border border-white/10 bg-white/5 px-10 py-3 text-sm text-background placeholder:text-white/30 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" />
+              <input required type="password" defaultValue="demo-password" placeholder={t("auth.passwordPh")} className="block w-full rounded-xl border border-white/10 bg-white/5 px-10 py-3 text-sm text-background placeholder:text-white/30 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" />
             </div>
           </label>
 
           <label className="mt-4 block">
             <span className="text-xs uppercase tracking-[0.18em] text-white/60">{t("admin.totp")}</span>
-            <input required type="text" inputMode="numeric" pattern="[0-9]{6}" maxLength={6} placeholder={t("admin.totpPh")} className="mt-2 block w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-center text-lg tracking-[0.4em] text-background placeholder:text-white/20 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" />
+            <input required type="text" inputMode="numeric" pattern="[0-9]{6}" maxLength={6} defaultValue="123456" placeholder={t("admin.totpPh")} className="mt-2 block w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-center text-lg tracking-[0.4em] text-background placeholder:text-white/20 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" />
           </label>
 
           <Button type="submit" variant="emerald" size="lg" className="mt-6 w-full">
-            {submitted ? <><Check className="h-4 w-4" /> OK</> : t("admin.submit")}
+            {t("admin.submit")}
           </Button>
+
+          <button type="button" onClick={handleAutofill} className="mt-3 w-full rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-xs font-medium text-white/80 transition hover:bg-white/10">
+            {t("admin.demoFill")}
+          </button>
 
           <p className="mt-5 text-center text-xs text-white/40">
             {t("admin.notice")}
