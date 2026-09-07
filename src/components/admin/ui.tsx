@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ActionDialog } from "@/components/app/ActionDialog";
 import { toast } from "sonner";
 
-export function AStat({ label, value, hint, tone = "default" }: { label: string; value: string; hint?: string; tone?: "default" | "good" | "warn" | "bad" | "info" }) {
+export function AStat({ label, value, hint, tone = "default" }: { label: string; value: ReactNode; hint?: string; tone?: "default" | "good" | "warn" | "bad" | "info" }) {
   const tones: Record<string, string> = {
     default: "text-foreground",
     good: "text-emerald-700",

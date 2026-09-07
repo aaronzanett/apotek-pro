@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Wordmark } from "@/components/site/Wordmark";
 import { useLang, type Lang } from "@/lib/i18n";
 import { signInAdmin, DEMO_ADMIN } from "@/lib/admin-session";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/login")({
   head: () => ({
@@ -49,6 +50,10 @@ function AdminLoginPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (email !== DEMO_ADMIN.email || password !== "demo-password" || totp !== "123456") {
+      toast.error(t("admin.demoFill"), { description: "Use the demo account button to load valid credentials." });
+      return;
+    }
     signInAdmin(email);
     navigate({ to: "/admin" });
   };
@@ -61,9 +66,9 @@ function AdminLoginPage() {
 
   return (
     <div className="min-h-screen bg-cream/40 text-foreground">
-      <header className="border-b border-border bg-cream/40/95 shadow-lg backdrop-blur-md">
+      <header className="border-b border-border bg-background/95 shadow-soft backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8 lg:px-10">
-          <Link to="/" className="flex items-center gap-2 [--foreground:var(--background)]" aria-label="Apotek Pro">
+          <Link to="/" className="flex items-center gap-2" aria-label="Apotek Pro">
             <Wordmark className="h-8 w-auto" />
           </Link>
           <div className="flex items-center gap-3">
@@ -76,7 +81,7 @@ function AdminLoginPage() {
       </header>
 
       <main className="mx-auto grid max-w-7xl gap-12 px-5 pb-20 pt-6 sm:px-8 lg:grid-cols-5 lg:gap-16 lg:px-10 lg:pt-10">
-        <section className="hidden lg:col-span-2 lg:flex lg:min-h-[620px] lg:flex-col lg:justify-between rounded-3xl border border-border bg-white/[0.04] p-10">
+        <section className="paper-grain hidden rounded-3xl border border-border bg-background p-10 shadow-soft lg:col-span-2 lg:flex lg:min-h-[620px] lg:flex-col lg:justify-between">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-border bg-cream/60 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.18em] text-foreground">
               <ShieldCheck className="h-3.5 w-3.5" />
@@ -123,7 +128,7 @@ function AdminLoginPage() {
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="mt-5 rounded-3xl border border-border bg-white/[0.04] p-7 shadow-lg sm:p-9">
+            <form onSubmit={handleSubmit} className="mt-5 rounded-3xl border border-border bg-background p-7 shadow-card sm:p-9">
               <label className="block">
                 <span className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">{t("admin.email")}</span>
                 <div className="relative mt-2">
