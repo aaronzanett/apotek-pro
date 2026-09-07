@@ -198,10 +198,15 @@ export function AdminLayout({ children, title, subtitle }: { children: ReactNode
             <div className="ml-auto flex items-center gap-2">
               <LangPill />
               <Link to="/app" className="hidden rounded-full border border-border bg-background px-3 py-1.5 text-xs text-muted-foreground transition hover:bg-secondary sm:inline-flex">
-              <div className="relative"><Button type="button" variant="ghost" size="icon" onClick={() => setNotificationsOpen((value) => !value)} className="relative h-9 w-9" aria-label="Notifications"><Bell className="h-4 w-4" />{unreadCount > 0 && <span className="absolute right-0 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-destructive px-1 text-[9px] text-destructive-foreground">{unreadCount}</span>}</Button>
-              {notificationsOpen && <div className="absolute right-0 top-11 z-50 w-[min(380px,calc(100vw-2rem))] rounded-2xl border border-border bg-background shadow-card"><div className="flex items-center justify-between border-b border-border px-4 py-3"><div><p className="text-sm font-semibold">Notifications</p><p className="text-xs text-muted-foreground">{unreadCount} unread</p></div><Button type="button" variant="ghost" size="sm" onClick={() => workspace.markAllRead()}>Mark all read</Button></div><div className="p-2">{workspace.notifications.map((item) => <Button key={item.id} type="button" variant="ghost" className={cn("h-auto w-full justify-start rounded-xl px-3 py-3 text-left", !item.read && "bg-brand/5")} onClick={() => { workspace.markRead(item.id); setNotificationsOpen(false); navigate({ to: item.to }); }}><span className="min-w-0"><span className="block whitespace-normal text-sm font-medium">{item.title}</span><span className="block whitespace-normal text-xs text-muted-foreground">{item.detail}</span></span></Button>)}</div></div>}</div>
                 {t("admin.shell.viewOwnerApp")}
               </Link>
+              <div className="relative">
+                <Button type="button" variant="ghost" size="icon" onClick={() => setNotificationsOpen((value) => !value)} className="relative h-9 w-9" aria-label="Notifications">
+                  <Bell className="h-4 w-4" />
+                  {unreadCount > 0 && <span className="absolute right-0 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-destructive px-1 text-[9px] text-destructive-foreground">{unreadCount}</span>}
+                </Button>
+                {notificationsOpen && <div className="absolute right-0 top-11 z-50 w-[min(380px,calc(100vw-2rem))] rounded-2xl border border-border bg-background shadow-card"><div className="flex items-center justify-between border-b border-border px-4 py-3"><div><p className="text-sm font-semibold">Notifications</p><p className="text-xs text-muted-foreground">{unreadCount} unread</p></div><Button type="button" variant="ghost" size="sm" onClick={() => workspace.markAllRead()}>Mark all read</Button></div><div className="p-2">{workspace.notifications.map((item) => <Button key={item.id} type="button" variant="ghost" className={cn("h-auto w-full justify-start rounded-xl px-3 py-3 text-left", !item.read && "bg-brand/5")} onClick={() => { workspace.markRead(item.id); setNotificationsOpen(false); navigate({ to: item.to }); }}><span className="min-w-0"><span className="block whitespace-normal text-sm font-medium">{item.title}</span><span className="block whitespace-normal text-xs text-muted-foreground">{item.detail}</span></span></Button>)}</div></div>}
+              </div>
 
               <div className="relative">
                 <button
@@ -222,16 +227,16 @@ export function AdminLayout({ children, title, subtitle }: { children: ReactNode
                         <p className="mt-1 text-[10px] uppercase tracking-wider text-brand">{session?.role ?? DEMO_ADMIN.role}</p>
                       </div>
                       <div className="p-1.5">
-                         <Link to="/admin/settings" onClick={() => setMenu(false)} className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-foreground hover:bg-secondary">
-                        <Button type="button" variant="ghost" onClick={() => { setMenu(false); toast.info("Admin help center", { description: "Demo support is available for all platform operations." }); }} className="w-full justify-start rounded-lg"><HelpCircle />Help</Button>
-                        <Button type="button" variant="ghost" onClick={() => { workspace.reset(); workspace.addAudit("demo.reset", "Admin workspace"); setMenu(false); toast.success("Demo admin data reset"); }} className="w-full justify-start rounded-lg"><RotateCcw />Reset demo data</Button>
+                        <Link to="/admin/settings" onClick={() => setMenu(false)} className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-foreground hover:bg-secondary">
                           <Settings className="h-3.5 w-3.5" />
                           {t("app.profile")}
                         </Link>
-                        <button onClick={handleSignOut} className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-sm text-destructive hover:bg-destructive/10">
+                        <Button type="button" variant="ghost" onClick={() => { setMenu(false); toast.info("Admin help center", { description: "Demo support is available for all platform operations." }); }} className="w-full justify-start rounded-lg"><HelpCircle />Help</Button>
+                        <Button type="button" variant="ghost" onClick={() => { workspace.reset(); workspace.addAudit("demo.reset", "Admin workspace"); setMenu(false); toast.success("Demo admin data reset"); }} className="w-full justify-start rounded-lg"><RotateCcw />Reset demo data</Button>
+                        <Button type="button" variant="ghost" onClick={handleSignOut} className="w-full justify-start rounded-lg text-destructive hover:bg-destructive/10 hover:text-destructive">
                           <LogOut className="h-3.5 w-3.5" />
                           {t("app.signOut")}
-                        </button>
+                        </Button>
                       </div>
                     </div>
                   </>
