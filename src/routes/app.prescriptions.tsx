@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { Pill as PillIcon, FileText, Clock, CheckCircle2 } from "lucide-react";
 import { OwnerLayout } from "@/components/app/OwnerLayout";
 import { Grid, Pill, SectionHeader, Stack, StatCard, TableCard, Td, Th, Toolbar } from "@/components/app/ui";
@@ -9,7 +10,7 @@ export const Route = createFileRoute("/app/prescriptions")({
   component: RxPage,
 });
 
-const rx = [
+const initialRx = [
   { id: "RX-2026-0918", time: "11:42", patient: "Ahmad Hidayat", doctor: "dr. Tania, Sp.PD", items: 3, status: "queue" },
   { id: "RX-2026-0917", time: "11:30", patient: "Siti Nurhaliza", doctor: "dr. Bayu", items: 5, status: "preparing" },
   { id: "RX-2026-0916", time: "11:18", patient: "Maria Christine", doctor: "dr. Tania, Sp.PD", items: 2, status: "counsel" },
@@ -19,6 +20,10 @@ const rx = [
 
 function RxPage() {
   const { t } = useLang();
+  const [rx, setRx] = useState(initialRx);
+  const [query, setQuery] = useState("");
+  const filtered = rx.filter((item) => `${item.id} ${item.patient} ${item.doctor}`.toLowerCase().includes(query.toLowerCase()));
+  const advance = (id: string) => setRx((items) => items.map((item) => item.id === id ? { ...item, status: item.status === "queue" ? "preparing" : item.status === "preparing" ? "counsel" : "done" } : item));
   return (
     <OwnerLayout title={t("app.nav.prescriptions")}>
       <Stack>
@@ -33,7 +38,7 @@ function RxPage() {
           title="Antrean resep"
           subtitle="Pantau alur dari penerimaan, peracikan, sampai konseling pasien."
         />
-        <Toolbar searchPlaceholder="Cari nomor resep atau pasien…" primaryLabel="Terima resep" />
+        <Toolbar searchPlaceholder="Cari nomor resep atau pasien…" primaryLabel="Terima resep" onSearch={setQuery} />
 
         <TableCard>
           <thead>
@@ -44,10 +49,11 @@ function RxPage() {
               <Th>Dokter</Th>
               <Th className="text-right">Item</Th>
               <Th>Status</Th>
+              <Th>Aksi</Th>
             </tr>
           </thead>
           <tbody>
-            {rx.map((r) => (
+            {filtered.map((r) => (
               <tr key={r.id} className="hover:bg-cream/30">
                 <Td className="font-mono text-xs">{r.id}</Td>
                 <Td className="tabular-nums">{r.time}</Td>
@@ -60,6 +66,7 @@ function RxPage() {
                   {r.status === "counsel" && <Pill tone="info">Konseling</Pill>}
                   {r.status === "done" && <Pill tone="good">Selesai</Pill>}
                 </Td>
+                <Td>{r.status !== "done" ? <button type="button" onClick={() => advance(r.id)} className="text-xs font-medium text-brand hover:underline">Tahap berikutnya</button> : <span className="text-xs text-muted-foreground">Selesai</span>}</Td>
               </tr>
             ))}
           </tbody>

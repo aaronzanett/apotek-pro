@@ -1,8 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 import { Receipt, TrendingUp, ShoppingBag, Users } from "lucide-react";
 import { OwnerLayout } from "@/components/app/OwnerLayout";
 import { Grid, Pill, SectionHeader, Stack, StatCard, TableCard, Td, Th, Toolbar } from "@/components/app/ui";
 import { useLang } from "@/lib/i18n";
+import { ActionDialog } from "@/components/app/ActionDialog";
 
 export const Route = createFileRoute("/app/sales")({
   head: () => ({ meta: [{ title: "Penjualan — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
@@ -20,6 +22,10 @@ const tx = [
 
 function SalesPage() {
   const { t } = useLang();
+  const navigate = useNavigate();
+  const [query, setQuery] = useState("");
+  const [selected, setSelected] = useState<(typeof tx)[number] | null>(null);
+  const filtered = tx.filter((item) => `${item.id} ${item.cashier} ${item.method}`.toLowerCase().includes(query.toLowerCase()));
   return (
     <OwnerLayout title={t("app.nav.sales")}>
       <Stack>
@@ -31,7 +37,7 @@ function SalesPage() {
         </Grid>
 
         <SectionHeader title="Riwayat penjualan" subtitle="Semua transaksi POS dan resep yang dilayani hari ini." />
-        <Toolbar searchPlaceholder="Cari nomor invoice atau kasir…" primaryLabel="Buka POS" />
+        <Toolbar searchPlaceholder="Cari nomor invoice atau kasir…" primaryLabel="Buka POS" onSearch={setQuery} onPrimary={() => navigate({ to: "/app/pos" })} exportRows={tx} />
 
         <TableCard>
           <thead>
@@ -46,8 +52,8 @@ function SalesPage() {
             </tr>
           </thead>
           <tbody>
-            {tx.map((t) => (
-              <tr key={t.id} className="hover:bg-cream/30">
+            {filtered.map((t) => (
+              <tr key={t.id} className="cursor-pointer hover:bg-cream/30" onClick={() => setSelected(t)}>
                 <Td className="font-mono text-xs">{t.id}</Td>
                 <Td className="tabular-nums">{t.time}</Td>
                 <Td>{t.cashier}</Td>
@@ -61,6 +67,9 @@ function SalesPage() {
             ))}
           </tbody>
         </TableCard>
+        <ActionDialog open={!!selected} onOpenChange={(open) => !open && setSelected(null)} title={selected ? `Detail ${selected.id}` : "Detail transaksi"} description={selected ? `${selected.time} · ${selected.cashier} · ${selected.method} · ${selected.total}` : undefined} onConfirm={() => undefined}>
+          <div className="rounded-xl bg-cream/60 p-4 text-sm"><p className="font-medium">{selected?.items} item · {selected?.type}</p><p className="mt-1 text-muted-foreground">Transaksi demo tercatat dan pembayaran telah terverifikasi.</p></div>
+        </ActionDialog>
       </Stack>
     </OwnerLayout>
   );
