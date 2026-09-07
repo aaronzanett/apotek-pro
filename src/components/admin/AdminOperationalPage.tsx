@@ -18,7 +18,7 @@ const tone = (value: string) => value.includes("active") || value.includes("paid
 
 export function AdminOperationalPage({ mode }: { mode: AdminMode }) {
   const ws = useAdminWorkspace(); const { lang } = useLang(); const [query, setQuery] = useState("");
-  const collectionKey: keyof AdminState = mode === "support" ? "tickets" : mode === "billing" ? "invoices" : mode === "settings" ? "tenants" : mode;
+  const collectionKey: keyof AdminState = mode === "support" ? "tickets" : mode === "billing" ? "invoices" : mode === "system" ? "services" : mode === "settings" ? "tenants" : mode;
   const collection = (ws[collectionKey] ?? []) as unknown as Array<Record<string, unknown>>;
   const rows = useMemo(() => collection.filter((row) => JSON.stringify(row).toLowerCase().includes(query.toLowerCase())), [collection, query]);
   const setRows = (value: Array<Record<string, unknown>>) => ws.setCollection(collectionKey, value as never);
