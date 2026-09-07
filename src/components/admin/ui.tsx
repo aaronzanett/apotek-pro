@@ -72,7 +72,7 @@ export function AGrid({ cols = 4, children }: { cols?: 2 | 3 | 4; children: Reac
   return <div className={cn("grid grid-cols-1 gap-3", map[cols])}>{children}</div>;
 }
 
-export function AToolbar({ searchPlaceholder = "Search…", onSearch, filters, exportRows, primaryLabel, onPrimary }: {
+export function AToolbar({ searchPlaceholder = "Search…", onSearch, filters, onFilter, exportRows, primaryLabel, onPrimary }: {
   searchPlaceholder?: string; onSearch?: (value: string) => void; filters?: string[]; onFilter?: (value: string) => void; exportRows?: Array<Record<string, string | number | boolean>>; primaryLabel?: string; onPrimary?: (value: string) => void;
 }) {
   const [filterOpen, setFilterOpen] = useState(false);
