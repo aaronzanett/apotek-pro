@@ -43,12 +43,12 @@ function SubsPage() {
           <tbody>
             {SUBS.map((s) => (
               <tr key={s.tenant}>
-                <ATd className="font-medium text-white">{s.tenant}</ATd>
+                <ATd className="font-medium text-foreground">{s.tenant}</ATd>
                 <ATd>{s.plan}</ATd>
                 <ATd className="text-right">{s.seats}</ATd>
                 <ATd className="text-right">{s.branches}</ATd>
-                <ATd className="text-right font-medium text-white">{formatPrice(s.mrr, lang)}</ATd>
-                <ATd className="text-white/60">{s.renews}</ATd>
+                <ATd className="text-right font-medium text-foreground">{formatPrice(s.mrr, lang)}</ATd>
+                <ATd className="text-muted-foreground">{s.renews}</ATd>
                 <ATd>
                   {s.status === "active" && <APill tone="good">active</APill>}
                   {s.status === "trial" && <APill tone="info">trial</APill>}

@@ -47,8 +47,8 @@ function AdminSupportPage() {
                 <tbody>
                   {TICKETS.map((t) => (
                     <tr key={t.id}>
-                      <ATd className="font-mono text-xs text-white/60">{t.id}</ATd>
-                      <ATd className="font-medium text-white">{t.subject}</ATd>
+                      <ATd className="font-mono text-xs text-muted-foreground">{t.id}</ATd>
+                      <ATd className="font-medium text-foreground">{t.subject}</ATd>
                       <ATd>{t.tenant}</ATd>
                       <ATd>
                         {t.priority === "high" && <APill tone="bad">high</APill>}
@@ -61,7 +61,7 @@ function AdminSupportPage() {
                         {t.status === "resolved" && <APill tone="good">resolved</APill>}
                       </ATd>
                       <ATd>{t.assignee}</ATd>
-                      <ATd className="text-white/60">{t.age}</ATd>
+                      <ATd className="text-muted-foreground">{t.age}</ATd>
                     </tr>
                   ))}
                 </tbody>
@@ -77,12 +77,12 @@ function AdminSupportPage() {
                 { name: "Maya Nadia", role: "Secondary", until: "Sun 18:00" },
                 { name: "Dion Permana", role: "Engineering escalation", until: "—" },
               ].map((p) => (
-                <li key={p.name} className="flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] p-3">
+                <li key={p.name} className="flex items-center justify-between rounded-xl border border-border bg-cream/40 p-3">
                   <div>
-                    <p className="font-medium text-white">{p.name}</p>
-                    <p className="text-[11px] text-white/40">{p.role}</p>
+                    <p className="font-medium text-foreground">{p.name}</p>
+                    <p className="text-[11px] text-muted-foreground">{p.role}</p>
                   </div>
-                  <span className="text-[11px] text-white/50">until {p.until}</span>
+                  <span className="text-[11px] text-muted-foreground">until {p.until}</span>
                 </li>
               ))}
             </ul>

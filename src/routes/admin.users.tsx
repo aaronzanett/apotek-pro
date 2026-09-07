@@ -43,14 +43,14 @@ function AdminUsersPage() {
           <tbody>
             {USERS.map((u) => (
               <tr key={u.email}>
-                <ATd className="font-medium text-white">{u.name}</ATd>
+                <ATd className="font-medium text-foreground">{u.name}</ATd>
                 <ATd>{u.email}</ATd>
                 <ATd>{u.tenant}</ATd>
                 <ATd><APill tone="info">{u.role}</APill></ATd>
                 <ATd>{u.mfa ? <APill tone="good">on</APill> : <APill tone="warn">off</APill>}</ATd>
-                <ATd className="text-white/60">{u.lastSeen}</ATd>
+                <ATd className="text-muted-foreground">{u.lastSeen}</ATd>
                 <ATd>
-                  <button className="text-xs text-brand-accent hover:underline">Impersonate</button>
+                  <button className="text-xs text-brand hover:underline">Impersonate</button>
                 </ATd>
               </tr>
             ))}

@@ -30,9 +30,9 @@ function AdminSettingsPage() {
                 ["Support email", "support@apotekpro.com"],
                 ["Default locale", "Indonesian (id-ID)"],
               ].map(([k, v]) => (
-                <div key={k} className="flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3">
-                  <span className="text-white/60">{k}</span>
-                  <span className="font-medium text-white">{v}</span>
+                <div key={k} className="flex items-center justify-between rounded-xl border border-border bg-cream/40 px-4 py-3">
+                  <span className="text-muted-foreground">{k}</span>
+                  <span className="font-medium text-foreground">{v}</span>
                 </div>
               ))}
             </div>
@@ -47,8 +47,8 @@ function AdminSettingsPage() {
                 ["IP allowlist for console", "Off", "warn"],
                 ["Data residency", "ap-southeast-1", "info"],
               ].map(([k, v, t]) => (
-                <div key={k as string} className="flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3">
-                  <span className="text-white/60">{k}</span>
+                <div key={k as string} className="flex items-center justify-between rounded-xl border border-border bg-cream/40 px-4 py-3">
+                  <span className="text-muted-foreground">{k}</span>
                   <APill tone={t as "good" | "warn" | "info" | "default"}>{v}</APill>
                 </div>
               ))}
@@ -60,12 +60,12 @@ function AdminSettingsPage() {
           <ASectionHeader title="Feature flags" subtitle="Gradual rollouts and beta features" />
           <div className="mt-4 grid grid-cols-1 gap-2 lg:grid-cols-2">
             {FLAGS.map((f) => (
-              <div key={f.key} className="rounded-xl border border-white/5 bg-white/[0.02] p-4">
+              <div key={f.key} className="rounded-xl border border-border bg-cream/40 p-4">
                 <div className="flex items-center justify-between">
-                  <code className="font-mono text-xs text-brand-accent">{f.key}</code>
+                  <code className="font-mono text-xs text-brand">{f.key}</code>
                   <APill tone={f.tone}>{f.state}</APill>
                 </div>
-                <p className="mt-2 text-sm text-white/70">{f.desc}</p>
+                <p className="mt-2 text-sm text-foreground">{f.desc}</p>
               </div>
             ))}
           </div>
@@ -82,7 +82,7 @@ function AdminSettingsPage() {
               ["PagerDuty", "warn"],
               ["Slack #ops", "good"],
             ].map(([name, t]) => (
-              <li key={name as string} className="flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] p-3 text-white/80">
+              <li key={name as string} className="flex items-center justify-between rounded-xl border border-border bg-cream/40 p-3 text-foreground">
                 {name}
                 <APill tone={t as "good" | "warn"}>{t === "good" ? "connected" : "needs review"}</APill>
               </li>

@@ -32,11 +32,11 @@ function TenantsPage() {
 
         <div className="flex flex-wrap items-center gap-2">
           <div className="relative flex-1 min-w-[260px]">
-            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
-            <input placeholder="Search tenants by name, owner or ID…" className="block w-full rounded-full border border-white/10 bg-white/5 px-10 py-2 text-sm text-white placeholder:text-white/40 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" />
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <input placeholder="Search tenants by name, owner or ID…" className="block w-full rounded-full border border-border bg-cream/60 px-10 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" />
           </div>
-          <button className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/70 hover:bg-white/10">All plans</button>
-          <button className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/70 hover:bg-white/10">All status</button>
+          <button className="rounded-full border border-border bg-cream/60 px-3 py-2 text-xs text-foreground hover:bg-secondary">All plans</button>
+          <button className="rounded-full border border-border bg-cream/60 px-3 py-2 text-xs text-foreground hover:bg-secondary">All status</button>
           <button className="ml-auto rounded-full bg-brand px-4 py-2 text-xs font-medium text-brand-foreground">Export CSV</button>
         </div>
 
@@ -56,13 +56,13 @@ function TenantsPage() {
           </thead>
           <tbody>
             {TENANTS.map((r) => (
-              <tr key={r.id} className="hover:bg-white/[0.02]">
-                <ATd className="font-medium text-white">
+              <tr key={r.id} className="hover:bg-cream/40">
+                <ATd className="font-medium text-foreground">
                   <div className="flex items-center gap-2">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand/15 text-brand-accent"><Building2 className="h-3.5 w-3.5" /></span>
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand/15 text-brand"><Building2 className="h-3.5 w-3.5" /></span>
                     <div>
                       <p>{r.name}</p>
-                      <p className="text-[11px] text-white/40">{r.id} · {r.country}</p>
+                      <p className="text-[11px] text-muted-foreground">{r.id} · {r.country}</p>
                     </div>
                   </div>
                 </ATd>
@@ -70,16 +70,16 @@ function TenantsPage() {
                 <ATd>{r.plan}</ATd>
                 <ATd className="text-right">{r.branches}</ATd>
                 <ATd className="text-right">{r.users}</ATd>
-                <ATd className="text-right font-medium text-white">{formatPrice(r.mrr, lang)}</ATd>
+                <ATd className="text-right font-medium text-foreground">{formatPrice(r.mrr, lang)}</ATd>
                 <ATd>
                   {r.status === "active" && <APill tone="good">active</APill>}
                   {r.status === "trial" && <APill tone="info">trial</APill>}
                   {r.status === "past_due" && <APill tone="bad">past due</APill>}
                   {r.status === "suspended" && <APill tone="warn">suspended</APill>}
                 </ATd>
-                <ATd className="text-white/60">{r.since}</ATd>
+                <ATd className="text-muted-foreground">{r.since}</ATd>
                 <ATd>
-                  <button className="inline-flex items-center gap-1 text-xs text-brand-accent hover:underline">
+                  <button className="inline-flex items-center gap-1 text-xs text-brand hover:underline">
                     Open <ExternalLink className="h-3 w-3" />
                   </button>
                 </ATd>

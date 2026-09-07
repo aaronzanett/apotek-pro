@@ -46,11 +46,11 @@ function BillingPage() {
                 <tbody>
                   {INVOICES.map((i) => (
                     <tr key={i.id}>
-                      <ATd className="font-mono text-xs text-white/70">{i.id}</ATd>
-                      <ATd className="font-medium text-white">{i.tenant}</ATd>
-                      <ATd className="text-right font-medium text-white">{formatPrice(i.amount, lang)}</ATd>
-                      <ATd className="text-white/60">{i.issued}</ATd>
-                      <ATd className="text-white/60">{i.paid}</ATd>
+                      <ATd className="font-mono text-xs text-foreground">{i.id}</ATd>
+                      <ATd className="font-medium text-foreground">{i.tenant}</ATd>
+                      <ATd className="text-right font-medium text-foreground">{formatPrice(i.amount, lang)}</ATd>
+                      <ATd className="text-muted-foreground">{i.issued}</ATd>
+                      <ATd className="text-muted-foreground">{i.paid}</ATd>
                       <ATd>
                         {i.status === "paid" && <APill tone="good">paid</APill>}
                         {i.status === "open" && <APill tone="info">open</APill>}
@@ -72,8 +72,8 @@ function BillingPage() {
                 { name: "Midtrans", state: "needs review", tone: "warn" as const },
                 { name: "Bank transfer", state: "manual", tone: "default" as const },
               ].map((p) => (
-                <li key={p.name} className="flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] p-3">
-                  <span className="font-medium text-white">{p.name}</span>
+                <li key={p.name} className="flex items-center justify-between rounded-xl border border-border bg-cream/40 p-3">
+                  <span className="font-medium text-foreground">{p.name}</span>
                   <APill tone={p.tone}>{p.state}</APill>
                 </li>
               ))}

@@ -28,19 +28,19 @@ function AnnouncementsPage() {
           {ITEMS.map((a) => (
             <ACard key={a.title}>
               <div className="flex items-start gap-4">
-                <span className="mt-0.5 inline-flex h-9 w-9 items-center justify-center rounded-xl bg-brand/15 text-brand-accent">
+                <span className="mt-0.5 inline-flex h-9 w-9 items-center justify-center rounded-xl bg-brand/15 text-brand">
                   <Megaphone className="h-4 w-4" />
                 </span>
                 <div className="flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="font-medium text-white">{a.title}</h3>
+                    <h3 className="font-medium text-foreground">{a.title}</h3>
                     {a.status === "published" && <APill tone="good">published</APill>}
                     {a.status === "scheduled" && <APill tone="info">scheduled</APill>}
                     {a.status === "draft" && <APill tone="warn">draft</APill>}
                   </div>
-                  <p className="mt-1 text-xs text-white/50">Audience: {a.audience} · Updated {a.date}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">Audience: {a.audience} · Updated {a.date}</p>
                 </div>
-                <button className="text-xs text-brand-accent hover:underline">Edit</button>
+                <button className="text-xs text-brand hover:underline">Edit</button>
               </div>
             </ACard>
           ))}
@@ -50,7 +50,7 @@ function AnnouncementsPage() {
           <ASectionHeader title="Channels" subtitle="Where announcements appear" />
           <ul className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2 text-sm">
             {["In-app banner (owner workspace)", "Email digest (weekly)", "Status page", "Webhook to /api/announcements"].map((c) => (
-              <li key={c} className="flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] p-3 text-white/80">
+              <li key={c} className="flex items-center justify-between rounded-xl border border-border bg-cream/40 p-3 text-foreground">
                 {c}
                 <APill tone="good">on</APill>
               </li>

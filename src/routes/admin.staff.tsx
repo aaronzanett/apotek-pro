@@ -47,7 +47,7 @@ function StaffPage() {
           <tbody>
             {STAFF.map((s) => (
               <tr key={s.email}>
-                <ATd className="font-medium text-white">{s.name}</ATd>
+                <ATd className="font-medium text-foreground">{s.name}</ATd>
                 <ATd>{s.email}</ATd>
                 <ATd>
                   {s.role === "superadmin" && <APill tone="bad">superadmin</APill>}
@@ -57,9 +57,9 @@ function StaffPage() {
                 </ATd>
                 <ATd>{s.team}</ATd>
                 <ATd>{s.mfa ? <APill tone="good">on</APill> : <APill tone="bad">off</APill>}</ATd>
-                <ATd className="text-white/60">{s.lastSeen}</ATd>
+                <ATd className="text-muted-foreground">{s.lastSeen}</ATd>
                 <ATd>
-                  <button className="text-xs text-brand-accent hover:underline">Manage</button>
+                  <button className="text-xs text-brand hover:underline">Manage</button>
                 </ATd>
               </tr>
             ))}

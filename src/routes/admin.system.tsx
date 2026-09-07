@@ -40,10 +40,10 @@ function SystemPage() {
           <ASectionHeader title="Services" subtitle="Live health from internal probes" />
           <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
             {SERVICES.map((s) => (
-              <div key={s.name} className="flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] p-3">
+              <div key={s.name} className="flex items-center justify-between rounded-xl border border-border bg-cream/40 p-3">
                 <div>
-                  <p className="font-medium text-white">{s.name}</p>
-                  <p className="text-[11px] text-white/40">{s.region} · p95 {s.p95}</p>
+                  <p className="font-medium text-foreground">{s.name}</p>
+                  <p className="text-[11px] text-muted-foreground">{s.region} · p95 {s.p95}</p>
                 </div>
                 <APill tone={tone(s.status)}>{s.status}</APill>
               </div>
@@ -53,16 +53,16 @@ function SystemPage() {
 
         <ACard>
           <ASectionHeader title="Open incident" subtitle="INC-204 · Background workers degraded" />
-          <ol className="mt-4 space-y-3 border-l border-white/10 pl-5">
+          <ol className="mt-4 space-y-3 border-l border-border pl-5">
             <li className="relative">
               <span className="absolute -left-[27px] top-1 h-2.5 w-2.5 rounded-full bg-amber-400" />
-              <p className="text-sm font-medium text-white">10:42 — Investigating</p>
-              <p className="text-xs text-white/60">Job queue p95 above 30s. Likely Redis backpressure on ap-southeast-1.</p>
+              <p className="text-sm font-medium text-foreground">10:42 — Investigating</p>
+              <p className="text-xs text-muted-foreground">Job queue p95 above 30s. Likely Redis backpressure on ap-southeast-1.</p>
             </li>
             <li className="relative">
               <span className="absolute -left-[27px] top-1 h-2.5 w-2.5 rounded-full bg-white/20" />
-              <p className="text-sm font-medium text-white/80">10:30 — Detected</p>
-              <p className="text-xs text-white/50">Auto-alert from queue depth monitor.</p>
+              <p className="text-sm font-medium text-foreground">10:30 — Detected</p>
+              <p className="text-xs text-muted-foreground">Auto-alert from queue depth monitor.</p>
             </li>
           </ol>
         </ACard>

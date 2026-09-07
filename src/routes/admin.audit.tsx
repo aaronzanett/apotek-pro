@@ -23,9 +23,9 @@ function AuditPage() {
     <AdminLayout title={t("admin.page.audit.title")} subtitle={t("admin.page.audit.subtitle")}>
       <div className="space-y-6">
         <div className="flex flex-wrap items-center gap-2">
-          <input placeholder="Filter actor, action or target…" className="flex-1 min-w-[260px] rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-white/40 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" />
-          <button className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/70 hover:bg-white/10">Last 24h</button>
-          <button className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/70 hover:bg-white/10">All severity</button>
+          <input placeholder="Filter actor, action or target…" className="flex-1 min-w-[260px] rounded-full border border-border bg-cream/60 px-4 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30" />
+          <button className="rounded-full border border-border bg-cream/60 px-3 py-2 text-xs text-foreground hover:bg-secondary">Last 24h</button>
+          <button className="rounded-full border border-border bg-cream/60 px-3 py-2 text-xs text-foreground hover:bg-secondary">All severity</button>
           <button className="ml-auto rounded-full bg-brand px-4 py-2 text-xs font-medium text-brand-foreground">Export</button>
         </div>
 
@@ -43,11 +43,11 @@ function AuditPage() {
           <tbody>
             {LOG.map((l, i) => (
               <tr key={i}>
-                <ATd className="font-mono text-[12px] text-white/60">{l.ts}</ATd>
-                <ATd className="text-white">{l.actor}</ATd>
-                <ATd className="font-mono text-[12px] text-brand-accent">{l.action}</ATd>
+                <ATd className="font-mono text-[12px] text-muted-foreground">{l.ts}</ATd>
+                <ATd className="text-foreground">{l.actor}</ATd>
+                <ATd className="font-mono text-[12px] text-brand">{l.action}</ATd>
                 <ATd>{l.target}</ATd>
-                <ATd className="font-mono text-[12px] text-white/50">{l.ip}</ATd>
+                <ATd className="font-mono text-[12px] text-muted-foreground">{l.ip}</ATd>
                 <ATd>
                   {l.severity === "high" && <APill tone="bad">high</APill>}
                   {l.severity === "med" && <APill tone="warn">medium</APill>}
