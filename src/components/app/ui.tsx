@@ -1,6 +1,9 @@
-import type { ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import { Search, Plus, Filter, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { ActionDialog } from "@/components/app/ActionDialog";
+import { toast } from "sonner";
 
 /* ---------- KPI / Stat card ---------- */
 export function StatCard({
@@ -41,40 +44,69 @@ export function Toolbar({
   primaryLabel,
   onPrimary,
   extra,
+  onSearch,
+  filterOptions,
+  exportRows,
 }: {
   searchPlaceholder?: string;
   primaryLabel?: string;
   onPrimary?: () => void;
   extra?: ReactNode;
+  onSearch?: (value: string) => void;
+  filterOptions?: string[];
+  exportRows?: Array<Record<string, string | number>>;
 }) {
+  const [query, setQuery] = useState("");
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [activeFilter, setActiveFilter] = useState("Semua");
+  const [actionOpen, setActionOpen] = useState(false);
+  const options = useMemo(() => filterOptions ?? ["Semua", "Aktif", "Perlu tindakan"], [filterOptions]);
+  const runPrimary = () => onPrimary ? onPrimary() : setActionOpen(true);
+  const exportCsv = () => {
+    const data = exportRows?.length ? exportRows : [{ laporan: "Apotek Pro", pencarian: query || "Semua", filter: activeFilter }];
+    const headers = Object.keys(data[0] ?? {});
+    const csv = [headers.join(","), ...data.map((row) => headers.map((key) => JSON.stringify(row[key] ?? "")).join(","))].join("\n");
+    const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = "apotek-pro-export.csv";
+    anchor.click();
+    URL.revokeObjectURL(url);
+    toast.success("Data berhasil diekspor");
+  };
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div className="relative flex flex-wrap items-center gap-2">
       <div className="relative flex-1 min-w-[220px]">
         <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <input
           type="search"
+          value={query}
+          onChange={(event) => { setQuery(event.target.value); onSearch?.(event.target.value); }}
           placeholder={searchPlaceholder ?? "Cari…"}
           className="block w-full rounded-full border border-border bg-cream/60 px-10 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
         />
       </div>
-      <button className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3 py-2 text-xs font-medium text-foreground transition-colors hover:bg-secondary">
+      <Button type="button" variant="outline" size="sm" onClick={() => setFilterOpen((value) => !value)}>
         <Filter className="h-3.5 w-3.5" />
-        Filter
-      </button>
-      <button className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3 py-2 text-xs font-medium text-foreground transition-colors hover:bg-secondary">
+        {activeFilter === "Semua" ? "Filter" : activeFilter}
+      </Button>
+      {filterOpen && (
+        <div className="absolute right-28 top-11 z-20 w-44 rounded-xl border border-border bg-background p-1 shadow-card">
+          {options.map((option) => <Button key={option} type="button" variant="ghost" size="sm" className="w-full justify-start" onClick={() => { setActiveFilter(option); setFilterOpen(false); toast.info(`Filter: ${option}`); }}>{option}</Button>)}
+        </div>
+      )}
+      <Button type="button" variant="outline" size="sm" onClick={exportCsv}>
         <Download className="h-3.5 w-3.5" />
         Ekspor
-      </button>
+      </Button>
       {extra}
       {primaryLabel && (
-        <button
-          onClick={onPrimary}
-          className="ml-auto inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-xs font-medium text-background transition-colors hover:bg-ink/90"
-        >
+        <Button type="button" variant="brand" size="sm" onClick={runPrimary} className="ml-auto">
           <Plus className="h-3.5 w-3.5" />
           {primaryLabel}
-        </button>
+        </Button>
       )}
+      {primaryLabel && !onPrimary && <ActionDialog open={actionOpen} onOpenChange={setActionOpen} title={primaryLabel} />}
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/r
 
 import appCss from "../styles.css?url";
 import { LanguageProvider, useLang } from "@/lib/i18n";
+import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundContent() {
   const { t } = useLang();
@@ -73,6 +74,7 @@ function RootComponent() {
   return (
     <LanguageProvider>
       <Outlet />
+      <Toaster position="top-right" richColors />
     </LanguageProvider>
   );
 }

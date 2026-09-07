@@ -44,6 +44,9 @@ import { Wordmark } from "@/components/site/Wordmark";
 import { cn } from "@/lib/utils";
 import { useLang, type Lang } from "@/lib/i18n";
 import { getDemoSession, signOutDemo, DEMO_OWNER } from "@/lib/demo-session";
+import { globalSearchItems, branches, useOwnerWorkspace } from "@/lib/owner-demo";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 type NavItem = {
   to: string;
@@ -182,7 +185,11 @@ export function OwnerLayout({ children, title }: { children: ReactNode; title?: 
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
+  const [branchMenu, setBranchMenu] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [search, setSearch] = useState("");
   const [session, setSession] = useState<typeof DEMO_OWNER | null>(null);
+  const workspace = useOwnerWorkspace();
 
   // Hydrate session client-side, redirect to /login if absent
   useEffect(() => {
@@ -229,6 +236,11 @@ export function OwnerLayout({ children, title }: { children: ReactNode; title?: 
     signOutDemo();
     navigate({ to: "/login" });
   };
+
+  const searchResults = search.trim().length > 1
+    ? globalSearchItems.filter((item) => `${item.label} ${item.detail}`.toLowerCase().includes(search.toLowerCase()))
+    : [];
+  const unreadCount = workspace.notifications.filter((item) => !item.read).length;
 
   const initials =
     (session?.name ?? "U")
@@ -374,28 +386,70 @@ export function OwnerLayout({ children, title }: { children: ReactNode; title?: 
               <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <input
                 type="search"
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" && searchResults[0]) {
+                    navigate({ to: searchResults[0].to });
+                    setSearch("");
+                  }
+                }}
                 placeholder={t("app.search")}
                 className="block w-full rounded-full border border-border bg-cream/60 px-10 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
               />
+              {searchResults.length > 0 && (
+                <div className="absolute left-0 right-0 top-11 z-50 overflow-hidden rounded-xl border border-border bg-background p-1 shadow-card">
+                  {searchResults.map((result) => (
+                    <Button key={result.label} type="button" variant="ghost" className="h-auto w-full justify-start rounded-lg px-3 py-2 text-left" onClick={() => { navigate({ to: result.to }); setSearch(""); }}>
+                      <span><span className="block text-sm font-medium">{result.label}</span><span className="block text-xs font-normal text-muted-foreground">{result.detail}</span></span>
+                    </Button>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="ml-auto flex items-center gap-2">
               {/* Branch picker */}
-              <button className="hidden items-center gap-2 rounded-full border border-border bg-cream/60 px-3 py-1.5 text-xs text-foreground transition-colors hover:bg-cream md:inline-flex">
-                <Building2 className="h-3.5 w-3.5 text-muted-foreground" />
-                {session?.branch ?? DEMO_OWNER.branch}
-                <ChevronDown className="h-3 w-3 text-muted-foreground" />
-              </button>
+              <div className="relative hidden md:block">
+                <Button type="button" variant="outline" size="sm" onClick={() => setBranchMenu((value) => !value)}>
+                  <Building2 className="h-3.5 w-3.5 text-muted-foreground" />
+                  {workspace.activeBranch}
+                  <ChevronDown className="h-3 w-3 text-muted-foreground" />
+                </Button>
+                {branchMenu && <div className="absolute right-0 top-10 z-50 w-52 rounded-xl border border-border bg-background p-1 shadow-card">
+                  {branches.map((branch) => <Button key={branch} type="button" variant="ghost" size="sm" className={cn("w-full justify-start", branch === workspace.activeBranch && "bg-brand/10 text-brand")} onClick={() => { workspace.setBranch(branch); setBranchMenu(false); toast.success(`Cabang aktif: ${branch}`); }}>{branch}</Button>)}
+                </div>}
+              </div>
 
               <LangPill />
 
-              <button
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                onClick={() => setNotificationsOpen((value) => !value)}
                 className="relative inline-flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
                 aria-label="Notifications"
               >
                 <Bell className="h-4 w-4" />
-                <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-destructive" />
-              </button>
+                {unreadCount > 0 && <span className="absolute right-0 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-destructive px-1 text-[9px] font-semibold text-destructive-foreground">{unreadCount}</span>}
+              </Button>
+              {notificationsOpen && (
+                <div className="absolute right-16 top-14 z-50 w-[min(380px,calc(100vw-2rem))] overflow-hidden rounded-2xl border border-border bg-background shadow-card">
+                  <div className="flex items-center justify-between border-b border-border px-4 py-3">
+                    <div><p className="text-sm font-semibold">Notifikasi</p><p className="text-xs text-muted-foreground">{unreadCount} belum dibaca</p></div>
+                    <Button type="button" variant="ghost" size="sm" onClick={() => { workspace.markAllRead(); toast.success("Semua notifikasi ditandai dibaca"); }}>Tandai semua</Button>
+                  </div>
+                  <div className="max-h-96 overflow-y-auto p-2">
+                    {workspace.notifications.map((item) => (
+                      <Button key={item.id} type="button" variant="ghost" className={cn("h-auto w-full justify-start rounded-xl px-3 py-3 text-left", !item.read && "bg-brand/5")} onClick={() => { workspace.markRead(item.id); setNotificationsOpen(false); navigate({ to: item.to }); }}>
+                        <span className={cn("mt-1 h-2 w-2 shrink-0 rounded-full", item.read ? "bg-border" : item.tone === "warn" ? "bg-amber-500" : item.tone === "good" ? "bg-emerald-500" : "bg-brand")} />
+                        <span className="min-w-0"><span className="block whitespace-normal text-sm font-medium">{item.title}</span><span className="mt-0.5 block whitespace-normal text-xs font-normal text-muted-foreground">{item.detail}</span><span className="mt-1 block text-[10px] font-normal text-muted-foreground">{item.time}</span></span>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* User menu */}
               <div className="relative">
@@ -439,13 +493,15 @@ export function OwnerLayout({ children, title }: { children: ReactNode; title?: 
                           <Settings className="h-3.5 w-3.5 text-muted-foreground" />
                           {t("app.profile")}
                         </Link>
-                        <a
-                          href="#"
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          onClick={() => { setUserMenu(false); toast.info("Pusat bantuan demo", { description: "Tim dukungan tersedia Senin–Jumat, 08.00–17.00 WIB." }); }}
                           className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-foreground transition-colors hover:bg-secondary"
                         >
                           <HelpCircle className="h-3.5 w-3.5 text-muted-foreground" />
                           {t("app.help")}
-                        </a>
+                        </Button>
                         <button
                           onClick={handleSignOut}
                           className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-sm text-destructive transition-colors hover:bg-destructive/10"
