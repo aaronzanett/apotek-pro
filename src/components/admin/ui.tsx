@@ -73,7 +73,7 @@ export function AGrid({ cols = 4, children }: { cols?: 2 | 3 | 4; children: Reac
 }
 
 export function AToolbar({ searchPlaceholder = "Search…", onSearch, filters, exportRows, primaryLabel, onPrimary }: {
-  searchPlaceholder?: string; onSearch?: (value: string) => void; filters?: string[]; exportRows?: Array<Record<string, string | number | boolean>>; primaryLabel?: string; onPrimary?: (value: string) => void;
+  searchPlaceholder?: string; onSearch?: (value: string) => void; filters?: string[]; onFilter?: (value: string) => void; exportRows?: Array<Record<string, string | number | boolean>>; primaryLabel?: string; onPrimary?: (value: string) => void;
 }) {
   const [filterOpen, setFilterOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState("All");
@@ -90,7 +90,7 @@ export function AToolbar({ searchPlaceholder = "Search…", onSearch, filters, e
   return <div className="relative flex flex-wrap items-center gap-2">
     <div className="relative min-w-[240px] flex-1"><Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" /><input type="search" onChange={(event) => onSearch?.(event.target.value)} placeholder={searchPlaceholder} className="block w-full rounded-full border border-border bg-cream/60 px-10 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20" /></div>
     <Button type="button" variant="outline" size="sm" onClick={() => setFilterOpen((value) => !value)}><Filter />{activeFilter === "All" ? "Filter" : activeFilter}</Button>
-    {filterOpen && <div className="absolute right-28 top-11 z-20 w-44 rounded-xl border border-border bg-background p-1 shadow-card">{options.map((option) => <Button key={option} type="button" variant="ghost" size="sm" className="w-full justify-start" onClick={() => { setActiveFilter(option); setFilterOpen(false); toast.info(`Filter: ${option}`); }}>{option}</Button>)}</div>}
+    {filterOpen && <div className="absolute right-28 top-11 z-20 w-44 rounded-xl border border-border bg-background p-1 shadow-card">{options.map((option) => <Button key={option} type="button" variant="ghost" size="sm" className="w-full justify-start" onClick={() => { setActiveFilter(option); onFilter?.(option); setFilterOpen(false); toast.info(`Filter: ${option}`); }}>{option}</Button>)}</div>}
     <Button type="button" variant="outline" size="sm" onClick={exportCsv}><Download />Export</Button>
     {primaryLabel && <Button type="button" variant="emerald" size="sm" className="ml-auto" onClick={() => setDialogOpen(true)}><Plus />{primaryLabel}</Button>}
     {primaryLabel && <ActionDialog open={dialogOpen} onOpenChange={setDialogOpen} title={primaryLabel} onConfirm={onPrimary} />}

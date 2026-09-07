@@ -17,10 +17,10 @@ const copy: Record<AdminMode, { title: string; subtitle: string }> = {
 const tone = (value: string) => value.includes("active") || value.includes("paid") || value.includes("operational") || value.includes("published") || value === "true" ? "good" as const : value.includes("past") || value.includes("high") || value.includes("outage") || value.includes("locked") ? "bad" as const : value.includes("trial") || value.includes("waiting") || value.includes("degraded") || value.includes("scheduled") ? "warn" as const : "info" as const;
 
 export function AdminOperationalPage({ mode }: { mode: AdminMode }) {
-  const ws = useAdminWorkspace(); const { lang } = useLang(); const [query, setQuery] = useState("");
+  const ws = useAdminWorkspace(); const { lang } = useLang(); const [query, setQuery] = useState(""); const [filter, setFilter] = useState("All");
   const collectionKey: keyof AdminState = mode === "support" ? "tickets" : mode === "billing" ? "invoices" : mode === "system" ? "services" : mode === "settings" ? "tenants" : mode;
   const collection = (ws[collectionKey] ?? []) as unknown as Array<Record<string, unknown>>;
-  const rows = useMemo(() => collection.filter((row) => JSON.stringify(row).toLowerCase().includes(query.toLowerCase())), [collection, query]);
+  const rows = useMemo(() => collection.filter((row) => JSON.stringify(row).toLowerCase().includes(query.toLowerCase())).filter((row) => filter === "All" || filter === "Active" && ["active", "paid", "operational", "published", "resolved"].includes(String(row.status)) || filter === "Needs action" && !["active", "paid", "operational", "published", "resolved"].includes(String(row.status))), [collection, query, filter]);
   const setRows = (value: Array<Record<string, unknown>>) => ws.setCollection(collectionKey, value as never);
   const action = (row: Record<string, unknown>) => {
     const key = String(row.id ?? row.email ?? row.name ?? row.tenant ?? row.ts); let next = { ...row }; let message = "Updated";
@@ -38,6 +38,9 @@ export function AdminOperationalPage({ mode }: { mode: AdminMode }) {
     const name = value || `New ${mode.slice(0, -1)}`; let row: Record<string, unknown> = { id: `NEW-${Date.now()}`, name, status: "active" };
     if (mode === "tenants") row = { ...row, owner: "Demo Owner", country: "ID", branches: 1, users: 1, plan: "Starter", mrr: 49, status: "trial", since: new Date().toISOString().slice(0, 10) };
     if (mode === "support") row = { id: `T-${Date.now().toString().slice(-4)}`, subject: name, tenant: "Demo tenant", priority: "low", status: "open", assignee: "—", age: "now" };
+    if (mode === "users") row = { name, email: `owner${Date.now()}@demo.id`, tenant: "Demo Pharmacy", role: "owner", lastSeen: "invited", mfa: false, locked: false };
+    if (mode === "subscriptions") row = { tenant: name, plan: "Starter", seats: 3, branches: 1, mrr: 49, renews: new Date(Date.now() + 2592000000).toISOString().slice(0, 10), status: "trial" };
+    if (mode === "billing") row = { id: `INV-${Date.now().toString().slice(-5)}`, tenant: name, amount: 49, issued: new Date().toISOString().slice(0, 10), paid: "—", status: "open" };
     if (mode === "staff") row = { name, email: `new${Date.now()}@zanscode.com`, role: "support", team: "Customer Success", mfa: false, lastSeen: "invited", active: true };
     if (mode === "announcements") row = { id: `ANN-${Date.now()}`, title: name, audience: "All tenants", status: "draft", date: new Date().toISOString().slice(0, 10) };
     setRows([row, ...collection]); ws.addAudit(`${mode}.create`, name); toast.success(`${name} created`);
@@ -46,7 +49,7 @@ export function AdminOperationalPage({ mode }: { mode: AdminMode }) {
   const columns = Object.keys(rows[0] ?? collection[0] ?? {}).slice(0, 7);
   return <AdminLayout title={copy[mode].title} subtitle={copy[mode].subtitle}><div className="space-y-6">
     <AGrid cols={4}><AStat label="Total records" value={collection.length} tone="info" /><AStat label="Healthy / active" value={collection.filter((r) => ["active", "paid", "operational", "published", "resolved"].includes(String(r.status))).length} tone="good" /><AStat label="Needs attention" value={collection.filter((r) => ["past_due", "degraded", "open", "high"].includes(String(r.status ?? r.severity))).length} tone="warn" /><AStat label="Demo storage" value="Local" /></AGrid>
-    <AToolbar onSearch={setQuery} searchPlaceholder={`Search ${mode}…`} exportRows={collection as Array<Record<string, string | number | boolean>>} primaryLabel={["tenants", "support", "staff", "announcements"].includes(mode) ? `New ${mode === "support" ? "ticket" : mode.slice(0, -1)}` : undefined} onPrimary={add} />
+    <AToolbar onSearch={setQuery} onFilter={setFilter} searchPlaceholder={`Search ${mode}…`} exportRows={collection as Array<Record<string, string | number | boolean>>} primaryLabel={["tenants", "users", "support", "subscriptions", "billing", "staff", "announcements"].includes(mode) ? `New ${mode === "support" ? "ticket" : mode === "billing" ? "invoice" : mode.slice(0, -1)}` : undefined} onPrimary={add} />
     <ATable><thead><tr>{columns.map((column) => <ATh key={column}>{column.replaceAll("_", " ")}</ATh>)}{mode !== "audit" && <ATh>Action</ATh>}</tr></thead><tbody>{rows.map((row, index) => <tr key={String(row.id ?? row.email ?? row.name ?? row.tenant ?? row.ts ?? index)}>{columns.map((column) => <ATd key={column} className={column === columns[0] ? "font-medium" : ""}>{column === "mrr" || column === "amount" ? formatPrice(Number(row[column]), lang) : column === "status" || column === "severity" || typeof row[column] === "boolean" ? <APill tone={tone(String(row[column]))}>{String(row[column])}</APill> : String(row[column] ?? "—")}</ATd>)}{mode !== "audit" && <ATd><Button type="button" variant="outline" size="sm" disabled={mode === "billing" && row.status === "paid"} onClick={() => action(row)}>{mode === "support" ? row.status === "resolved" ? "Reopen" : "Resolve" : mode === "billing" ? "Mark paid" : mode === "system" ? "Update status" : "Manage"}</Button></ATd>}</tr>)}</tbody></ATable>
     {!rows.length && <ACard className="py-12 text-center text-sm text-muted-foreground">No matching records.</ACard>}
   </div></AdminLayout>;
