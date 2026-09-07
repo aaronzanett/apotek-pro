@@ -14,6 +14,8 @@ export const Route = createFileRoute("/login")({
       { name: "description", content: "Masuk ke dasbor Apotek Pro untuk mengelola cabang, stok, dan resep apotek Anda." },
       { property: "og:title", content: "Masuk — Apotek Pro" },
       { property: "og:description", content: "Masuk ke dasbor pemilik apotek Apotek Pro." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),

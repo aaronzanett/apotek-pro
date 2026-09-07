@@ -11,6 +11,10 @@ export const Route = createFileRoute("/admin/login")({
     meta: [
       { title: "Konsol Admin — Apotek Pro" },
       { name: "description", content: "Akses internal untuk tim Zanscode." },
+      { property: "og:title", content: "Konsol Admin — Apotek Pro" },
+      { property: "og:description", content: "Akses internal untuk tim Zanscode." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
@@ -148,11 +152,14 @@ function AdminLoginPage() {
 
               <p className="mt-5 text-center text-xs text-white/40">{t("admin.notice")}</p>
             </form>
-
-          <Link to="/login" className="text-background hover:underline">
-            {t("admin.ownerLink")}
-          </Link>
-        </p>
+            <p className="mt-6 text-center text-sm text-white/50">
+              {t("admin.ownerHint")}{" "}
+              <Link to="/login" className="font-medium text-background hover:underline">
+                {t("admin.ownerLink")}
+              </Link>
+            </p>
+          </div>
+        </section>
       </main>
     </div>
   );
