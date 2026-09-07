@@ -363,6 +363,9 @@ const id: Dict = {
   "admin.ownerHint": "Bukan admin?",
   "admin.ownerLink": "Masuk sebagai pemilik apotek",
   "admin.demoFill": "Masuk sebagai admin demo",
+  "admin.demoBody": "Isi kredensial internal demo untuk mencoba konsol staf Zanscode.",
+  "admin.accessTitle": "Akses staf terverifikasi",
+  "admin.accessNote": "Dilindungi dengan kata sandi dan kode otentikasi.",
 
   // Admin shell + nav
   "admin.shell.console": "Konsol Internal",
@@ -831,6 +834,9 @@ const en: Dict = {
   "admin.ownerHint": "Not an admin?",
   "admin.ownerLink": "Sign in as pharmacy owner",
   "admin.demoFill": "Sign in as demo admin",
+  "admin.demoBody": "Fill the internal demo credentials to explore the Zanscode staff console.",
+  "admin.accessTitle": "Verified staff access",
+  "admin.accessNote": "Protected with a password and authenticator code.",
 
   "admin.shell.console": "Internal console",
   "admin.shell.consoleNote": "Zanscode staff workspace for managing the entire Apotek Pro platform.",
