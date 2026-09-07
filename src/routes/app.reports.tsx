@@ -10,7 +10,7 @@ export const Route = createFileRoute("/app/reports")({
     const { t } = useLang();
     return (
       <OwnerLayout title={t("app.nav.reports")}>
-        <OperationalPage icon={BarChart3} description="Buat, tinjau, dan unduh laporan bisnis apotek." primaryLabel="Buat laporan" stats={[{label:"Omzet bulan ini",value:"Rp 486,2 jt",note:"+12,4%"},{label:"Laba kotor",value:"Rp 112,8 jt",note:"Margin 23,2%"},{label:"Laporan terjadwal",value:"6",note:"Berikutnya besok"}]} rows={[{name:"Penjualan harian",detail:"Semua cabang · Hari ini",metric:"Rp 18,4 jt",status:"Tersedia",tone:"success"},{name:"Pergerakan stok",detail:"Cabang Menteng · September",metric:"4.812 mutasi",status:"Tersedia",tone:"success"},{name:"Laba rugi",detail:"Semua cabang · September",metric:"Diproses",status:"Dijadwalkan",tone:"info"}]} />
+        <OperationalPage icon={BarChart3} description="Buat, tinjau, dan unduh laporan bisnis apotek." primaryLabel="Buat laporan" stats={[{label:"Omzet bulan ini",value:"Rp 486,2 jt",note:"+12,4%"},{label:"Laba kotor",value:"Rp 112,8 jt",note:"Margin 23,2%"},{label:"Laporan terjadwal",value:"6",note:"Berikutnya besok"}]} rows={[{name:"Penjualan harian",detail:"Semua cabang · Hari ini",metric:"Rp 18,4 jt",status:"Tersedia",tone:"good"},{name:"Pergerakan stok",detail:"Cabang Menteng · September",metric:"4.812 mutasi",status:"Tersedia",tone:"good"},{name:"Laba rugi",detail:"Semua cabang · September",metric:"Diproses",status:"Dijadwalkan",tone:"info"}]} />
       </OwnerLayout>
     );
   },
