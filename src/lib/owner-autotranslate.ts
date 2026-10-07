@@ -169,14 +169,12 @@ export function startAutoTranslate(root: HTMLElement) {
   };
   const run = (fn: () => void) => { if (busy) return; busy = true; try { fn(); } finally { busy = false; } };
   run(() => walk(root));
-  const titleOrig = document.title; document.title = translateId(document.title);
   const obs = new MutationObserver((muts) => run(() => {
     for (const m of muts) {
       if (m.type === "characterData") doText(m.target as Text);
       else if (m.type === "attributes") doEl(m.target as Element);
       else m.addedNodes.forEach(walk);
     }
-    if (/[a-z]/.test(document.title)) document.title = translateId(document.title);
   }));
   obs.observe(root, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ATTRS });
   return () => {
@@ -186,6 +184,6 @@ export function startAutoTranslate(root: HTMLElement) {
       if (n.nodeType === 3 && o?.text !== undefined) (n as Text).data = o.text;
       if (n.nodeType === 1) { if (o?.attrs) for (const [a, v] of Object.entries(o.attrs)) (n as Element).setAttribute(a, v); n.childNodes.forEach(restore); }
     };
-    restore(root); document.title = titleOrig;
+    restore(root);
   };
 }

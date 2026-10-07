@@ -8,10 +8,10 @@ import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
-    meta: [
-      { title: "Kontak — Apotek Pro" },
+    meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, 
+      { title: "Contact — Apotek Pro" },
       { name: "description", content: "Pesan demo atau hubungi tim kami untuk onboarding, harga, dan dukungan." },
-      { property: "og:title", content: "Kontak — Apotek Pro" },
+      { property: "og:title", content: "Contact — Apotek Pro" },
       { property: "og:description", content: "Pesan demo atau bicara dengan tim Apotek Pro." },
     ],
   }),

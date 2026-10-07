@@ -10,9 +10,9 @@ import { signInDemo, DEMO_OWNER } from "@/lib/demo-session";
 export const Route = createFileRoute("/login")({
   head: () => ({
     meta: [
-      { title: "Masuk pemilik apotek — Apotek Pro" },
+      { title: "Pharmacy Owner Login — Apotek Pro" },
       { name: "description", content: "Masuk ke dasbor Apotek Pro untuk mengelola cabang, stok, dan resep apotek Anda." },
-      { property: "og:title", content: "Masuk — Apotek Pro" },
+      { property: "og:title", content: "Pharmacy Owner Login — Apotek Pro" },
       { property: "og:description", content: "Masuk ke dasbor pemilik apotek Apotek Pro." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

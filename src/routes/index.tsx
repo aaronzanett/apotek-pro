@@ -14,10 +14,10 @@ import productInventory from "@/assets/product-inventory.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
-    meta: [
-      { title: "Apotek Pro — Sistem operasi apotek yang tenang" },
+    meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, 
+      { title: "Apotek Pro — Pharmacy Management Software" },
       { name: "description", content: "POS, resep, inventaris, pemasok, dan kepatuhan dalam satu platform yang tenang dan terhubung — dari Zanscode." },
-      { property: "og:title", content: "Apotek Pro — Sistem operasi apotek yang tenang" },
+      { property: "og:title", content: "Apotek Pro — Pharmacy Management Software" },
       { property: "og:description", content: "POS, resep, inventaris, pemasok, dan kepatuhan dalam satu platform." },
     ],
   }),

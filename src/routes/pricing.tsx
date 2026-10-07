@@ -9,10 +9,10 @@ import { useLang, formatPrice } from "@/lib/i18n";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
-    meta: [
-      { title: "Harga — Apotek Pro" },
+    meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, 
+      { title: "Pricing — Apotek Pro" },
       { name: "description", content: "Harga per cabang yang transparan untuk apotek tunggal, jaringan yang berkembang, dan grup enterprise." },
-      { property: "og:title", content: "Harga — Apotek Pro" },
+      { property: "og:title", content: "Pricing — Apotek Pro" },
       { property: "og:description", content: "Paket untuk setiap ukuran apotek, dari satu konter hingga enterprise multi-cabang." },
     ],
   }),
