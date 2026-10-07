@@ -104,8 +104,9 @@ const D: Record<string, string> = {
   "Baru": "New", "Siap": "Ready", "Diserahkan": "Dispensed", "Diracik": "Compounded", "Verifikasi": "Verification", "Racik": "Compound", "Serahkan": "Dispense",
 };
 
+Object.assign(D, { "Cari manual": "Manual search", "+ Tambah outlet": "+ Add outlet", "Tambah outlet": "Add outlet", "Semua beroperasi": "All operational", "Stok dan opname": "Stock and counts" });
 const WORDS: Array<[RegExp, string]> = [
-  [/\bhari\b/g, "days"], [/\bunit\b/g, "units"], [/\bstaf\b/g, "staff"], [/\bproduk\b/g, "products"], [/\bterjual\b/g, "sold"], [/\bdari kemarin\b/g, "from yesterday"],
+  [/\bJatuh tempo\b/g, "Due"], [/\bhari\b/g, "days"], [/\bunit\b/g, "units"], [/\bstaf\b/g, "staff"], [/\bproduk\b/g, "products"], [/\bterjual\b/g, "sold"], [/\bdari kemarin\b/g, "from yesterday"],
   [/\bjam lalu\b/g, "hours ago"], [/\bmenit lalu\b/g, "minutes ago"], [/\bCabang (\w+)/g, "$1 Branch"], [/\bSemua cabang\b/g, "All branches"], [/\bdalam (\d+) hari/g, "within $1 days"],
   [/\baktif di katalog\b/g, "active in catalog"], [/\brata-rata\b/g, "average"], [/\bkritis\b/g, "critical"], [/\brendah\b/g, "low"], [/\bpemasok utama\b/g, "main suppliers"],
   [/\bcabang\b/g, "branches"], [/\bTarget\b/g, "Target"], [/\bBaik\b/g, "Good"], [/\bBerikutnya besok\b/g, "Next tomorrow"], [/\bMenunggu diterima\b/g, "Awaiting acceptance"],
