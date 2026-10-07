@@ -5,7 +5,7 @@ import { SectionHeader, Stack } from "@/components/app/ui";
 import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/app/settings")({
-  head: () => ({ meta: [{ title: "Pengaturan — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ name: "description", content: "Manage settings with Apotek Pro by Zanscode." }, { property: "og:title", content: "Settings — Apotek Pro" }, { property: "og:description", content: "Manage settings with Apotek Pro by Zanscode." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Settings — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
   component: SettingsPage,
 });
 

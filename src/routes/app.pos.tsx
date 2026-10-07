@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/app/pos")({
-  head: () => ({ meta: [{ title: "Kasir — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ name: "description", content: "Manage point of sale with Apotek Pro by Zanscode." }, { property: "og:title", content: "Point of Sale — Apotek Pro" }, { property: "og:description", content: "Manage point of sale with Apotek Pro by Zanscode." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Point of Sale — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
   component: PosPage,
 });
 

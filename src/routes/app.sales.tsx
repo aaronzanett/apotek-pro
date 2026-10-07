@@ -7,7 +7,7 @@ import { useLang } from "@/lib/i18n";
 import { ActionDialog } from "@/components/app/ActionDialog";
 
 export const Route = createFileRoute("/app/sales")({
-  head: () => ({ meta: [{ title: "Penjualan — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ name: "description", content: "Manage sales with Apotek Pro by Zanscode." }, { property: "og:title", content: "Sales — Apotek Pro" }, { property: "og:description", content: "Manage sales with Apotek Pro by Zanscode." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Sales — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
   component: SalesPage,
 });
 

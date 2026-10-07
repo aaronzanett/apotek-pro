@@ -14,8 +14,8 @@ import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/app/")({
   head: () => ({
-    meta: [
-      { title: "Dasbor — Apotek Pro" },
+    meta: [{ name: "description", content: "Manage dashboard with Apotek Pro by Zanscode." }, { property: "og:title", content: "Dashboard — Apotek Pro" }, { property: "og:description", content: "Manage dashboard with Apotek Pro by Zanscode." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, 
+      { title: "Dashboard — Apotek Pro" },
       { name: "robots", content: "noindex" },
     ],
   }),

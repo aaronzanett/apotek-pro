@@ -1,3 +1,3 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AdminOperationalPage } from "@/components/admin/AdminOperationalPage";
-export const Route = createFileRoute("/admin/staff")({ head: () => ({ meta: [{ title: "Staff — Apotek Pro Admin" }, { name: "robots", content: "noindex" }] }), component: () => <AdminOperationalPage mode="staff" /> });
+export const Route = createFileRoute("/admin/staff")({ head: () => ({ meta: [{ name: "description", content: "Manage staff with Apotek Pro by Zanscode." }, { property: "og:title", content: "Staff — Apotek Pro Admin" }, { property: "og:description", content: "Manage staff with Apotek Pro by Zanscode." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Staff — Apotek Pro Admin" }, { name: "robots", content: "noindex" }] }), component: () => <AdminOperationalPage mode="staff" /> });

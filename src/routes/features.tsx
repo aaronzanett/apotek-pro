@@ -10,10 +10,10 @@ import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/features")({
   head: () => ({
-    meta: [
-      { title: "Fitur — Apotek Pro" },
+    meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, 
+      { title: "Features — Apotek Pro" },
       { name: "description", content: "POS, resep, inventaris batch/kedaluwarsa, pemasok, laporan, dan kepatuhan — setiap alur kerja apotek tercakup." },
-      { property: "og:title", content: "Fitur — Apotek Pro" },
+      { property: "og:title", content: "Features — Apotek Pro" },
       { property: "og:description", content: "Daftar fitur lengkap Apotek Pro dari Zanscode." },
     ],
   }),

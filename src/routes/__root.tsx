@@ -37,7 +37,7 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Apotek Pro — Sistem manajemen apotek dari Zanscode" },
+      { title: "Apotek Pro — Pharmacy Management by Zanscode" },
       { name: "description", content: "Sistem operasi modern untuk apotek: POS, resep, inventaris, pemasok, dan kepatuhan." },
       { name: "author", content: "Zanscode" },
       { property: "og:type", content: "website" },

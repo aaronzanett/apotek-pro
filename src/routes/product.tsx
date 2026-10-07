@@ -11,10 +11,10 @@ import imgReports from "@/assets/product-reports.jpg";
 
 export const Route = createFileRoute("/product")({
   head: () => ({
-    meta: [
-      { title: "Tur produk — Apotek Pro" },
+    meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, 
+      { title: "Product Tour — Apotek Pro" },
       { name: "description", content: "Tur visual modul Apotek Pro: POS, inventaris & kedaluwarsa, pemasok, dan laporan kepatuhan." },
-      { property: "og:title", content: "Tur produk — Apotek Pro" },
+      { property: "og:title", content: "Product Tour — Apotek Pro" },
       { property: "og:description", content: "Lihat modul POS, inventaris, dan laporan Apotek Pro." },
       { property: "og:image", content: imgPos },
       { property: "twitter:image", content: imgPos },

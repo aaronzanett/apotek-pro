@@ -5,7 +5,7 @@ import { OperationalPage } from "@/components/app/OperationalPage";
 import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/app/branches")({
-  head: () => ({ meta: [{ title: "Cabang — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ name: "description", content: "Manage branches with Apotek Pro by Zanscode." }, { property: "og:title", content: "Branches — Apotek Pro" }, { property: "og:description", content: "Manage branches with Apotek Pro by Zanscode." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Branches — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
   component: () => {
     const { t } = useLang();
     return (

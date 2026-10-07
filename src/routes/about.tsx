@@ -9,10 +9,10 @@ import texture from "@/assets/texture-emerald.jpg";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
-    meta: [
-      { title: "Tentang — Apotek Pro by Zanscode" },
+    meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, 
+      { title: "About — Apotek Pro by Zanscode" },
       { name: "description", content: "Apotek Pro dibangun oleh Zanscode untuk membantu apotek beroperasi rapi, patuh, dan berfokus pada pasien." },
-      { property: "og:title", content: "Tentang — Apotek Pro" },
+      { property: "og:title", content: "About — Apotek Pro by Zanscode" },
       { property: "og:description", content: "Misi kami: operasi apotek yang lebih baik, pelayanan pasien yang lebih baik." },
     ],
   }),

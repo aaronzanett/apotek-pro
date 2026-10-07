@@ -5,7 +5,7 @@ import { SectionHeader, Stack, TableCard, Td, Th, Toolbar } from "@/components/a
 import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/app/roles")({
-  head: () => ({ meta: [{ title: "Peran & Akses — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ name: "description", content: "Manage roles & permissions with Apotek Pro by Zanscode." }, { property: "og:title", content: "Roles & Permissions — Apotek Pro" }, { property: "og:description", content: "Manage roles & permissions with Apotek Pro by Zanscode." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Roles & Permissions — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
   component: RolesPage,
 });
 

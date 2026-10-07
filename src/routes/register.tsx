@@ -8,10 +8,10 @@ import { useLang, type Lang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/register")({
   head: () => ({
-    meta: [
-      { title: "Coba demo gratis — Apotek Pro" },
+    meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, 
+      { title: "Free Demo Registration — Apotek Pro" },
       { name: "description", content: "Buat akun pemilik apotek dan coba Apotek Pro gratis. Tanpa kartu kredit." },
-      { property: "og:title", content: "Coba demo gratis — Apotek Pro" },
+      { property: "og:title", content: "Free Demo Registration — Apotek Pro" },
       { property: "og:description", content: "Mulai apotek Anda di Apotek Pro dalam hitungan menit." },
     ],
   }),

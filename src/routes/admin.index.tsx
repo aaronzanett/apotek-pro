@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/admin/")({
-  head: () => ({ meta: [{ title: "Konsol Admin — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ name: "description", content: "Manage admin dashboard with Apotek Pro by Zanscode." }, { property: "og:title", content: "Admin Dashboard — Apotek Pro" }, { property: "og:description", content: "Manage admin dashboard with Apotek Pro by Zanscode." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Admin Dashboard — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
   component: AdminDashboardPage,
 });
 

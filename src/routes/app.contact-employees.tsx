@@ -5,7 +5,7 @@ import { Grid, Pill, SectionHeader, Stack, StatCard, TableCard, Td, Th, Toolbar 
 import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/app/contact-employees")({
-  head: () => ({ meta: [{ title: "Karyawan — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ name: "description", content: "Manage employee contacts with Apotek Pro by Zanscode." }, { property: "og:title", content: "Employee Contacts — Apotek Pro" }, { property: "og:description", content: "Manage employee contacts with Apotek Pro by Zanscode." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Employee Contacts — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
   component: EmployeesPage,
 });
 

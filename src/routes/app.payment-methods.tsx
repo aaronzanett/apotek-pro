@@ -5,7 +5,7 @@ import { Pill, SectionHeader, Stack, TableCard, Td, Th, Toolbar } from "@/compon
 import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/app/payment-methods")({
-  head: () => ({ meta: [{ title: "Metode Pembayaran — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ name: "description", content: "Manage payment methods with Apotek Pro by Zanscode." }, { property: "og:title", content: "Payment Methods — Apotek Pro" }, { property: "og:description", content: "Manage payment methods with Apotek Pro by Zanscode." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Payment Methods — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
   component: PaymentsPage,
 });
 
