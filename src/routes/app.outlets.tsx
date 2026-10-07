@@ -5,7 +5,7 @@ import { Grid, Pill, SectionHeader, Stack, StatCard } from "@/components/app/ui"
 import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/app/outlets")({
-  head: () => ({ meta: [{ title: "Outlet — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ name: "description", content: "Manage outlets with Apotek Pro by Zanscode." }, { property: "og:title", content: "Outlets — Apotek Pro" }, { property: "og:description", content: "Manage outlets with Apotek Pro by Zanscode." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Outlets — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
   component: OutletsPage,
 });
 

@@ -5,7 +5,7 @@ import { Pill, SectionHeader, Stack, TableCard, Td, Th, Toolbar } from "@/compon
 import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/app/shelves")({
-  head: () => ({ meta: [{ title: "Rak — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ name: "description", content: "Manage shelves with Apotek Pro by Zanscode." }, { property: "og:title", content: "Shelves — Apotek Pro" }, { property: "og:description", content: "Manage shelves with Apotek Pro by Zanscode." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Shelves — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
   component: ShelvesPage,
 });
 

@@ -10,9 +10,9 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/admin/login")({
   head: () => ({
     meta: [
-      { title: "Konsol Admin — Apotek Pro" },
+      { title: "Admin Login — Apotek Pro" },
       { name: "description", content: "Akses internal untuk tim Zanscode." },
-      { property: "og:title", content: "Konsol Admin — Apotek Pro" },
+      { property: "og:title", content: "Admin Login — Apotek Pro" },
       { property: "og:description", content: "Akses internal untuk tim Zanscode." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

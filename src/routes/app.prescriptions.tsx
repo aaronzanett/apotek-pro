@@ -6,7 +6,7 @@ import { Grid, Pill, SectionHeader, Stack, StatCard, TableCard, Td, Th, Toolbar 
 import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/app/prescriptions")({
-  head: () => ({ meta: [{ title: "Resep — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ name: "description", content: "Manage prescriptions with Apotek Pro by Zanscode." }, { property: "og:title", content: "Prescriptions — Apotek Pro" }, { property: "og:description", content: "Manage prescriptions with Apotek Pro by Zanscode." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Prescriptions — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
   component: RxPage,
 });
 

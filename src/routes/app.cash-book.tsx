@@ -5,7 +5,7 @@ import { Grid, Pill, SectionHeader, Stack, StatCard, TableCard, Td, Th, Toolbar 
 import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/app/cash-book")({
-  head: () => ({ meta: [{ title: "Buku Kas — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ name: "description", content: "Manage cash book with Apotek Pro by Zanscode." }, { property: "og:title", content: "Cash Book — Apotek Pro" }, { property: "og:description", content: "Manage cash book with Apotek Pro by Zanscode." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Cash Book — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
   component: CashBookPage,
 });
 

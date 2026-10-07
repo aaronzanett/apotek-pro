@@ -5,7 +5,7 @@ import { Grid, Pill, SectionHeader, Stack, StatCard, TableCard, Td, Th, Toolbar 
 import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/app/purchasing")({
-  head: () => ({ meta: [{ title: "Pembelian — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ name: "description", content: "Manage purchasing with Apotek Pro by Zanscode." }, { property: "og:title", content: "Purchasing — Apotek Pro" }, { property: "og:description", content: "Manage purchasing with Apotek Pro by Zanscode." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Purchasing — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
   component: PurchasingPage,
 });
 

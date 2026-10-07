@@ -5,7 +5,7 @@ import { Grid, Pill, SectionHeader, Stack, StatCard, TableCard, Td, Th, Toolbar 
 import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/app/expired-stock")({
-  head: () => ({ meta: [{ title: "Stok Kedaluwarsa — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ name: "description", content: "Manage expired stock with Apotek Pro by Zanscode." }, { property: "og:title", content: "Expired Stock — Apotek Pro" }, { property: "og:description", content: "Manage expired stock with Apotek Pro by Zanscode." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Expired Stock — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
   component: ExpiredPage,
 });
 

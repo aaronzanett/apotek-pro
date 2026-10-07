@@ -5,7 +5,7 @@ import { Grid, Pill, SectionHeader, Stack, StatCard, TableCard, Td, Th, Toolbar 
 import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/app/defecta")({
-  head: () => ({ meta: [{ title: "Defecta — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ name: "description", content: "Manage reorder list with Apotek Pro by Zanscode." }, { property: "og:title", content: "Reorder List — Apotek Pro" }, { property: "og:description", content: "Manage reorder list with Apotek Pro by Zanscode." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Reorder List — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
   component: DefectaPage,
 });
 

@@ -5,7 +5,7 @@ import { Grid, Pill, SectionHeader, Stack, StatCard, TableCard, Td, Th, Toolbar 
 import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/app/accounts-payable")({
-  head: () => ({ meta: [{ title: "Hutang — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ name: "description", content: "Manage accounts payable with Apotek Pro by Zanscode." }, { property: "og:title", content: "Accounts Payable — Apotek Pro" }, { property: "og:description", content: "Manage accounts payable with Apotek Pro by Zanscode." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Accounts Payable — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
   component: PayablePage,
 });
 

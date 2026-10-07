@@ -5,7 +5,7 @@ import { SectionHeader, Stack, Toolbar } from "@/components/app/ui";
 import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/app/categories")({
-  head: () => ({ meta: [{ title: "Kategori — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ name: "description", content: "Manage categories with Apotek Pro by Zanscode." }, { property: "og:title", content: "Categories — Apotek Pro" }, { property: "og:description", content: "Manage categories with Apotek Pro by Zanscode." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Categories — Apotek Pro" }, { name: "robots", content: "noindex" }] }),
   component: CategoriesPage,
 });
 
