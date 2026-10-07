@@ -180,9 +180,15 @@ function LangPill() {
 }
 
 export function OwnerLayout({ children, title }: { children: ReactNode; title?: string }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  useEffect(() => {
+    if (lang !== "en") return;
+    let stop: (() => void) | undefined;
+    import("@/lib/owner-autotranslate").then((m) => { stop = m.startAutoTranslate(document.body); });
+    return () => stop?.();
+  }, [lang, pathname]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
   const [branchMenu, setBranchMenu] = useState(false);

@@ -28,7 +28,8 @@ const quick = [
 ];
 
 function PosPage() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const money = (v: number) => lang === "en" ? `$${(v / 16000).toFixed(2)}` : `Rp ${v.toLocaleString("id-ID")}`;
   const [cart, setCart] = useState(initialCart);
   const [query, setQuery] = useState("");
   const [discount, setDiscount] = useState(0);
@@ -80,7 +81,7 @@ function PosPage() {
                   className="rounded-xl border border-border bg-background p-3 text-left transition-colors hover:border-brand hover:bg-brand/5"
                 >
                   <p className="text-sm font-medium text-foreground">{q.name}</p>
-                  <p className="mt-1 text-xs text-muted-foreground">Rp {q.price.toLocaleString("id-ID")}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{money(q.price)}</p>
                 </Button>
               ))}
             </div>
@@ -103,11 +104,11 @@ function PosPage() {
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium">{i.name}</p>
                     <p className="text-xs text-muted-foreground">
-                      Rp {i.price.toLocaleString("id-ID")} / {i.unit}
+                      {money(i.price)} / {i.unit}
                     </p>
                   </div>
                   <p className="text-sm font-medium tabular-nums">
-                    Rp {i.subtotal.toLocaleString("id-ID")}
+                    {money(i.subtotal)}
                   </p>
                 </div>
                 <div className="mt-2 flex items-center gap-1">
@@ -129,21 +130,21 @@ function PosPage() {
           <div className="border-t border-border px-4 py-3 text-sm">
             <div className="flex items-center justify-between text-muted-foreground">
               <span>Subtotal</span>
-              <span className="tabular-nums">Rp {subtotal.toLocaleString("id-ID")}</span>
+              <span className="tabular-nums">{money(subtotal)}</span>
             </div>
-            {discount > 0 && <div className="mt-1 flex items-center justify-between text-brand"><span>Diskon</span><span>-Rp {discount.toLocaleString("id-ID")}</span></div>}
+            {discount > 0 && <div className="mt-1 flex items-center justify-between text-brand"><span>Diskon</span><span>{"-" + money(discount)}</span></div>}
             <div className="mt-1 flex items-center justify-between text-muted-foreground">
               <span>PPN 11%</span>
-              <span className="tabular-nums">Rp {tax.toLocaleString("id-ID")}</span>
+              <span className="tabular-nums">{money(tax)}</span>
             </div>
             <div className="mt-3 flex items-center justify-between border-t border-border pt-3 text-base font-semibold">
               <span>Total</span>
-              <span className="tabular-nums">Rp {total.toLocaleString("id-ID")}</span>
+              <span className="tabular-nums">{money(total)}</span>
             </div>
           </div>
 
           <div className="space-y-2 border-t border-border p-3">
-            <Button type="button" variant="brand" className="h-11 w-full" disabled={cart.length === 0} onClick={() => { toast.success("Pembayaran berhasil", { description: `INV-2026-04813 · Rp ${total.toLocaleString("id-ID")}` }); setCart([]); setDiscount(0); setPrescription(false); }}>
+            <Button type="button" variant="brand" className="h-11 w-full" disabled={cart.length === 0} onClick={() => { toast.success("Pembayaran berhasil", { description: `INV-2026-04813 · ${money(total)}` }); setCart([]); setDiscount(0); setPrescription(false); }}>
               <CreditCard className="h-4 w-4" />
               Bayar sekarang
             </Button>
